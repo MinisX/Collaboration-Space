@@ -22,14 +22,12 @@ custom_constants/separation = 50
 text = "LOGIN SCREEN"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="Container"]
-editor/display_folded = true
 margin_top = 207.0
 margin_right = 1870.0
 margin_bottom = 500.0
 custom_constants/separation = 15
 
 [node name="Username" type="HBoxContainer" parent="Container/VBoxContainer2"]
-editor/display_folded = true
 margin_left = 535.0
 margin_right = 1335.0
 margin_bottom = 89.0
@@ -100,3 +98,7 @@ size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 align = 1
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="pressed" from="Container/VBoxContainer2/LoginButton" to="." method="_on_LoginButton_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

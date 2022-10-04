@@ -126,3 +126,7 @@ size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 align = 1
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="pressed" from="Container/VBoxContainer2/RegisterButton" to="." method="_on_RegisterButton_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
