@@ -1,13 +1,19 @@
 extends KinematicBody2D
 
-var velocity: Vector2 = Vector2()
-export (float) var speed = 100.0 
+export (float) var speed: float = 10000.0
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+var velocity: Vector2 = Vector2(0.0, 0.0)
 
-func get_input():
+onready var participant_name: Label = $Name
+
+func _ready() -> void:
+	participant_name.text = "Participant"
+
+func _process(delta: float) -> void:
+	get_input()
+	velocity = move_and_slide(velocity*delta)
+
+func get_input() -> void:
 	velocity = Vector2()
 	if Input.is_action_pressed("ui_right"):
 		velocity.x += 1
@@ -19,6 +25,6 @@ func get_input():
 		velocity.y -= 1
 	velocity = velocity.normalized() * speed
 
-func _process(delta):
-	get_input()
-	velocity = move_and_slide(velocity)
+func set_participant_name(new_name: String) -> void:
+	participant_name.text = new_name
+

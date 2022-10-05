@@ -11,8 +11,12 @@ config_version=4
 [application]
 
 config/name="simple-base"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://EnteringScene.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Meeting="*res://Meeting.gd"
 
 [gui]
 
