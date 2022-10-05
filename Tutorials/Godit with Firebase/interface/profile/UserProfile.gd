@@ -26,16 +26,12 @@ var profile := {
 func _ready() -> void:
 	# We try to get the document containing his information
 	Firebase.get_document("users/%s" % Firebase.user_info.id, http)
-	print("_ready")
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body) -> void:
-	print("_on_HTTPRequest_request_completed")
-	print(response_code)
 	var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
 	# Based on the HTTP response code we perform actions
 	match response_code:
 		404:
-			print("response_code 404")
 			notification.text = "Please, enter your information"
 			new_profile = true
 			return
@@ -48,7 +44,6 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body) -> 
 
 
 func _on_ConfirmButton_pressed() -> void:
-	print("_on_ConfirmButton_pressed")
 	# Perform validation and checking of the user information
 	if nickname.text.empty() or character_class.text.empty():
 		notification.text = "Please, enter your nickname and class"
