@@ -20,3 +20,6 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		notification.text = response_body.result.error.message.capitalize()
 	else:
 		notification.text = "Sign in sucessful!"
+		# After sucessful login redirect to UserProfile scene
+		yield(get_tree().create_timer(2.0), "timeout")
+		get_tree().change_scene("res://interface/profile/UserProfile.tscn")

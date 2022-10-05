@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://interface/Title.tscn" type="PackedScene" id=1]
 [ext_resource path="res://interface/fonts/montserrat_eb_64.tres" type="DynamicFont" id=2]
+[ext_resource path="res://interface/profile/UserProfile.gd" type="Script" id=3]
 
 [node name="UserProfile" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 3 )
 
 [node name="Container" type="VBoxContainer" parent="."]
 anchor_right = 1.0
@@ -184,3 +186,4 @@ autowrap = true
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [connection signal="pressed" from="Container/VBoxContainer2/ConfirmButton" to="." method="_on_ConfirmButton_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
