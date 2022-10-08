@@ -11,3 +11,10 @@ func _on_join_pressed() -> void:
 	Meeting.participant_name = participant_name_input.text
 	get_tree().change_scene("res://MeetingSpace.tscn")
 
+func _on_LoginButton_pressed():
+#	get_tree().change_scene("res://LoginScreen.tscn") // TODO
+	pass
+
+func _on_RegisterButton_pressed():
+#	get_tree().change_scene("res://RegisterScreen.tscn") // TODO
+	pass # Replace with function body.

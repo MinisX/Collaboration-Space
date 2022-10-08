@@ -13,20 +13,56 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -150.0
-margin_top = -24.0
+margin_top = -40.0
 margin_right = 150.0
 margin_bottom = 76.0
 size_flags_horizontal = 3
 
 [node name="ParticipantName" type="LineEdit" parent="VBoxContainer"]
 margin_right = 300.0
-margin_bottom = 48.0
+margin_bottom = 30.0
 size_flags_vertical = 3
 placeholder_text = "Name"
 
 [node name="JoinButton" type="Button" parent="VBoxContainer"]
-margin_top = 52.0
+margin_top = 34.0
 margin_right = 300.0
-margin_bottom = 100.0
+margin_bottom = 64.0
 size_flags_vertical = 3
-text = "Join"
+text = "Join as guest"
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_top = 68.0
+margin_right = 300.0
+margin_bottom = 82.0
+size_flags_vertical = 1
+text = "OR"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 86.0
+margin_right = 300.0
+margin_bottom = 116.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LoginButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_right = 148.0
+margin_bottom = 30.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Login"
+
+[node name="RegisterButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 152.0
+margin_right = 300.0
+margin_bottom = 30.0
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Register"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/LoginButton" to="." method="_on_LoginButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/RegisterButton" to="." method="_on_RegisterButton_pressed"]
