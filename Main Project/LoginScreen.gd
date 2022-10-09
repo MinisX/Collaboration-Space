@@ -10,13 +10,13 @@ onready var JoinButton: Button = $MarginContainer/VBoxContainer/HBoxContainer/Jo
 
 func _ready() -> void:
 	# Connect buttons to suitable callbacks
-	JoinButton.connect("pressed", self, "_on_join_pressed")		
+	JoinButton.connect("pressed", self, "_on_join_pressed")
 	LoginButton.connect("pressed", self, "_on_LoginButton_pressed")
 	RegisterButton.connect("pressed", self, "_on_RegisterButton_pressed")
 
 # Called when login button is pressed
 func _on_LoginButton_pressed():
-	Meeting.participant_name = Username.text	# Logic to be refined
+	Meeting.participant_data["name"] = Username.text # Logic to be refined
 	get_tree().change_scene("res://MeetingSpace.tscn")
 	
 # Called when register button is pressed
@@ -25,5 +25,5 @@ func _on_RegisterButton_pressed():
 	
 # Called when join button is pressed
 func _on_join_pressed() -> void:
-	Meeting.participant_name = Username.text
+	Meeting.participant_data["name"] = Username.text
 	get_tree().change_scene("res://EnteringScene.tscn")
