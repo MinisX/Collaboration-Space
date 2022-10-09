@@ -1,10 +1,10 @@
 extends Control
 
 # instantiate Member variables
-onready var join_button: Button = $VBoxContainer/JoinButton
-onready var LoginButton: Button = $VBoxContainer/HBoxContainer/LoginButton
-onready var RegisterButton: Button = $VBoxContainer/HBoxContainer/RegisterButton
-onready var participant_name_input: LineEdit = $VBoxContainer/ParticipantName
+onready var join_button: Button = $MarginContainer/VBoxContainer/JoinButton
+onready var LoginButton: Button = $MarginContainer/VBoxContainer/HBoxContainer/LoginButton
+onready var RegisterButton: Button = $MarginContainer/VBoxContainer/HBoxContainer/RegisterButton
+onready var participant_name_input: LineEdit = $MarginContainer/VBoxContainer/ParticipantName
 
 func _ready() -> void:
 	# Connect buttons to suitable callbacks

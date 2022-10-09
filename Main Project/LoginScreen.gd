@@ -16,7 +16,7 @@ func _ready() -> void:
 
 # Called when login button is pressed
 func _on_LoginButton_pressed():
-	Meeting.participant_name = Username.text
+	Meeting.participant_name = Username.text	# Logic to be refined
 	get_tree().change_scene("res://MeetingSpace.tscn")
 	
 # Called when register button is pressed
