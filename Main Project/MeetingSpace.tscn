@@ -7,16 +7,19 @@
 [node name="MeetingScene" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="Participant" parent="." instance=ExtResource( 1 )]
-position = Vector2( 352, 204 )
+[node name="YSort" type="YSort" parent="."]
 
-[node name="Wall" parent="." instance=ExtResource( 3 )]
+[node name="Participant" parent="YSort" instance=ExtResource( 1 )]
+position = Vector2( 352, 204 )
+scale = Vector2( 2, 2 )
+
+[node name="Wall" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 160, 129 )
 scale = Vector2( 1, 5 )
 
-[node name="Wall2" parent="." instance=ExtResource( 3 )]
+[node name="Wall2" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 462, 81 )
 
-[node name="Wall3" parent="." instance=ExtResource( 3 )]
+[node name="Wall3" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 478, 250 )
 scale = Vector2( 3, 1 )
