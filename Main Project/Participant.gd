@@ -11,6 +11,15 @@ onready var animation_player: AnimationPlayer = $Animation
 func _ready() -> void:
 	participant_name.text = "Participant"
 
+func init(participant_dictionary: Dictionary) -> void:
+	participant_name.text = participant_dictionary["name"]
+	$Head.modulate = participant_dictionary["color"]
+	$Arms.modulate = participant_dictionary["color"]
+	$Torso.modulate = participant_dictionary["color"]
+	$Legs.modulate = participant_dictionary["color"]
+	$Feet.modulate = participant_dictionary["color"]
+	$Hands.modulate = participant_dictionary["color"]
+
 
 func _process(_delta: float) -> void:
 	get_input()
@@ -29,11 +38,6 @@ func get_input() -> void:
 	if Input.is_action_pressed("ui_up"):
 		velocity.y -= 1
 	velocity = velocity.normalized() * speed
-
-
-func set_participant_name(new_name: String) -> void:
-	participant_name.text = new_name
-
 
 func decide_animation() -> void:
 	if velocity.x == 0 and velocity.y > 0:
