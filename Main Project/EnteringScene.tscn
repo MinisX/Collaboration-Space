@@ -113,10 +113,10 @@ size_flags_vertical = 0
 text = "Back"
 
 [node name="ColorPicker" type="ColorPicker" parent="CustomizeUI_Container/HBoxContainer"]
-margin_left = 78.0
-margin_top = 4.0
-margin_right = 386.0
-margin_bottom = 504.0
+margin_left = 82.0
+margin_top = 8.0
+margin_right = 390.0
+margin_bottom = 508.0
 
 [node name="Avatar" parent="CustomizeUI_Container/HBoxContainer" instance=ExtResource( 2 )]
 position = Vector2( 715, 180 )
