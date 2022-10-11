@@ -23,13 +23,12 @@ func _ready() -> void:
 	# defult name and default ip
 	name_input.text = "participant"
 	ip_input.text = "34.159.28.32"
-
-func _on_host_pressed() -> void:
-	connection_panel.hide()
-	participants_panel.show()
-
-	Meeting.host_meeting(name_input.text)
+	
+	# DELETE THIS WHEN RUNNING FROM CLIENT SIDE
+	Meeting.host_meeting("admin")
 	refresh_lobby()
+	yield(get_tree().create_timer(10.0), "timeout")
+	Meeting.start_meeting()
 
 # Called when the node enters the scene tree for the first time.
 func _enter_tree():
@@ -37,6 +36,18 @@ func _enter_tree():
 	# and start a client otherwise.
 	if "--server" in OS.get_cmdline_args():
 		Meeting.host_meeting("admin")
+		refresh_lobby()
+		yield(get_tree().create_timer(10.0), "timeout")
+		Meeting.start_meeting()
+
+func _on_host_pressed() -> void:
+	connection_panel.hide()
+	participants_panel.show()
+
+	Meeting.host_meeting("admin")
+	refresh_lobby()
+	yield(get_tree().create_timer(10.0), "timeout")
+	Meeting.start_meeting()
 
 func _on_join_pressed() -> void:
 	var ip: String = ip_input.text
@@ -71,6 +82,8 @@ func _on_meeting_error(error) -> void:
 	host_button.disabled = false
 	join_button.disabled = false
 
+# This method is called first time when we host as server
+# and when client joins, it is signaled from Meeing register_participant
 func refresh_lobby() -> void:
 	var participants: Array = Meeting.get_participant_list()
 	participants.sort()

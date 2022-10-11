@@ -1,7 +1,7 @@
 extends Node
 
 # Confriration parameters
-const DEFAULT_PORT: int = 5555
+const DEFAULT_PORT: int = 4242
 const MAX_PARTICIPANT: int = 30
 
 # Create new NetworkedMultiplayerENet object. 
@@ -118,6 +118,7 @@ remote func ready_to_start(id: int) -> void:
 
 # Method that creates the host
 func host_meeting(new_participant_name: String) -> void:
+	print("host_meeting")
 	participant_name = new_participant_name
 	
 	# Initializing as a server, listening on the given port, with a given maximum number of peers
@@ -144,6 +145,7 @@ func get_participant_name() -> String:
 
 
 func start_meeting() -> void:
+	print("start_meeting")
 	assert(get_tree().is_network_server())
 	
 	randomize()
