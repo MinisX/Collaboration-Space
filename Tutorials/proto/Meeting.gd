@@ -112,7 +112,7 @@ remote func ready_to_start(id: int) -> void:
 			rpc_id(p, "postconfigure_meeting")
 		postconfigure_meeting()
 
-
+#Method that creates the host
 func host_meeting(new_participant_name: String) -> void:
 	participant_name = new_participant_name
 	peer = NetworkedMultiplayerENet.new()
