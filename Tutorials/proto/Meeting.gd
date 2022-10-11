@@ -1,8 +1,12 @@
 extends Node
 
-const DEFAULT_PORT: int = 2000
+# Confriration parameters
+const DEFAULT_PORT: int = 5555
 const MAX_PARTICIPANT: int = 30
 
+# Create new NetworkedMultiplayerENet object. 
+# It containts useful methods for serializing, sending and receiving data. On top of that, it adds methods to set a peer, 
+# transfer mode, etc. It also includes signals that will let you know when peers connect or disconnect.
 var peer: NetworkedMultiplayerENet = null
 
 # Name for my player.
@@ -112,16 +116,20 @@ remote func ready_to_start(id: int) -> void:
 			rpc_id(p, "postconfigure_meeting")
 		postconfigure_meeting()
 
-#Method that creates the host
+# Method that creates the host
 func host_meeting(new_participant_name: String) -> void:
 	participant_name = new_participant_name
+	
+	# Initializing as a server, listening on the given port, with a given maximum number of peers
 	peer = NetworkedMultiplayerENet.new()
 	peer.create_server(DEFAULT_PORT, MAX_PARTICIPANT)
 	get_tree().set_network_peer(peer)
 
-
+# Method for joining existing session
 func join_meeting(ip: String, new_participant_name: String) -> void:
 	participant_name = new_participant_name
+	
+	# Initializing as a client, connecting to a given IP and port:
 	peer = NetworkedMultiplayerENet.new()
 	peer.create_client(ip, DEFAULT_PORT)
 	get_tree().set_network_peer(peer)
@@ -157,8 +165,6 @@ func end_meeting() -> void:
 
 	emit_signal("meeting_ended")
 	participants.clear()
-
-
 
 
 

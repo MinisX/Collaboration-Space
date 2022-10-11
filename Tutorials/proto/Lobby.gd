@@ -22,7 +22,7 @@ func _ready() -> void:
 	join_button.connect("pressed", self, "_on_join_pressed")
 	# defult name and default ip
 	name_input.text = "participant"
-	ip_input.text = "127.0.0.1"
+	ip_input.text = "34.159.28.32"
 
 func _on_host_pressed() -> void:
 	connection_panel.hide()
@@ -31,6 +31,12 @@ func _on_host_pressed() -> void:
 	Meeting.host_meeting(name_input.text)
 	refresh_lobby()
 
+# Called when the node enters the scene tree for the first time.
+func _enter_tree():
+	# Start the server if Godot is passed the "--server" argument,
+	# and start a client otherwise.
+	if "--server" in OS.get_cmdline_args():
+		Meeting.host_meeting("admin")
 
 func _on_join_pressed() -> void:
 	var ip: String = ip_input.text
