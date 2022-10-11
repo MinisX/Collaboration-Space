@@ -12,14 +12,21 @@ func _ready() -> void:
 	participant_name.text = "Participant"
 
 func init(participant_dictionary: Dictionary) -> void:
-	participant_name.text = participant_dictionary["name"]
-	$Head.modulate = participant_dictionary["color"]
-	$Arms.modulate = participant_dictionary["color"]
-	$Torso.modulate = participant_dictionary["color"]
-	$Legs.modulate = participant_dictionary["color"]
-	$Feet.modulate = participant_dictionary["color"]
-	$Hands.modulate = participant_dictionary["color"]
+	participant_name.text = participant_dictionary["Name"]
+	set_selected_color()
 
+func set_selected_color() -> void:
+	$Hair.modulate = Meeting.participant_data["Color"]["Hair"]
+	$Eyes.modulate = Meeting.participant_data["Color"]["Eyes"]
+	# skin
+	$Hands.modulate = Meeting.participant_data["Color"]["Skin"]
+	$Head.modulate = Meeting.participant_data["Color"]["Skin"]
+	# shirt
+	$Torso.modulate = Meeting.participant_data["Color"]["Shirt"]
+	$Arms.modulate = Meeting.participant_data["Color"]["Shirt"]
+	# 
+	$Legs.modulate = Meeting.participant_data["Color"]["Pants"]
+	$Feet.modulate = Meeting.participant_data["Color"]["Shoe"]
 
 func _process(_delta: float) -> void:
 	get_input()
