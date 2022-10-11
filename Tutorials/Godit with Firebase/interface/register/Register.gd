@@ -9,6 +9,7 @@ onready var notification : Label = $Container/Notification
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var response_body := JSON.parse(body.get_string_from_ascii())
+
 	# If HTTP request is not OK, we provide response from Firebase as notification
 	if response_code != 200:
 		notification.text = response_body.result.error.message.capitalize()

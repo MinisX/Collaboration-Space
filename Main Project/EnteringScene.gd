@@ -38,9 +38,9 @@ func _on_back_button_pressed() -> void:
 
 # Called when login button is pressed
 func _on_LoginButton_pressed():
-	get_tree().change_scene("res://LoginScreen.tscn")
+	get_tree().change_scene("res://login/LoginScreen.tscn")
 
 # Called when register button is pressed
 func _on_RegisterButton_pressed():
-	get_tree().change_scene("res://RegisterScreen.tscn")
+	get_tree().change_scene("res://register/RegisterScreen.tscn")
 	

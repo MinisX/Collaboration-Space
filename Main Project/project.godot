@@ -11,12 +11,13 @@ config_version=4
 [application]
 
 config/name="simple-base"
-run/main_scene="res://LoginScreen.tscn"
+run/main_scene="res://login/LoginScreen.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Meeting="*res://Meeting.gd"
+Firebase="*res://static/Firebase.gd"
 
 [gui]
 

@@ -1,10 +1,14 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://RegisterScreen.gd" type="Script" id=1]
+[ext_resource path="res://login/LoginScreen.gd" type="Script" id=1]
 
-[node name="Control" type="Control"]
+[node name="Login" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -171.0
+margin_top = -72.0
+margin_right = -171.0
+margin_bottom = -72.0
 script = ExtResource( 1 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -24,42 +28,42 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="EnterUsernameLabel" type="Label" parent="MarginContainer/VBoxContainer"]
-margin_top = 8.0
+margin_top = 6.0
 margin_right = 300.0
-margin_bottom = 22.0
+margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "Please enter your username and password:"
 
 [node name="UsernameEdit" type="LineEdit" parent="MarginContainer/VBoxContainer"]
-margin_top = 34.0
+margin_top = 31.0
 margin_right = 300.0
-margin_bottom = 64.0
+margin_bottom = 58.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 placeholder_text = "Username"
 
 [node name="PasswordEdit" type="LineEdit" parent="MarginContainer/VBoxContainer"]
-margin_top = 68.0
+margin_top = 62.0
 margin_right = 300.0
-margin_bottom = 98.0
+margin_bottom = 89.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 secret = true
 placeholder_text = "Password"
 
-[node name="RegisterButton" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_top = 102.0
+[node name="LoginButton" type="Button" parent="MarginContainer/VBoxContainer"]
+margin_top = 93.0
 margin_right = 300.0
-margin_bottom = 132.0
+margin_bottom = 120.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Register"
+text = "Login"
 
 [node name="OrLabel" type="Label" parent="MarginContainer/VBoxContainer"]
-margin_top = 136.0
+margin_top = 124.0
 margin_right = 300.0
-margin_bottom = 166.0
+margin_bottom = 151.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "OR"
@@ -67,23 +71,32 @@ align = 1
 valign = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 170.0
+margin_top = 155.0
 margin_right = 300.0
-margin_bottom = 200.0
+margin_bottom = 182.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="LoginButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="RegisterButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 margin_right = 148.0
-margin_bottom = 30.0
+margin_bottom = 27.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Login"
+text = "Register"
 
 [node name="JoinButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 152.0
 margin_right = 300.0
-margin_bottom = 30.0
+margin_bottom = 27.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "join as guest"
+
+[node name="Notification" type="Label" parent="MarginContainer/VBoxContainer"]
+margin_top = 186.0
+margin_right = 300.0
+margin_bottom = 200.0
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
