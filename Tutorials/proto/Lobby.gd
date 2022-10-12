@@ -22,13 +22,7 @@ func _ready() -> void:
 	join_button.connect("pressed", self, "_on_join_pressed")
 	# defult name and default ip
 	name_input.text = "participant"
-	ip_input.text = "34.159.28.32"\
-	
-	# REMOVE ON CLIENT SIDE
-	Meeting.host_meeting("admin")
-	refresh_lobby()
-	yield(get_tree().create_timer(10.0), "timeout")
-	Meeting.start_meeting()
+	ip_input.text = "34.159.28.32"
 
 # Called when the node enters the scene tree for the first time.
 func _enter_tree():
