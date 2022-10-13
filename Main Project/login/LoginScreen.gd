@@ -29,8 +29,9 @@ func _on_RegisterButton_pressed():
 	
 # Called when join button is pressed
 func _on_join_pressed() -> void:
-	Meeting.participant_data["name"] = Username.text
-	get_tree().change_scene("res://EnteringScene.tscn")
+#	Meeting.participant_data["name"] = Username.text
+#	get_tree().change_scene("res://EnteringScene.tscn")
+	get_tree().change_scene("res://Customization/Avatar.tscn")
 
 # This function is called when we receive response on our HTTP request. This is done with use of HTTPRequest node, which
 # is attached to Login scene

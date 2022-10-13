@@ -31,8 +31,9 @@ func _on_LoginButton_pressed():
 	
 # Called when join button is pressed
 func _on_join_pressed() -> void:
-	Meeting.participant_data["name"] = Username.text
-	get_tree().change_scene("res://EnteringScene.tscn")
+	get_tree().change_scene("res://Customization/Avatar.tscn")
+#	Meeting.participant_data["name"] = Username.text
+#	get_tree().change_scene("res://EnteringScene.tscn")
 
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):

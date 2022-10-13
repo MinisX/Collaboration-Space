@@ -3,10 +3,6 @@
 [ext_resource path="res://login/LoginScreen.gd" type="Script" id=1]
 
 [node name="Login" type="Control"]
-<<<<<<< HEAD
-anchor_right = 1.0
-anchor_bottom = 1.0
-=======
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -15,7 +11,6 @@ margin_left = -512.0
 margin_top = -300.0
 margin_right = 512.0
 margin_bottom = 300.0
->>>>>>> 04e4a8a7da5c49362f776e2c8a37acb8e4b10e29
 script = ExtResource( 1 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
