@@ -18,6 +18,9 @@ config/icon="res://icon.png"
 
 Meeting="*res://Meeting.gd"
 Firebase="*res://static/Firebase.gd"
+Lobby="*res://static/Lobby.gd"
+Server="*res://static/Server.gd"
+Client="*res://static/Client.gd"
 
 [gui]
 
