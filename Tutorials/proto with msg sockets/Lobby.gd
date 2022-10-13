@@ -23,9 +23,13 @@ func _ready() -> void:
 	join_button.connect("pressed", self, "_on_join_pressed")
 	# defult name and default ip
 	name_input.text = "participant"
+<<<<<<< HEAD:Tutorials/proto with msg sockets/Lobby.gd
 	ip_input.text = "141.59.136.68"
 
 
+=======
+	ip_input.text = "34.159.28.32"
+>>>>>>> 69aa83e0fcebf45c54a1fa191cfcd1bf49a0d1b7:Tutorials/proto/Lobby.gd
 
 # Called when the node enters the scene tree for the first time.
 func _enter_tree():
