@@ -9,6 +9,7 @@ onready var connection_panel: ColorRect = $ConnectionPanel
 onready var participants_panel: ColorRect = $ParticipantsPanel
 onready var participants_list_view: ItemList = $ParticipantsPanel/ParticipantList
 
+
 func _ready() -> void:
 	# Network Related
 	Meeting.connect("connection_failed", self, "_on_connection_failed")
@@ -22,13 +23,9 @@ func _ready() -> void:
 	join_button.connect("pressed", self, "_on_join_pressed")
 	# defult name and default ip
 	name_input.text = "participant"
-	ip_input.text = "34.159.28.32"\
-	
-	# REMOVE ON CLIENT SIDE
-	Meeting.host_meeting("admin")
-	refresh_lobby()
-	yield(get_tree().create_timer(10.0), "timeout")
-	Meeting.start_meeting()
+	ip_input.text = "141.59.136.68"
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _enter_tree():
@@ -37,7 +34,7 @@ func _enter_tree():
 	if "--server" in OS.get_cmdline_args():
 		Meeting.host_meeting("admin")
 		refresh_lobby()
-		yield(get_tree().create_timer(10.0), "timeout")
+		yield(get_tree().create_timer(100.0), "timeout")
 		Meeting.start_meeting()
 
 func _on_host_pressed() -> void:

@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 174.5, 90.25 )
+
+[node name="MeetingArea" type="Node2D"]
+
+[node name="Participants" type="YSort" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 840.5, 110.75 )
+shape = SubResource( 1 )
+
+[node name="LineEdit" type="LineEdit" parent="."]
+margin_left = 851.0
+margin_top = 49.0
+margin_right = 951.0
+margin_bottom = 83.0
+text = "Hello world!"
+
+[node name="Button" type="Button" parent="."]
+margin_left = 857.0
+margin_top = 89.0
+margin_right = 936.0
+margin_bottom = 109.0
+text = "Send"
+
+[node name="debug" type="RichTextLabel" parent="."]
+margin_left = 837.0
+margin_top = 127.0
+margin_right = 976.0
+margin_bottom = 183.0
