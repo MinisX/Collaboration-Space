@@ -1853,6 +1853,7 @@ align = 1
 
 [node name="Camera" type="Camera2D" parent="."]
 current = true
+zoom = Vector2( 0.75, 0.75 )
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 root_node = NodePath("../IdleSprites/Head")
