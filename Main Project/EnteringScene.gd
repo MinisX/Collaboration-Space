@@ -20,7 +20,7 @@ func _ready() -> void:
 # Called when join button is pressed
 func _on_join_pressed() -> void:
 	Meeting.participant_data["Name"] = participant_name_input.text
-	get_tree().change_scene("res://MeetingSpace.tscn")
+	get_tree().change_scene("res://Spaces/Default/Default.tscn")
 	
 func _on_customize_pressed() -> void:
 	$MarginContainer.hide()
