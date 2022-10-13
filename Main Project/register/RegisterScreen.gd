@@ -1,6 +1,5 @@
 extends Control
 
-
 # instantiate Member variables
 onready var Username: LineEdit = $MarginContainer/VBoxContainer/UsernameEdit
 onready var Password: LineEdit = $MarginContainer/VBoxContainer/PasswordEdit

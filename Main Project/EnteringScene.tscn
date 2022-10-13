@@ -118,12 +118,14 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 text = "Back"
 
+<<<<<<< HEAD
 [node name="ColorPicker" type="ColorPicker" parent="CustomizeUI_Container/HBoxContainer"]
 margin_left = 86.0
 margin_top = 12.0
 margin_right = 394.0
 margin_bottom = 512.0
 
+=======
+>>>>>>> 04e4a8a7da5c49362f776e2c8a37acb8e4b10e29
 [node name="Avatar" parent="CustomizeUI_Container/HBoxContainer" instance=ExtResource( 2 )]
-position = Vector2( 715, 180 )
-scale = Vector2( 4, 4 )
+position = Vector2( 350, 204 )

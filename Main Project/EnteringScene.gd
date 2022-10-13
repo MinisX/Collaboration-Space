@@ -7,7 +7,6 @@ onready var LoginButton: Button = $MarginContainer/VBoxContainer/HBoxContainer/L
 onready var RegisterButton: Button = $MarginContainer/VBoxContainer/HBoxContainer/RegisterButton
 onready var participant_name_input: LineEdit = $MarginContainer/VBoxContainer/ParticipantName
 onready var back_button: Button = $CustomizeUI_Container/HBoxContainer/BackButton
-onready var color_picker: ColorPicker = $CustomizeUI_Container/HBoxContainer/ColorPicker
 onready var avatar = $CustomizeUI_Container/HBoxContainer/Avatar
 
 func _ready() -> void:
@@ -17,20 +16,15 @@ func _ready() -> void:
 	LoginButton.connect("pressed", self, "_on_LoginButton_pressed")
 	RegisterButton.connect("pressed", self, "_on_RegisterButton_pressed")
 	back_button.connect("pressed", self, "_on_back_button_pressed")
-	color_picker.connect("color_changed", self, "_on_color_value_changed")
 
 # Called when join button is pressed
 func _on_join_pressed() -> void:
-	Meeting.participant_data["name"] = participant_name_input.text
-	get_tree().change_scene("res://MeetingSpace.tscn")
+	Meeting.participant_data["Name"] = participant_name_input.text
+	get_tree().change_scene("res://Spaces/Default/Default.tscn")
 	
 func _on_customize_pressed() -> void:
 	$MarginContainer.hide()
 	$CustomizeUI_Container.show()
-
-func _on_color_value_changed(color) -> void:
-	Meeting.participant_data["color"] = color
-	avatar.set_body_color(color)
 
 func _on_back_button_pressed() -> void:
 	$MarginContainer.show()
