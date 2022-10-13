@@ -1,17 +1,17 @@
 [gd_scene load_steps=20 format=2]
 
-[ext_resource path="res://Avatar.gd" type="Script" id=1]
-[ext_resource path="res://Assets/UI/CustomAvatarButtonGroup.tres" type="ButtonGroup" id=2]
-[ext_resource path="res://Assets/Sprites/idle_hair.png" type="Texture" id=3]
-[ext_resource path="res://Assets/Sprites/idle_eyes.png" type="Texture" id=4]
-[ext_resource path="res://Assets/Sprites/idle_legs.png" type="Texture" id=5]
-[ext_resource path="res://Assets/Sprites/idle_feet.png" type="Texture" id=6]
-[ext_resource path="res://Assets/Sprites/idle_arms.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Sprites/idle_legs.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Sprites/idle_feet.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Sprites/idle_hands.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Sprites/idle_torso.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sprites/idle_hair.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Sprites/idle_eyes.png" type="Texture" id=6]
+[ext_resource path="res://Assets/UI/CustomAvatarButtonGroup.tres" type="ButtonGroup" id=7]
 [ext_resource path="res://Assets/Sprites/idle_head.png" type="Texture" id=8]
-[ext_resource path="res://Assets/Sprites/idle_torso.png" type="Texture" id=9]
-[ext_resource path="res://Assets/Sprites/idle_hands.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Sprites/idle_arms.png" type="Texture" id=9]
+[ext_resource path="res://Customization/Avatar.gd" type="Script" id=10]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -110,7 +110,7 @@ tracks/7/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=2]
 resource_name = "idle_e"
 length = 0.5
 loop = true
@@ -211,7 +211,7 @@ tracks/7/keys = {
 "values": [ 10, 11, 12, 13, 14 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 resource_name = "idle_n"
 length = 0.5
 loop = true
@@ -312,7 +312,7 @@ tracks/7/keys = {
 "values": [ 20, 21, 22, 23, 24 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=4]
 resource_name = "idle_ne"
 length = 0.5
 loop = true
@@ -413,7 +413,7 @@ tracks/7/keys = {
 "values": [ 15, 16, 17, 18, 19 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=5]
 resource_name = "idle_nw"
 length = 0.5
 loop = true
@@ -514,7 +514,7 @@ tracks/7/keys = {
 "values": [ 25, 26, 27, 28, 29 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=6]
 resource_name = "idle_s"
 length = 0.5
 loop = true
@@ -716,7 +716,7 @@ tracks/7/keys = {
 "values": [ 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=8]
 resource_name = "idle_sw"
 length = 0.5
 loop = true
@@ -918,15 +918,22 @@ tracks/7/keys = {
 "values": [ 30, 31, 32, 33, 34 ]
 }
 
-[node name="Avatar" type="Node2D"]
-script = ExtResource( 1 )
+[node name="Avatar" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 10 )
 
-[node name="Sprites" type="Node2D" parent="."]
-position = Vector2( 176, 0 )
-scale = Vector2( 4, 4 )
+[node name="Sprites" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 184.0
+margin_right = 184.0
+rect_scale = Vector2( 4, 4 )
 
 [node name="Torso" type="Sprite" parent="Sprites"]
-texture = ExtResource( 9 )
+texture = ExtResource( 4 )
 hframes = 5
 vframes = 8
 
@@ -936,32 +943,32 @@ hframes = 5
 vframes = 8
 
 [node name="Hair" type="Sprite" parent="Sprites"]
-texture = ExtResource( 3 )
-hframes = 5
-vframes = 8
-
-[node name="Eyes" type="Sprite" parent="Sprites"]
-texture = ExtResource( 4 )
-hframes = 5
-vframes = 8
-
-[node name="Arms" type="Sprite" parent="Sprites"]
-texture = ExtResource( 7 )
-hframes = 5
-vframes = 8
-
-[node name="Legs" type="Sprite" parent="Sprites"]
 texture = ExtResource( 5 )
 hframes = 5
 vframes = 8
 
-[node name="Feet" type="Sprite" parent="Sprites"]
+[node name="Eyes" type="Sprite" parent="Sprites"]
 texture = ExtResource( 6 )
 hframes = 5
 vframes = 8
 
+[node name="Arms" type="Sprite" parent="Sprites"]
+texture = ExtResource( 9 )
+hframes = 5
+vframes = 8
+
+[node name="Legs" type="Sprite" parent="Sprites"]
+texture = ExtResource( 1 )
+hframes = 5
+vframes = 8
+
+[node name="Feet" type="Sprite" parent="Sprites"]
+texture = ExtResource( 2 )
+hframes = 5
+vframes = 8
+
 [node name="Hands" type="Sprite" parent="Sprites"]
-texture = ExtResource( 10 )
+texture = ExtResource( 3 )
 hframes = 5
 vframes = 8
 
@@ -969,14 +976,14 @@ vframes = 8
 root_node = NodePath("../Sprites/Head")
 autoplay = "idle_s"
 playback_speed = 0.5
-anims/RESET = SubResource( 2 )
-anims/idle_e = SubResource( 4 )
-anims/idle_n = SubResource( 5 )
-anims/idle_ne = SubResource( 6 )
-anims/idle_nw = SubResource( 8 )
-anims/idle_s = SubResource( 3 )
+anims/RESET = SubResource( 1 )
+anims/idle_e = SubResource( 2 )
+anims/idle_n = SubResource( 3 )
+anims/idle_ne = SubResource( 4 )
+anims/idle_nw = SubResource( 5 )
+anims/idle_s = SubResource( 6 )
 anims/idle_se = SubResource( 7 )
-anims/idle_sw = SubResource( 10 )
+anims/idle_sw = SubResource( 8 )
 anims/idle_w = SubResource( 9 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -995,60 +1002,89 @@ margin_bottom = 188.0
 alignment = 1
 
 [node name="Hair" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_top = 2.0
+margin_top = 14.0
 margin_right = 48.0
-margin_bottom = 22.0
+margin_bottom = 34.0
 toggle_mode = true
-group = ExtResource( 2 )
+group = ExtResource( 7 )
 text = "Hair"
 
 [node name="Skin" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_top = 26.0
+margin_top = 38.0
 margin_right = 48.0
-margin_bottom = 46.0
+margin_bottom = 58.0
 toggle_mode = true
-group = ExtResource( 2 )
+pressed = true
+group = ExtResource( 7 )
 text = "Skin"
 
 [node name="Eyes" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_top = 50.0
+margin_top = 62.0
 margin_right = 48.0
-margin_bottom = 70.0
+margin_bottom = 82.0
 toggle_mode = true
-group = ExtResource( 2 )
+group = ExtResource( 7 )
 text = "Eyes"
 
 [node name="Shirt" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_top = 74.0
+margin_top = 86.0
 margin_right = 48.0
-margin_bottom = 94.0
+margin_bottom = 106.0
 toggle_mode = true
-group = ExtResource( 2 )
+group = ExtResource( 7 )
 text = "Shirt"
 
 [node name="Pants" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_top = 98.0
+margin_top = 110.0
 margin_right = 48.0
-margin_bottom = 118.0
+margin_bottom = 130.0
 toggle_mode = true
-group = ExtResource( 2 )
+group = ExtResource( 7 )
 text = "Pants"
 
 [node name="Shoe" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_top = 122.0
+margin_top = 134.0
 margin_right = 48.0
-margin_bottom = 142.0
+margin_bottom = 154.0
 toggle_mode = true
-group = ExtResource( 2 )
+group = ExtResource( 7 )
 text = "Shoe"
 
-[node name="ColorPicker" type="ColorPickerButton" parent="MarginContainer/VBoxContainer"]
-margin_top = 146.0
-margin_right = 48.0
-margin_bottom = 166.0
-
 [node name="TurnAvatarSlider" type="HSlider" parent="MarginContainer/VBoxContainer"]
-margin_top = 170.0
+margin_top = 158.0
 margin_right = 48.0
-margin_bottom = 186.0
+margin_bottom = 174.0
 max_value = 7.0
+
+[node name="ColorPicker" type="ColorPicker" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -424.0
+margin_top = -231.0
+margin_right = -116.0
+margin_bottom = 231.0
+edit_alpha = false
+
+[node name="Ok" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 241.0
+margin_top = 182.0
+margin_right = 271.0
+margin_bottom = 202.0
+text = "Ok"
+
+[node name="NameInput" type="LineEdit" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 114.0
+margin_top = 132.0
+margin_right = 254.0
+margin_bottom = 156.0
+placeholder_text = "Participant Name"
