@@ -1,0 +1,73 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Chat/ChatUI/ChatUI.gd" type="Script" id=2]
+
+[node name="ChatUI" type="Control"]
+anchor_bottom = 1.0
+margin_right = 250.0
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.227451, 0.317647, 0.572549, 1 )
+
+[node name="ChatContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = 15.0
+margin_right = -15.0
+margin_bottom = -15.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ChatContainer"]
+margin_right = 220.0
+margin_bottom = 570.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ChatContainer/VBoxContainer"]
+margin_right = 220.0
+margin_bottom = 20.0
+custom_constants/separation = 100
+alignment = 1
+
+[node name="Chat" type="Label" parent="ChatContainer/VBoxContainer/HBoxContainer"]
+margin_left = 36.0
+margin_top = 3.0
+margin_right = 64.0
+margin_bottom = 17.0
+text = "Chat"
+
+[node name="HideButton" type="Button" parent="ChatContainer/VBoxContainer/HBoxContainer"]
+margin_left = 164.0
+margin_right = 184.0
+margin_bottom = 20.0
+text = "<"
+
+[node name="ItemList" type="ScrollContainer" parent="ChatContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 220.0
+margin_bottom = 542.0
+size_flags_vertical = 3
+
+[node name="MessageContainer" type="VBoxContainer" parent="ChatContainer/VBoxContainer/ItemList"]
+margin_right = 220.0
+size_flags_horizontal = 3
+custom_constants/separation = 16
+
+[node name="Chat" type="HBoxContainer" parent="ChatContainer/VBoxContainer"]
+margin_top = 546.0
+margin_right = 220.0
+margin_bottom = 570.0
+
+[node name="ChatText" type="LineEdit" parent="ChatContainer/VBoxContainer/Chat"]
+margin_right = 173.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="SendButton" type="Button" parent="ChatContainer/VBoxContainer/Chat"]
+margin_left = 177.0
+margin_right = 220.0
+margin_bottom = 24.0
+text = "send"

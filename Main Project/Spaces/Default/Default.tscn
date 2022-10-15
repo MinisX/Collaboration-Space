@@ -1,4 +1,4 @@
-[gd_scene load_steps=137 format=2]
+[gd_scene load_steps=138 format=2]
 
 [ext_resource path="res://Spaces/Default/Tiles/wall_down.png" type="Texture" id=1]
 [ext_resource path="res://Participant.tscn" type="PackedScene" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://Spaces/Default/Tiles/GrassBackground.png" type="Texture" id=15]
 [ext_resource path="res://Spaces/Default/Tiles/floor_tileset.png" type="Texture" id=16]
 [ext_resource path="res://Spaces/Default/Default.gd" type="Script" id=17]
+[ext_resource path="res://Chat/ChatUI/ChatUI.tscn" type="PackedScene" id=18]
 
 [sub_resource type="ConvexPolygonShape2D" id=21]
 points = PoolVector2Array( 8.036, 64, 0.152008, 64, 0, 0, 8.144, 0 )
@@ -1271,6 +1272,9 @@ script = ExtResource( 17 )
 texture = ExtResource( 15 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 5000, 5000 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Participant" parent="." instance=ExtResource( 2 )]
 position = Vector2( 512, 792 )
@@ -1302,3 +1306,15 @@ tile_data = PoolIntArray( -131078, 0, 0, -131076, 0, 0, -131074, 0, 0, -196605, 
 
 [node name="Door_1_meeting" parent="." instance=ExtResource( 10 )]
 position = Vector2( 32, 544 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ChatButton" type="Button" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -20.0
+margin_right = 40.0
+text = "Chat"
+
+[node name="ChatUI" parent="CanvasLayer" instance=ExtResource( 18 )]
+visible = false
