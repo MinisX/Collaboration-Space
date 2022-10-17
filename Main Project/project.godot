@@ -16,11 +16,8 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Meeting="*res://Meeting.gd"
+GlobalData="*res://GlobalData.gd"
 Firebase="*res://static/Firebase.gd"
-Lobby="*res://static/Lobby.gd"
-Server="*res://static/Server.gd"
-Client="*res://static/Client.gd"
 
 [gui]
 

@@ -30,12 +30,12 @@ func init(participant_dictionary: Dictionary) -> void:
 	set_selected_color()
 
 func set_selected_color() -> void:
-	sprites_m.get_node("Hair").modulate = Meeting.participant_data["Color"]["Hair"]
-	sprites_m.get_node("Eyes").modulate = Meeting.participant_data["Color"]["Eyes"]
-	sprites_m.get_node("Skin").modulate = Meeting.participant_data["Color"]["Skin"]
-	sprites_m.get_node("Shirt").modulate = Meeting.participant_data["Color"]["Shirt"]
-	sprites_m.get_node("Pants").modulate = Meeting.participant_data["Color"]["Pants"]
-	sprites_m.get_node("Shoe").modulate = Meeting.participant_data["Color"]["Shoe"]
+	sprites_m.get_node("Hair").modulate = GlobalData.participant_data["Color"]["Hair"]
+	sprites_m.get_node("Eyes").modulate = GlobalData.participant_data["Color"]["Eyes"]
+	sprites_m.get_node("Skin").modulate = GlobalData.participant_data["Color"]["Skin"]
+	sprites_m.get_node("Shirt").modulate = GlobalData.participant_data["Color"]["Shirt"]
+	sprites_m.get_node("Pants").modulate = GlobalData.participant_data["Color"]["Pants"]
+	sprites_m.get_node("Shoe").modulate = GlobalData.participant_data["Color"]["Shoe"]
 
 
 func get_input() -> void:
