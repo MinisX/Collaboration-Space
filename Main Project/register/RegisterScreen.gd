@@ -44,4 +44,4 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	else:
 		Notification.text = "Registration sucessful!"
 		#yield(get_tree().create_timer(2.0), "timeout")
-		get_tree().change_scene("res://interface/login/Login.tscn")
+		get_tree().change_scene("res://Customization/Avatar.tscn")
