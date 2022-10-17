@@ -1,4 +1,4 @@
-[gd_scene load_steps=140 format=2]
+[gd_scene load_steps=141 format=2]
 
 [ext_resource path="res://Spaces/Default/Tiles/wall_down.png" type="Texture" id=1]
 [ext_resource path="res://Participant.tscn" type="PackedScene" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://Chat/ChatUI/ChatUI.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Spaces/Default/Tiles/caffe_1.png" type="Texture" id=19]
 [ext_resource path="res://Spaces/Default/Tiles/dispenser_1.png" type="Texture" id=20]
+[ext_resource path="res://Menu/Menu.tscn" type="PackedScene" id=21]
 
 [sub_resource type="ConvexPolygonShape2D" id=21]
 points = PoolVector2Array( 8.036, 64, 0.152008, 64, 0, 0, 8.144, 0 )
@@ -1351,3 +1352,10 @@ text = "Chat"
 
 [node name="ChatUI" parent="CanvasLayer" instance=ExtResource( 18 )]
 visible = false
+
+[node name="MenuUI" parent="CanvasLayer" instance=ExtResource( 21 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1024.0
+margin_bottom = 600.0
