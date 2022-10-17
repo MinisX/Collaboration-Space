@@ -121,8 +121,8 @@ tracks/3/keys = {
 "values": [ 0.0, 90.0 ]
 }
 
-[sub_resource type="CircleShape2D" id=4]
-radius = 156.0
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 10, 35 )
 
 [node name="Door" type="StaticBody2D"]
 script = ExtResource( 2 )

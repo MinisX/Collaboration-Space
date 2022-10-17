@@ -6,10 +6,12 @@ export (float) var speed: float = 200.0
 onready var participant_name: Label = $Name
 onready var animation_player: AnimationPlayer = $AnimationPlayer
 onready var sprites_m: Node2D = $SpritesM
+onready var interaction_area: Area2D = $InteractionArea
 
 var velocity: Vector2 = Vector2(0.0, 0.0)
 var direction: Vector2 = Vector2(0.0, 1.0)
 var current_animation: String = "idle_s"
+#var id = 2023
 
 
 func _ready() -> void:
