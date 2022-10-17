@@ -1,4 +1,4 @@
-[gd_scene load_steps=144 format=2]
+[gd_scene load_steps=145 format=2]
 
 [ext_resource path="res://Spaces/Default/Tiles/wall_down.png" type="Texture" id=1]
 [ext_resource path="res://Participant.tscn" type="PackedScene" id=2]
@@ -7,7 +7,7 @@
 [ext_resource path="res://Spaces/Default/Tiles/wall_up.png" type="Texture" id=5]
 [ext_resource path="res://Spaces/Default/Tiles/library_1_top.png" type="Texture" id=6]
 [ext_resource path="res://Spaces/Default/Tiles/library_1.png" type="Texture" id=7]
-[ext_resource path="res://Spaces/Default/Tiles/table_1.png" type="Texture" id=8]
+[ext_resource path="res://Spaces/Default/Tiles/table_1_top.png" type="Texture" id=8]
 [ext_resource path="res://Spaces/Default/Tiles/table_2_top.png" type="Texture" id=9]
 [ext_resource path="res://Spaces/Default/Door.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Spaces/Default/Tiles/wall_front.png" type="Texture" id=11]
@@ -22,6 +22,7 @@
 [ext_resource path="res://Spaces/Default/Tiles/dispenser_1.png" type="Texture" id=20]
 [ext_resource path="res://Menu/Menu.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Spaces/Default/Tiles/table_2_bot.png" type="Texture" id=22]
+[ext_resource path="res://Spaces/Default/Tiles/table_1_bot.png" type="Texture" id=23]
 
 [sub_resource type="ConvexPolygonShape2D" id=21]
 points = PoolVector2Array( 8.036, 64, 0.152008, 64, 0, 0, 8.144, 0 )
@@ -1161,9 +1162,6 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 [sub_resource type="ConvexPolygonShape2D" id=131]
 points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 
-[sub_resource type="ConvexPolygonShape2D" id=133]
-points = PoolVector2Array( 119.6, 104.241, 8.68399, 104.241, 8.68399, 17.5169, 119.6, 17.5169 )
-
 [sub_resource type="TileSet" id=132]
 0/name = "library_1.png 0"
 0/texture = ExtResource( 7 )
@@ -1207,27 +1205,6 @@ points = PoolVector2Array( 119.6, 104.241, 8.68399, 104.241, 8.68399, 17.5169, 1
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 1/z_index = 0
-2/name = "table_1.png 2"
-2/texture = ExtResource( 8 )
-2/tex_offset = Vector2( 0, 0 )
-2/modulate = Color( 1, 1, 1, 1 )
-2/region = Rect2( 0, 0, 128, 128 )
-2/tile_mode = 0
-2/occluder_offset = Vector2( 0, 0 )
-2/navigation_offset = Vector2( 0, 0 )
-2/shape_offset = Vector2( 0, 0 )
-2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-2/shape = SubResource( 133 )
-2/shape_one_way = false
-2/shape_one_way_margin = 1.0
-2/shapes = [ {
-"autotile_coord": Vector2( 0, 0 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 133 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-} ]
-2/z_index = 0
 4/name = "caffe_1.png 4"
 4/texture = ExtResource( 19 )
 4/tex_offset = Vector2( 0, 0 )
@@ -1288,9 +1265,26 @@ points = PoolVector2Array( 119.6, 104.241, 8.68399, 104.241, 8.68399, 17.5169, 1
 0/shape_one_way_margin = 0.0
 0/shapes = [  ]
 0/z_index = 0
+1/name = "table_1_top.png 1"
+1/texture = ExtResource( 8 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 8, 16, 112, 16 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
 
 [sub_resource type="ConvexPolygonShape2D" id=141]
 points = PoolVector2Array( 0, 16, 208, 16, 208, 88, 0, 88 )
+
+[sub_resource type="ConvexPolygonShape2D" id=143]
+points = PoolVector2Array( 0, 16, 112, 16, 112, 88, 0, 88 )
 
 [sub_resource type="TileSet" id=140]
 0/name = "table_2_bot.png 0"
@@ -1314,6 +1308,27 @@ points = PoolVector2Array( 0, 16, 208, 16, 208, 88, 0, 88 )
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 0/z_index = 0
+1/name = "table_1_bot.png 1"
+1/texture = ExtResource( 23 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 8, 16, 112, 104 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape = SubResource( 143 )
+1/shape_one_way = false
+1/shape_one_way_margin = 1.0
+1/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 143 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+1/z_index = 0
 
 [node name="Default" type="YSort"]
 script = ExtResource( 17 )
@@ -1358,15 +1373,15 @@ tile_data = PoolIntArray( -131078, 0, 0, -131076, 0, 0, -131074, 0, 0, -196605, 
 [node name="Tables" type="Node" parent="Building"]
 
 [node name="table_top" type="TileMap" parent="Building/Tables"]
-z_index = 1000
+z_index = 10
 tile_set = SubResource( 139 )
 format = 1
-tile_data = PoolIntArray( 65531, 0, 0, 524283, 0, 0 )
+tile_data = PoolIntArray( 65531, 0, 0, 65540, 1, 0, 65544, 1, 0, 65548, 1, 0, 327684, 1, 0, 327688, 1, 0, 327692, 1, 0, 524283, 0, 0 )
 
 [node name="table_bot" type="TileMap" parent="Building/Tables"]
 tile_set = SubResource( 140 )
 format = 1
-tile_data = PoolIntArray( 65531, 0, 0, 524283, 0, 0 )
+tile_data = PoolIntArray( 65531, 0, 0, 65540, 1, 0, 65544, 1, 0, 65548, 1, 0, 327684, 1, 0, 327688, 1, 0, 327692, 1, 0, 524283, 0, 0 )
 
 [node name="Door_1_meeting" parent="." instance=ExtResource( 10 )]
 position = Vector2( 32, 544 )
