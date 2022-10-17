@@ -1337,6 +1337,9 @@ tile_data = PoolIntArray( -131078, 0, 0, -131076, 0, 0, -131074, 0, 0, -196605, 
 [node name="Door_1_meeting" parent="." instance=ExtResource( 10 )]
 position = Vector2( 32, 544 )
 
+[node name="Door_2_meeting" parent="." instance=ExtResource( 10 )]
+position = Vector2( 32, 96 )
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ChatButton" type="Button" parent="CanvasLayer"]
