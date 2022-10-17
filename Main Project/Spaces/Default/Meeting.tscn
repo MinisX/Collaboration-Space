@@ -16,13 +16,14 @@
 [ext_resource path="res://Spaces/Default/Tiles/window_front.png" type="Texture" id=14]
 [ext_resource path="res://Spaces/Default/Tiles/GrassBackground.png" type="Texture" id=15]
 [ext_resource path="res://Spaces/Default/Tiles/floor_tileset.png" type="Texture" id=16]
-[ext_resource path="res://Spaces/Default/Default.gd" type="Script" id=17]
+[ext_resource path="res://Spaces/Default/Meeting.gd" type="Script" id=17]
 [ext_resource path="res://Chat/ChatUI/ChatUI.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Spaces/Default/Tiles/caffe_1.png" type="Texture" id=19]
 [ext_resource path="res://Spaces/Default/Tiles/dispenser_1.png" type="Texture" id=20]
 [ext_resource path="res://Menu/Menu.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Spaces/Default/Tiles/table_2_bot.png" type="Texture" id=22]
 [ext_resource path="res://Spaces/Default/Tiles/table_1_bot.png" type="Texture" id=23]
+
 
 [sub_resource type="ConvexPolygonShape2D" id=21]
 points = PoolVector2Array( 8.036, 64, 0.152008, 64, 0, 0, 8.144, 0 )

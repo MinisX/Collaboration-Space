@@ -44,4 +44,4 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		# After sucessful login redirect to UserProfile scene
 		#yield(get_tree().create_timer(2.0), "timeout")
 		GlobalData.participant_data["name"] = Username.text # Logic to be refined
-		get_tree().change_scene("res://Spaces/Default/Default.tscn")
+		get_tree().change_scene("res://Spaces/Default/Meeting.tscn")

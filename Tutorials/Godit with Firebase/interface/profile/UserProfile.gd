@@ -26,12 +26,10 @@ var profile := {
 func _ready() -> void:
 	# We try to get the document containing his information
 	Firebase.get_document("users/%s" % Firebase.user_info.id, http)
-	print("_readyUserProfile")
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body) -> void:
 	var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
 	# Based on the HTTP response code we perform actions
-	print(response_code)
 	match response_code:
 		404:
 			notification.text = "Please, enter your information"
@@ -46,7 +44,6 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body) -> 
 
 
 func _on_ConfirmButton_pressed() -> void:
-	print("here1")
 	# Perform validation and checking of the user information
 	if nickname.text.empty() or character_class.text.empty():
 		notification.text = "Please, enter your nickname and class"
@@ -62,23 +59,12 @@ func _on_ConfirmButton_pressed() -> void:
 	match new_profile:
 		# If profile is new, create new document
 		true: 
-			
-			
-			var testData := {
-			"nickname": {}
-			}
-		
-			testData.nickname = { "stringValue": "test3"}
-		
-			print("here2")
-			Firebase.save_document("test?documentId=%s" % Firebase.user_info.id, testData, http)
+			Firebase.save_document("users?documentId=%s" % Firebase.user_info.id, profile, http)
 		false:
 			# If this is existing profile, then we just update it
 			Firebase.update_document("users/%s" % Firebase.user_info.id, profile,http)
-			print("here3")
 	# Check status of our flag
 	information_sent = true
-	print("here4")
 
 # We want to update the values of our control nodes whenever we use this setter ( e.g on line 43, self.profile = ... )
 func set_profile(value: Dictionary) -> void:
