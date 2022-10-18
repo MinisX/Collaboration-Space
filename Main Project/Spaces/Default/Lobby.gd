@@ -57,10 +57,9 @@ func refresh_lobby() -> void:
 		participants_list_view.add_item(p)
 	
 func _on_offline_pressed():
-	Meeting.host_meeting(GlobalData.name)
+	Meeting.host_meeting(GlobalData.participant_data["Name"])
 	refresh_lobby()
 	Meeting.start_meeting()
-
 
 func _on_online_pressed():
 	print("Lobby: _on_online_pressed")

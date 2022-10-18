@@ -3,9 +3,9 @@ extends KinematicBody2D
 
 export (float) var speed: float = 200.0
 
-onready var participant_name: Label = $Name
+# onready var participant_name: Label = $Name
 onready var animation_player: AnimationPlayer = $AnimationPlayer
-onready var sprites_m: Node2D = $SpritesM
+# onready var sprites_m: Node2D = $SpritesM
 onready var interaction_area: Area2D = $InteractionArea
 
 var velocity: Vector2 = Vector2(0.0, 0.0)
@@ -19,7 +19,8 @@ puppet var puppet_current_animation: String = "idle_s"
 
 
 func _ready() -> void:
-	participant_name.text = "Participant"
+	print("Participant: _ready()")
+	set_participant_name (GlobalData.participant_data["Name"])
 
 func _process(_delta: float) -> void:
 	# TODO 
@@ -42,8 +43,9 @@ func _process(_delta: float) -> void:
 
 
 func init(participant_dictionary: Dictionary) -> void:
+	print("Participant: init()")
 	# Use $Name.text = ...
-	participant_name.text = participant_dictionary["Name"]
+	set_participant_name (participant_dictionary["Name"])
 	set_selected_color()
 	
 func set_participant_name(new_name: String) -> void:
@@ -54,12 +56,12 @@ func set_participant_camera(active: bool) -> void:
 
 func set_selected_color() -> void:
 	# $SpritesM. .....
-	sprites_m.get_node("Hair").modulate = GlobalData.participant_data["Color"]["Hair"]
-	sprites_m.get_node("Eyes").modulate = GlobalData.participant_data["Color"]["Eyes"]
-	sprites_m.get_node("Skin").modulate = GlobalData.participant_data["Color"]["Skin"]
-	sprites_m.get_node("Shirt").modulate = GlobalData.participant_data["Color"]["Shirt"]
-	sprites_m.get_node("Pants").modulate = GlobalData.participant_data["Color"]["Pants"]
-	sprites_m.get_node("Shoe").modulate = GlobalData.participant_data["Color"]["Shoe"]
+	$SpritesM.get_node("Hair").modulate = GlobalData.participant_data["Color"]["Hair"]
+	$SpritesM.get_node("Eyes").modulate = GlobalData.participant_data["Color"]["Eyes"]
+	$SpritesM.get_node("Skin").modulate = GlobalData.participant_data["Color"]["Skin"]
+	$SpritesM.get_node("Shirt").modulate = GlobalData.participant_data["Color"]["Shirt"]
+	$SpritesM.get_node("Pants").modulate = GlobalData.participant_data["Color"]["Pants"]
+	$SpritesM.get_node("Shoe").modulate = GlobalData.participant_data["Color"]["Shoe"]
 
 
 func get_input() -> void:
