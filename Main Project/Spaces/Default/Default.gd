@@ -9,7 +9,7 @@ var menu_visibility: bool = false
 
 
 func _ready() -> void:
-#	particpant.init(Meeting.participant_data)
+	#particpant.init(GlobalData.participant_data)
 	chat_button.connect("pressed", self, "_on_chat_button_pressed")
 
 func _process(_delta):
