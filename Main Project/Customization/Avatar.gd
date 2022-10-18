@@ -24,7 +24,10 @@ func _ready() -> void:
 
 func _on_ok_pressed() -> void:
 	GlobalData.participant_data["Name"] = name_input.text
-	get_tree().change_scene("res://Spaces/Default/Default.tscn")
+	
+	get_tree().change_scene("res://Spaces/Default/Lobby.tscn")
+	
+	#get_tree().change_scene("res://Spaces/Default/Default.tscn")
 
 
 func _on_color_value_changed(color: Color) -> void:
