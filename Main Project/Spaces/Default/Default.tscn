@@ -1,9 +1,8 @@
-[gd_scene load_steps=145 format=2]
+[gd_scene load_steps=144 format=2]
 
 [ext_resource path="res://Spaces/Default/Door.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Chat/ChatUI/ChatUI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Menu/Menu.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Participant.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Spaces/Default/Tiles/table_1_bot.png" type="Texture" id=5]
 [ext_resource path="res://Spaces/Default/Tiles/dispenser_1.png" type="Texture" id=6]
 [ext_resource path="res://Spaces/Default/Tiles/table_2_bot.png" type="Texture" id=7]
@@ -1341,11 +1340,6 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Participant" parent="." instance=ExtResource( 4 )]
-position = Vector2( 512, 792 )
-z_index = 2
-z_as_relative = false
-
 [node name="Building" type="Node2D" parent="."]
 
 [node name="building" type="TileMap" parent="Building"]
@@ -1407,3 +1401,5 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 1024.0
 margin_bottom = 600.0
+
+[node name="Participants" type="Node2D" parent="."]
