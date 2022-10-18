@@ -42,6 +42,7 @@ func _process(_delta: float) -> void:
 
 
 func init(participant_dictionary: Dictionary) -> void:
+	# Use $Name.text = ...
 	participant_name.text = participant_dictionary["Name"]
 	set_selected_color()
 	
@@ -52,6 +53,7 @@ func set_participant_camera(active: bool) -> void:
 	$Camera.current = active
 
 func set_selected_color() -> void:
+	# $SpritesM. .....
 	sprites_m.get_node("Hair").modulate = GlobalData.participant_data["Color"]["Hair"]
 	sprites_m.get_node("Eyes").modulate = GlobalData.participant_data["Color"]["Eyes"]
 	sprites_m.get_node("Skin").modulate = GlobalData.participant_data["Color"]["Skin"]

@@ -13,7 +13,7 @@ const MAX_PARTICIPANT: int = 30
 var peer: NetworkedMultiplayerENet = null
 
 # Name for the player and server.
-var participant_name: String = "participant"
+var participant_name: String = GlobalData.name
 
 # Names for remote participants in id:name format.
 var participants: Dictionary = {}
@@ -32,6 +32,7 @@ signal meeting_error(what)
 # NETWORK RELATED STUFF END
 
 func _ready() -> void:
+	print(participant_name)
 	# These signals are sent from NetworkedMultiplayerENet
 	# E.g connected_to_server is sent from NetworkedMultiplayerENet to Meeting
 	get_tree().connect("network_peer_connected", self, "_participant_connected")
@@ -145,7 +146,7 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 		
 		# TODO has to be taken from DB
 		# Initialize participant with default data
-		#participant.init(GlobalData.participant_data)
+		# participant.init(GlobalData.participant_data)
 
 		# TODO ask Yufus and Fatma why is name set as p_id, which is spawn location
 		participant.set_name(str(p_id))

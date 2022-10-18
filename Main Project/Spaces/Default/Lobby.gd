@@ -57,8 +57,9 @@ func refresh_lobby() -> void:
 		participants_list_view.add_item(p)
 	
 func _on_offline_pressed():
-	pass
-	#get_tree().change_scene("res://Spaces/Default/Default.tscn")
+	Meeting.host_meeting(GlobalData.name)
+	refresh_lobby()
+	Meeting.start_meeting()
 
 
 func _on_online_pressed():
