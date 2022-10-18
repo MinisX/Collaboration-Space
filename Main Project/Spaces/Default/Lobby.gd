@@ -64,7 +64,6 @@ func _on_offline_pressed():
 func _on_online_pressed():
 	print("Lobby: _on_online_pressed")
 
-	#Meeting.join_meeting(ip, name_input.text)
 	Meeting.join_meeting(ip, GlobalData.participant_data["Name"])
 	
 
