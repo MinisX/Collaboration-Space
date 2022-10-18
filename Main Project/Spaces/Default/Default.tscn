@@ -1,29 +1,28 @@
 [gd_scene load_steps=145 format=2]
 
-[ext_resource path="res://Spaces/Default/Tiles/wall_down.png" type="Texture" id=1]
-[ext_resource path="res://Participant.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Spaces/Default/Tiles/wall_left.png" type="Texture" id=3]
-[ext_resource path="res://Spaces/Default/Tiles/wall_right.png" type="Texture" id=4]
-[ext_resource path="res://Spaces/Default/Tiles/wall_up.png" type="Texture" id=5]
-[ext_resource path="res://Spaces/Default/Tiles/library_1_top.png" type="Texture" id=6]
-[ext_resource path="res://Spaces/Default/Tiles/library_1.png" type="Texture" id=7]
-[ext_resource path="res://Spaces/Default/Tiles/table_1_top.png" type="Texture" id=8]
-[ext_resource path="res://Spaces/Default/Tiles/table_2_top.png" type="Texture" id=9]
-[ext_resource path="res://Spaces/Default/Door.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Spaces/Default/Tiles/wall_front.png" type="Texture" id=11]
-[ext_resource path="res://Spaces/Default/Tiles/wall_front_left.png" type="Texture" id=12]
-[ext_resource path="res://Spaces/Default/Tiles/wall_front_right.png" type="Texture" id=13]
-[ext_resource path="res://Spaces/Default/Tiles/window_front.png" type="Texture" id=14]
-[ext_resource path="res://Spaces/Default/Tiles/GrassBackground.png" type="Texture" id=15]
-[ext_resource path="res://Spaces/Default/Tiles/floor_tileset.png" type="Texture" id=16]
-[ext_resource path="res://Spaces/Default/Meeting.gd" type="Script" id=17]
-[ext_resource path="res://Chat/ChatUI/ChatUI.tscn" type="PackedScene" id=18]
-[ext_resource path="res://Spaces/Default/Tiles/caffe_1.png" type="Texture" id=19]
-[ext_resource path="res://Spaces/Default/Tiles/dispenser_1.png" type="Texture" id=20]
-[ext_resource path="res://Menu/Menu.tscn" type="PackedScene" id=21]
-[ext_resource path="res://Spaces/Default/Tiles/table_2_bot.png" type="Texture" id=22]
-[ext_resource path="res://Spaces/Default/Tiles/table_1_bot.png" type="Texture" id=23]
-
+[ext_resource path="res://Spaces/Default/Door.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Chat/ChatUI/ChatUI.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Menu/Menu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Participant.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Spaces/Default/Tiles/table_1_bot.png" type="Texture" id=5]
+[ext_resource path="res://Spaces/Default/Tiles/dispenser_1.png" type="Texture" id=6]
+[ext_resource path="res://Spaces/Default/Tiles/table_2_bot.png" type="Texture" id=7]
+[ext_resource path="res://Spaces/Default/Tiles/caffe_1.png" type="Texture" id=8]
+[ext_resource path="res://Spaces/Default/Tiles/wall_front.png" type="Texture" id=9]
+[ext_resource path="res://Spaces/Default/Tiles/wall_front_left.png" type="Texture" id=10]
+[ext_resource path="res://Spaces/Default/Tiles/wall_front_right.png" type="Texture" id=11]
+[ext_resource path="res://Spaces/Default/Tiles/window_front.png" type="Texture" id=12]
+[ext_resource path="res://Spaces/Default/Tiles/GrassBackground.png" type="Texture" id=13]
+[ext_resource path="res://Spaces/Default/Tiles/floor_tileset.png" type="Texture" id=14]
+[ext_resource path="res://Spaces/Default/Tiles/wall_down.png" type="Texture" id=15]
+[ext_resource path="res://Spaces/Default/Tiles/wall_left.png" type="Texture" id=16]
+[ext_resource path="res://Spaces/Default/Tiles/library_1_top.png" type="Texture" id=17]
+[ext_resource path="res://Spaces/Default/Tiles/library_1.png" type="Texture" id=18]
+[ext_resource path="res://Spaces/Default/Tiles/table_2_top.png" type="Texture" id=19]
+[ext_resource path="res://Spaces/Default/Tiles/table_1_top.png" type="Texture" id=20]
+[ext_resource path="res://Spaces/Default/Tiles/wall_up.png" type="Texture" id=21]
+[ext_resource path="res://Spaces/Default/Tiles/wall_right.png" type="Texture" id=22]
+[ext_resource path="res://Spaces/Default/Default.gd" type="Script" id=23]
 
 [sub_resource type="ConvexPolygonShape2D" id=21]
 points = PoolVector2Array( 8.036, 64, 0.152008, 64, 0, 0, 8.144, 0 )
@@ -339,7 +338,7 @@ points = PoolVector2Array( 64, 64, 56.244, 64, 56.244, 56.572, 64, 56.572 )
 
 [sub_resource type="TileSet" id=20]
 0/name = "floor_tileset.png 0"
-0/texture = ExtResource( 16 )
+0/texture = ExtResource( 14 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 704, 320 )
@@ -1010,7 +1009,7 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 128, 0, 128 )
 
 [sub_resource type="TileSet" id=129]
 0/name = "wall_down.png 0"
-0/texture = ExtResource( 1 )
+0/texture = ExtResource( 15 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 64, 64 )
@@ -1031,7 +1030,7 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 128, 0, 128 )
 } ]
 0/z_index = 0
 1/name = "wall_left.png 1"
-1/texture = ExtResource( 3 )
+1/texture = ExtResource( 16 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 0, 0, 64, 64 )
@@ -1052,7 +1051,7 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 128, 0, 128 )
 } ]
 1/z_index = 0
 2/name = "wall_right.png 2"
-2/texture = ExtResource( 4 )
+2/texture = ExtResource( 22 )
 2/tex_offset = Vector2( 0, 0 )
 2/modulate = Color( 1, 1, 1, 1 )
 2/region = Rect2( 0, 0, 64, 64 )
@@ -1073,7 +1072,7 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 128, 0, 128 )
 } ]
 2/z_index = 0
 3/name = "wall_up.png 3"
-3/texture = ExtResource( 5 )
+3/texture = ExtResource( 21 )
 3/tex_offset = Vector2( 0, 0 )
 3/modulate = Color( 1, 1, 1, 1 )
 3/region = Rect2( 0, 0, 64, 64 )
@@ -1094,7 +1093,7 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 128, 0, 128 )
 } ]
 3/z_index = 0
 4/name = "wall_front.png 4"
-4/texture = ExtResource( 11 )
+4/texture = ExtResource( 9 )
 4/tex_offset = Vector2( 0, 0 )
 4/modulate = Color( 1, 1, 1, 1 )
 4/region = Rect2( 0, 0, 64, 128 )
@@ -1115,7 +1114,7 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 128, 0, 128 )
 } ]
 4/z_index = 0
 5/name = "wall_front_left.png 5"
-5/texture = ExtResource( 12 )
+5/texture = ExtResource( 10 )
 5/tex_offset = Vector2( 0, 0 )
 5/modulate = Color( 1, 1, 1, 1 )
 5/region = Rect2( 0, 0, 64, 128 )
@@ -1136,7 +1135,7 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 128, 0, 128 )
 } ]
 5/z_index = 0
 6/name = "wall_front_right.png 6"
-6/texture = ExtResource( 13 )
+6/texture = ExtResource( 11 )
 6/tex_offset = Vector2( 0, 0 )
 6/modulate = Color( 1, 1, 1, 1 )
 6/region = Rect2( 0, 0, 64, 128 )
@@ -1165,7 +1164,7 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 
 [sub_resource type="TileSet" id=132]
 0/name = "library_1.png 0"
-0/texture = ExtResource( 7 )
+0/texture = ExtResource( 18 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 64, 64 )
@@ -1186,7 +1185,7 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 } ]
 0/z_index = 0
 1/name = "library_1_top.png 1"
-1/texture = ExtResource( 6 )
+1/texture = ExtResource( 17 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 0, 0, 64, 64 )
@@ -1207,7 +1206,7 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 } ]
 1/z_index = 0
 4/name = "caffe_1.png 4"
-4/texture = ExtResource( 19 )
+4/texture = ExtResource( 8 )
 4/tex_offset = Vector2( 0, 0 )
 4/modulate = Color( 1, 1, 1, 1 )
 4/region = Rect2( 0, 0, 64, 128 )
@@ -1221,7 +1220,7 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 4/shapes = [  ]
 4/z_index = 0
 5/name = "dispenser_1.png 5"
-5/texture = ExtResource( 20 )
+5/texture = ExtResource( 6 )
 5/tex_offset = Vector2( 0, 0 )
 5/modulate = Color( 1, 1, 1, 1 )
 5/region = Rect2( 0, 0, 64, 128 )
@@ -1237,7 +1236,7 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 
 [sub_resource type="TileSet" id=138]
 0/name = "window_front.png 0"
-0/texture = ExtResource( 14 )
+0/texture = ExtResource( 12 )
 0/tex_offset = Vector2( 0, 32 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 64, 64 )
@@ -1253,7 +1252,7 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 
 [sub_resource type="TileSet" id=139]
 0/name = "table_2_top.png 0"
-0/texture = ExtResource( 9 )
+0/texture = ExtResource( 19 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 208, 16 )
@@ -1267,7 +1266,7 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 0/shapes = [  ]
 0/z_index = 0
 1/name = "table_1_top.png 1"
-1/texture = ExtResource( 8 )
+1/texture = ExtResource( 20 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 8, 16, 112, 16 )
@@ -1289,7 +1288,7 @@ points = PoolVector2Array( 0, 16, 112, 16, 112, 88, 0, 88 )
 
 [sub_resource type="TileSet" id=140]
 0/name = "table_2_bot.png 0"
-0/texture = ExtResource( 22 )
+0/texture = ExtResource( 7 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 208, 104 )
@@ -1310,7 +1309,7 @@ points = PoolVector2Array( 0, 16, 112, 16, 112, 88, 0, 88 )
 } ]
 0/z_index = 0
 1/name = "table_1_bot.png 1"
-1/texture = ExtResource( 23 )
+1/texture = ExtResource( 5 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 8, 16, 112, 104 )
@@ -1332,17 +1331,17 @@ points = PoolVector2Array( 0, 16, 112, 16, 112, 88, 0, 88 )
 1/z_index = 0
 
 [node name="Default" type="YSort"]
-script = ExtResource( 17 )
+script = ExtResource( 23 )
 
 [node name="Background" type="Sprite" parent="."]
-texture = ExtResource( 15 )
+texture = ExtResource( 13 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 5000, 5000 )
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Participant" parent="." instance=ExtResource( 2 )]
+[node name="Participant" parent="." instance=ExtResource( 4 )]
 position = Vector2( 512, 792 )
 z_index = 2
 z_as_relative = false
@@ -1384,10 +1383,10 @@ tile_set = SubResource( 140 )
 format = 1
 tile_data = PoolIntArray( 65531, 0, 0, 65540, 1, 0, 65544, 1, 0, 65548, 1, 0, 327684, 1, 0, 327688, 1, 0, 327692, 1, 0, 524283, 0, 0 )
 
-[node name="Door_1_meeting" parent="." instance=ExtResource( 10 )]
+[node name="Door_1_meeting" parent="." instance=ExtResource( 1 )]
 position = Vector2( 32, 544 )
 
-[node name="Door_2_meeting" parent="." instance=ExtResource( 10 )]
+[node name="Door_2_meeting" parent="." instance=ExtResource( 1 )]
 position = Vector2( 32, 96 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -1399,10 +1398,10 @@ margin_top = -20.0
 margin_right = 40.0
 text = "Chat"
 
-[node name="ChatUI" parent="CanvasLayer" instance=ExtResource( 18 )]
+[node name="ChatUI" parent="CanvasLayer" instance=ExtResource( 2 )]
 visible = false
 
-[node name="MenuUI" parent="CanvasLayer" instance=ExtResource( 21 )]
+[node name="MenuUI" parent="CanvasLayer" instance=ExtResource( 3 )]
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0

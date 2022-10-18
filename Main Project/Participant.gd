@@ -17,7 +17,6 @@ var current_animation: String = "idle_s"
 func _ready() -> void:
 	participant_name.text = "Participant"
 
-
 func _process(_delta: float) -> void:
 	get_input()
 	decide_animation()
