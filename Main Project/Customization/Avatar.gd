@@ -6,9 +6,7 @@ onready var button_group: ButtonGroup = null
 onready var color_picker: ColorPicker = $ColorPicker
 onready var turn_avatar_slider: HSlider = $MarginContainer/VBoxContainer/TurnAvatarSlider
 onready var ok_button: Button = $Ok
-onready var name_input: LineEdit = $NameInput
 onready var http : HTTPRequest = $HTTPRequest
-onready var notification : Label = $Container/Notification
 
 var active_part: String = "Skin"
 var active_color: Color = Color(1.0, 1.0, 1.0, 1.0)
@@ -24,7 +22,7 @@ var profile : = {
 	"head": {},
 	"torso": {},
 	"arms": {}
-}
+} setget set_profile
 
 
 
@@ -35,16 +33,23 @@ func _ready() -> void:
 	turn_avatar_slider.connect("value_changed", self, "_on_avatar_turned")
 	ok_button.connect("pressed", self, "_on_ok_pressed")
 #	color_picker.connect("popup_closed", self, "_on_color_selected")
-	Firebase.get_document("users/%s" % Firebase.user_info.id, http) 
-
+	Firebase.get_document("users/%s" % Firebase.user_info.id, http)
+	print("User info")
+	print(Firebase.user_info.id)
+	print(Firebase.user_info.token)
+	
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
+	print("Response code: %s \n " % response_code)
+	
 	var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
 	match response_code:
 		404:
 			#notification.text = ""
 			new_profile = true
+			return
 		200:
 			if information_sent:
+				print("Information saved")
 				#notification.text = ""
 				information_sent = false
 			self.profile = result_body.fields	
@@ -54,17 +59,17 @@ func _on_ok_pressed() -> void:
 	print("Avatar: _on_ok_pressed()")
 	#GlobalData.participant_data["Name"] = name_input.text
 	
-	profile.hair = { "intergerValue": GlobalData.participant_data["Color"]["Hair"]}
-	profile.eyes = { "intergerValue": GlobalData.participant_data["Color"]["Eyes"]}
-	profile.legs = { "intergerValue": GlobalData.participant_data["Color"]["Pants"]}
-	profile.feet = { "intergerValue": GlobalData.participant_data["Color"]["Shoe"]}
-	profile.hands = { "intergerValue": GlobalData.participant_data["Color"]["Skin"]}
-	profile.head = { "intergerValue": GlobalData.participant_data["Color"]["Skin"]}
-	profile.torso = { "intergerValue": GlobalData.participant_data["Color"]["Shirt"]}
-	profile.arms = { "intergerValue": GlobalData.participant_data["Color"]["Shirt"]}
+	profile.hair = { "stringValue": GlobalData.participant_data["Color"]["Hair"]}
+	profile.eyes = { "stringValue": GlobalData.participant_data["Color"]["Eyes"]}
+	profile.legs = { "stringValue": GlobalData.participant_data["Color"]["Pants"]}
+	profile.feet = { "stringValue": GlobalData.participant_data["Color"]["Shoe"]}
+	profile.hands = { "stringValue": GlobalData.participant_data["Color"]["Skin"]}
+	profile.head = { "stringValue": GlobalData.participant_data["Color"]["Skin"]}
+	profile.torso = { "stringValue": GlobalData.participant_data["Color"]["Shirt"]}
+	profile.arms = { "stringValue": GlobalData.participant_data["Color"]["Shirt"]}
 	
 	print(profile)
-	Firebase.save_document("users?documentId=%s" % Firebase.user_info.id, profile, http)
+	
 	match new_profile:
 		true:
 			print("true")
@@ -72,11 +77,13 @@ func _on_ok_pressed() -> void:
 		false: 
 			print("false")
 			Firebase.update_document("users/%s" % Firebase.user_info.id, profile, http)
-	
+			
+	information_sent = true
 	#get_tree().change_scene("res://Spaces/Default/Lobby.tscn")
 	
 	#get_tree().change_scene("res://Spaces/Default/Default.tscn")
-
+func set_profile(value: Dictionary) -> void:
+	profile = value
 
 func _on_color_value_changed(color: Color) -> void:
 	active_color = color
