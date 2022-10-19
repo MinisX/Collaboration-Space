@@ -1,8 +1,9 @@
-[gd_scene load_steps=144 format=2]
+[gd_scene load_steps=145 format=2]
 
 [ext_resource path="res://Spaces/Default/Door.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Chat/ChatUI/ChatUI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Menu/Menu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Participants/ParticipantsUI.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Spaces/Default/Tiles/table_1_bot.png" type="Texture" id=5]
 [ext_resource path="res://Spaces/Default/Tiles/dispenser_1.png" type="Texture" id=6]
 [ext_resource path="res://Spaces/Default/Tiles/table_2_bot.png" type="Texture" id=7]
@@ -1401,5 +1402,21 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 1024.0
 margin_bottom = 600.0
+
+[node name="ParticipantsButton" type="Button" parent="CanvasLayer"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -87.0
+margin_top = -20.0
+text = "Participants"
+
+[node name="ParticipantsUI" parent="CanvasLayer" instance=ExtResource( 4 )]
+visible = false
+margin_left = 1.0
+margin_top = 2.0
+margin_right = 1.0
+margin_bottom = 2.0
 
 [node name="Participants" type="Node2D" parent="."]

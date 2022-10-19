@@ -30,18 +30,16 @@ margin_bottom = 570.0
 margin_right = 220.0
 margin_bottom = 20.0
 custom_constants/separation = 100
-alignment = 1
 
 [node name="Chat" type="Label" parent="ChatContainer/VBoxContainer/HBoxContainer"]
-margin_left = 36.0
 margin_top = 3.0
-margin_right = 64.0
+margin_right = 28.0
 margin_bottom = 17.0
 text = "Chat"
 
 [node name="HideButton" type="Button" parent="ChatContainer/VBoxContainer/HBoxContainer"]
-margin_left = 164.0
-margin_right = 184.0
+margin_left = 200.0
+margin_right = 148.0
 margin_bottom = 20.0
 text = "<"
 
