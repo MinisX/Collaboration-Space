@@ -6,6 +6,7 @@ const PROJECT_ID := "collaboration-space-2d"
 # These are URLs (endpoints) for HTTP POST request to Firebase
 const REGISTER_URL := "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=%s" % API_KEY
 const LOGIN_URL := "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=%s" % API_KEY
+const ANON_LOGIN_URL:= "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=%s" % API_KEY
 const FIRESTORE_URL := "https://firestore.googleapis.com/v1/projects/%s/databases/(default)/documents/" % PROJECT_ID
 
 # In user_info dictionary we store user token and user id
@@ -50,6 +51,20 @@ func register(email: String, password: String, http: HTTPRequest) -> void:
 	var result := yield(http, "request_completed") as Array
 	# If our response is OK ( 200 ), we store user information
 	if result[1] == 200:
+		user_info = _get_user_info(result)
+	
+func anon_login(http: HTTPRequest) -> void:
+	print("anon_login_start")
+	var body := {
+		"returnSecureToken": true
+	}
+	
+	http.request(ANON_LOGIN_URL, [], false, HTTPClient.METHOD_POST, to_json(body))
+	# When the response is received from Firebase, it's stored in variable "result"
+	var result := yield(http, "request_completed") as Array
+	# If our response is OK ( 200 ), we store user information
+	if result[1] == 200:
+		print("anon_login_success")
 		user_info = _get_user_info(result)
 	
 func login(email: String, password: String, http: HTTPRequest) -> void:

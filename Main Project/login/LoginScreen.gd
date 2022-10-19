@@ -10,6 +10,8 @@ onready var JoinButton: Button = $MarginContainer/VBoxContainer/HBoxContainer/Jo
 onready var http : HTTPRequest = $HTTPRequest
 onready var Notification : Label = $MarginContainer/VBoxContainer/Notification
 
+var anonLogin = false
+
 func _ready() -> void:
 	# Connect buttons to suitable callbacks
 	JoinButton.connect("pressed", self, "_on_join_pressed")
@@ -31,7 +33,9 @@ func _on_RegisterButton_pressed():
 func _on_join_pressed() -> void:
 #	Meeting.participant_data["name"] = Username.text
 #	get_tree().change_scene("res://EnteringScene.tscn")
-	get_tree().change_scene("res://Customization/Avatar.tscn")
+	Firebase.anon_login(http)
+	anonLogin = true
+	#get_tree().change_scene("res://Customization/Avatar.tscn")
 
 # This function is called when we receive response on our HTTP request. This is done with use of HTTPRequest node, which
 # is attached to Login scene
@@ -44,4 +48,8 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		# After sucessful login redirect to UserProfile scene
 		#yield(get_tree().create_timer(2.0), "timeout")
 		GlobalData.participant_data["name"] = Username.text # Logic to be refined
-		get_tree().change_scene("res://Spaces/Default/Lobby.tscn")
+		if(anonLogin):
+			get_tree().change_scene("res://Customization/Avatar.tscn")
+		else:
+			get_tree().change_scene("res://Spaces/Default/Lobby.tscn")
+		
