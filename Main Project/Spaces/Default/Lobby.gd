@@ -15,7 +15,7 @@ func _ready() -> void:
 	print("Lobby: _ready")
 	
 	# Fetch data from DB
-	#fetch_user_data_fromDB()
+	fetch_user_data_fromDB()
 	
 	# The signals are emitted ( sent ) from Meeting to Lobby
 	# E.g connection_succeeded is sent from Meeting _connected_ok() method
@@ -24,12 +24,6 @@ func _ready() -> void:
 	Meeting.connect("participants_list_changed", self, "refresh_lobby")
 	Meeting.connect("meeting_ended", self, "_on_meeting_ended")
 	Meeting.connect("meeting_error", self, "_on_meeting_error")
-	
-	# Server side code
-	Meeting.host_meeting(GlobalData.participant_data["Name"])
-	refresh_lobby()
-	yield(get_tree().create_timer(20.0), "timeout")
-	Meeting.start_meeting()
 	
 # This method is triggered from Meeting.gd in _connected_ok() method
 func _on_connection_success() -> void:
