@@ -1088,3 +1088,7 @@ margin_top = 132.0
 margin_right = 254.0
 margin_bottom = 156.0
 placeholder_text = "Participant Name"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
