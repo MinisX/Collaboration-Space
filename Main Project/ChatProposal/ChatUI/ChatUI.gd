@@ -1,6 +1,6 @@
 extends Control
 
-const MESSAGE = preload("res://Chat/Message/Message.tscn")
+const MESSAGE = preload("res://ChatProposal/Message/Message.tscn")
 
 onready var hide_button: Button = $ChatContainer/VBoxContainer/HBoxContainer/HideButton
 onready var message_container: VBoxContainer = $ChatContainer/VBoxContainer/ItemList/MessageContainer
