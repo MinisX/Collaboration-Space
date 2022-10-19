@@ -3,6 +3,8 @@ extends Control
 onready var continue_button: Button = $VBoxContainer/ContinueButton
 onready var hot_keys_button: Button = $VBoxContainer/HotKeysButton
 onready var exit_button: Button = $VBoxContainer/ExitButton
+onready var hot_keys_scene = $HotKeys
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,10 +14,11 @@ func _ready():
 	
 
 func _on_continue_pressed() -> void:
-	pass
+	self.hide()
+	self.get_parent().get_parent().menu_visibility = false
 	
 func _on_hot_keys_pressed() -> void:
-	pass
+	hot_keys_scene.show()
 	
 func _on_exit_pressed() -> void:
 	pass

@@ -7,6 +7,7 @@ onready var menu_UI = $CanvasLayer/MenuUI
 onready var participants_button = $CanvasLayer/ParticipantsButton
 onready var menu_button = $CanvasLayer/MenuButton
 
+
 var menu_visibility: bool = false
 var participants_UI_visibility: bool = false
 
@@ -25,6 +26,7 @@ func _process(_delta):
 		else:
 			menu_UI.show()
 			menu_visibility = true
+
 
 func _on_chat_button_pressed() -> void:
 	chat_UI.show()
