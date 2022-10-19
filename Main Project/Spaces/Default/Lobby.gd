@@ -19,6 +19,12 @@ func _ready() -> void:
 	Meeting.connect("meeting_ended", self, "_on_meeting_ended")
 	Meeting.connect("meeting_error", self, "_on_meeting_error")
 	
+	# Server side code
+	Meeting.host_meeting("admin")
+	refresh_lobby()
+	yield(get_tree().create_timer(20.0), "timeout")
+	Meeting.start_meeting()
+	
 # This method is triggered from Meeting.gd in _connected_ok() method
 func _on_connection_success() -> void:
 	print("Lobby: _on_connection_success")

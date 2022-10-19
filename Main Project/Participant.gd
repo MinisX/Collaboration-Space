@@ -11,12 +11,13 @@ onready var interaction_area: Area2D = $InteractionArea
 var velocity: Vector2 = Vector2(0.0, 0.0)
 var direction: Vector2 = Vector2(0.0, 1.0)
 var current_animation: String = "idle_s"
+#var participant_data: Dictionary = GlobalData.participant_data
 
 # The puppet keyword means a call can be made from the network master to any network puppet.
 puppet var puppet_pos: Vector2 = Vector2()
 puppet var puppet_motion: Vector2 = Vector2()
 puppet var puppet_current_animation: String = "idle_s"
-
+puppet var puppet_participant_data: Dictionary = GlobalData.participant_data
 
 func _ready() -> void:
 	print("Participant: _ready()")
@@ -29,14 +30,17 @@ func _process(_delta: float) -> void:
 		get_input()
 		rset("puppet_motion", velocity)
 		rset("puppet_pos", position)
+		rset("puppet_participant_data", GlobalData.participant_data)
 	else:
 		position = puppet_pos
 		velocity = puppet_motion
+		GlobalData.participant_data = puppet_participant_data
 		
 	velocity = move_and_slide(velocity)
 	
 	if not is_network_master():
 		puppet_pos = position
+		puppet_participant_data = GlobalData.participant_data
 	
 	decide_animation()
 	animation_player.play(current_animation)
