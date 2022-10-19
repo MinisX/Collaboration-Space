@@ -83,5 +83,8 @@ margin_bottom = 318.5
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
 [connection signal="pressed" from="ConnectionPanel/VBoxContainer/Row3/Offline" to="." method="_on_offline_pressed"]
 [connection signal="pressed" from="ConnectionPanel/VBoxContainer/Row3/Online" to="." method="_on_online_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

@@ -8,8 +8,14 @@ onready var offline_button: Button = $ConnectionPanel/VBoxContainer/Row3/Offline
 onready var online_button: Button = $ConnectionPanel/VBoxContainer/Row3/Online
 onready var ip: String = "34.159.28.32"
 
+# Access HTTPRequest instance
+onready var http : HTTPRequest = $HTTPRequest
+
 func _ready() -> void:
 	print("Lobby: _ready")
+	
+	# Fetch data from DB
+	fetch_user_data_fromDB()
 	
 	# The signals are emitted ( sent ) from Meeting to Lobby
 	# E.g connection_succeeded is sent from Meeting _connected_ok() method
@@ -66,4 +72,44 @@ func _on_online_pressed():
 
 	Meeting.join_meeting(ip, GlobalData.participant_data["Name"])
 	
+func fetch_user_data_fromDB():
+	print("Lobby: fetch_user_data_fromDB()")
+	Firebase.get_document("users/%s" % Firebase.user_info.id, http)
 
+func _on_HTTPRequest_request_completed(result, response_code, headers, body):
+	print("HTTP Request Completed")
+	
+	var profile : = {
+	"name": {},
+	"hair": {},
+	"eyes": {},
+	"legs": {},
+	"feet": {},
+	"hands": {},
+	"head": {},
+	"torso": {},
+	"arms": {}
+	}
+	
+	var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
+	
+	if response_code == 200:
+		print("HTTP Response: Code 200 -> Information fetched")
+		profile = result_body.fields
+		
+		name_input = profile.name
+		GlobalData.participant_data["Name"] = profile.name["stringValue"]
+		
+		GlobalData.participant_data["Color"]["Hair"] = Color(profile.hair["stringValue"])
+		GlobalData.participant_data["Color"]["Eyes"] = Color(profile.eyes["stringValue"])
+		GlobalData.participant_data["Color"]["Pants"] = Color(profile.legs["stringValue"])
+		GlobalData.participant_data["Color"]["Shoe"] = Color(profile.feet["stringValue"])
+		# skin
+		GlobalData.participant_data["Color"]["Skin"] = Color(profile.hands["stringValue"])
+		GlobalData.participant_data["Color"]["Skin"] = Color(profile.head["stringValue"])
+		# shirt
+		GlobalData.participant_data["Color"]["Shirt"] = Color(profile.torso["stringValue"])
+		GlobalData.participant_data["Color"]["Shirt"] = Color(profile.arms["stringValue"])
+		
+	else:
+		print("HTTP Response: Not 200 -> Information not fetched")
