@@ -13,6 +13,8 @@ const FIRESTORE_URL := "https://firestore.googleapis.com/v1/projects/%s/database
 # use this to make request on behalf of user who has logged in
 var user_info := {}
 
+var avatar_info := {}
+
 # To get the token above we will use this function
 # We are passing to it result which is the response that we have got from Firebase
 # Then we parse it as a dictionary as we get it as Array
@@ -23,6 +25,13 @@ func _get_user_info(result: Array) -> Dictionary:
 		"token": result_body.idToken,
 		"id": result_body.localId
 	}
+	
+func _get_avatar_info(result: Array) -> Dictionary:
+	var result_body := JSON.parse(result[3].get_string_from_ascii()).result as Dictionary
+	return {
+		"token": result_body.idToken,
+		"id": result_body.localId
+	}	
 
 # Since we want to authenticate our users when they are making a request, we have to use 
 # these headers to tell our server that user is authenticated.
@@ -73,6 +82,9 @@ func save_document(path: String, fields: Dictionary, http: HTTPRequest) -> void:
 	var document := { "fields": fields }
 	var body := to_json(document)
 	var url := FIRESTORE_URL + path
+	print(document)
+	print(body)
+	print(url)
 	# Make the request to create the document
 	http.request(url, _get_request_headers(), false, HTTPClient.METHOD_POST, body)
 	
