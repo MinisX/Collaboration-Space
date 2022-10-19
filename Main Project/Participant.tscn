@@ -1323,6 +1323,7 @@ height = 6.0
 radius = 50.0
 
 [node name="Participant" type="KinematicBody2D"]
+z_index = 5
 script = ExtResource( 2 )
 
 [node name="Name" type="Label" parent="."]

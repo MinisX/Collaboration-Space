@@ -22,3 +22,9 @@ func _on_hot_keys_pressed() -> void:
 	
 func _on_exit_pressed() -> void:
 	pass
+	# TODO Safely remove the participant from the meeting
+	# error 1: create_server: Couldn't create an ENet multiplayer server.
+	# error 2: set_network_peer: Supplied NetworkedMultiplayerPeer must be connecting or connected.
+#	self.hide()
+#	get_parent().get_parent().queue_free()
+#	get_tree().change_scene("res://login/LoginScreen.tscn")
