@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="simple-base"
-run/main_scene="res://Spaces/Default/Lobby.tscn"
+run/main_scene="res://login/LoginScreen.tscn"
 config/icon="res://icon.png"
 
 [autoload]
