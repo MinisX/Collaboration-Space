@@ -24,7 +24,6 @@
 [ext_resource path="res://Spaces/Default/Tiles/wall_right.png" type="Texture" id=22]
 [ext_resource path="res://Spaces/Default/Default.gd" type="Script" id=23]
 
-
 [sub_resource type="ConvexPolygonShape2D" id=21]
 points = PoolVector2Array( 8.036, 64, 0.152008, 64, 0, 0, 8.144, 0 )
 
@@ -1375,6 +1374,7 @@ format = 1
 tile_data = PoolIntArray( 65531, 0, 0, 65540, 1, 0, 65544, 1, 0, 65548, 1, 0, 327684, 1, 0, 327688, 1, 0, 327692, 1, 0, 524283, 0, 0 )
 
 [node name="table_bot" type="TileMap" parent="Building/Tables"]
+position = Vector2( 0, -1 )
 tile_set = SubResource( 140 )
 format = 1
 tile_data = PoolIntArray( 65531, 0, 0, 65540, 1, 0, 65544, 1, 0, 65548, 1, 0, 327684, 1, 0, 327688, 1, 0, 327692, 1, 0, 524283, 0, 0 )
