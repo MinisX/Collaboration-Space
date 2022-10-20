@@ -11,20 +11,21 @@ func _ready():
 	continue_button.connect("pressed", self, "_on_continue_pressed")
 	hot_keys_button.connect("pressed", self, "_on_hot_keys_pressed")
 	exit_button.connect("pressed", self, "_on_exit_pressed")
-	
+
 
 func _on_continue_pressed() -> void:
 	self.hide()
 	self.get_parent().get_parent().menu_visibility = false
-	
+
+
 func _on_hot_keys_pressed() -> void:
 	hot_keys_scene.show()
-	
+
+
 func _on_exit_pressed() -> void:
-	pass
 	# TODO Safely remove the participant from the meeting
 	# error 1: create_server: Couldn't create an ENet multiplayer server.
 	# error 2: set_network_peer: Supplied NetworkedMultiplayerPeer must be connecting or connected.
-#	self.hide()
-#	get_parent().get_parent().queue_free()
-#	get_tree().change_scene("res://login/LoginScreen.tscn")
+	self.hide()
+	get_parent().get_parent().queue_free()
+	get_tree().change_scene("res://login/LoginScreen.tscn")
