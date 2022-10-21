@@ -43,6 +43,8 @@ func _on_menu_button_pressed() -> void:
 		if menu_visibility == true:
 			menu_UI.hide()
 			menu_visibility = false
+			participants_button.show()
 		else:
 			menu_UI.show()
 			menu_visibility = true
+			participants_button.hide()
