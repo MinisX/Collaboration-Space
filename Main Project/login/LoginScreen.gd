@@ -47,7 +47,8 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		Notification.text = "Sign in sucessful!"
 		# After sucessful login redirect to UserProfile scene
 		#yield(get_tree().create_timer(2.0), "timeout")
-		GlobalData.participant_data["name"] = Username.text # Logic to be refined
+#		GlobalData.participant_data["name"] = Username.text # Logic to be refined
+		Meeting.participant_data["Name"] = Username.text
 		if(anonLogin):
 			get_tree().change_scene("res://Customization/Avatar.tscn")
 		else:

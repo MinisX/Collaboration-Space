@@ -1425,4 +1425,4 @@ margin_right = 49.0
 margin_bottom = 20.0
 text = "Menu"
 
-[node name="Participants" type="Node2D" parent="."]
+[node name="Participants" type="YSort" parent="."]

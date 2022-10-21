@@ -12,10 +12,21 @@ const MAX_PARTICIPANT: int = 30
 # transfer mode, etc. It also includes signals that will let you know when peers connect or disconnect.
 var peer: NetworkedMultiplayerENet = null
 
-# Name for the player and server.
-var participant_name: String = GlobalData.participant_data["Name"]
 
-# Names for remote participants in id:name format.
+# Dictionary to store particpant name and custom colors
+var participant_data: Dictionary = {
+	Name = "name data",
+	Color = {
+		Hair = Color(1.0, 1.0, 1.0, 1.0),
+		Skin = Color(1.0, 1.0, 1.0, 1.0),
+		Eyes = Color(1.0, 1.0, 1.0, 1.0),
+		Shirt = Color(1.0, 1.0, 1.0, 1.0),
+		Pants = Color(1.0, 1.0, 1.0, 1.0),
+		Shoe = Color(1.0, 1.0, 1.0, 1.0)
+	}
+}
+
+# participant datas for remote participants in id:participant_data format.
 var participants: Dictionary = {}
 var participants_ready: Array = []
 
@@ -32,7 +43,7 @@ signal meeting_error(what)
 # NETWORK RELATED STUFF END
 
 func _ready() -> void:
-	print("Meeting: _ready " + participant_name)
+	print("Meeting: _ready " + participant_data["Name"])
 	# These signals are sent from NetworkedMultiplayerENet
 	# E.g connected_to_server is sent from NetworkedMultiplayerENet to Meeting
 	get_tree().connect("network_peer_connected", self, "_participant_connected")
@@ -48,7 +59,7 @@ func _participant_connected(id: int) -> void:
 	
 	# Start registration
 	# The remote function register_participant of Meeting is triggered here
-	rpc_id(id, "register_participant", participant_name)
+	rpc_id(id, "register_participant", participant_data)
 	
 	# A little bit about RPC
 	# To communicate between peers, the easiest way is to use RPCs (remote procedure calls). This is implemented as a set of functions in Node:
@@ -106,12 +117,13 @@ func _connected_fail() -> void:
 # The remote keyword can be called by any peer, including the server and all clients. 
 # The puppet keyword means a call can be made from the network 
 # master to any network puppet. The master keyword means a call can be made from any network puppet to the network master.
-remote func register_participant(new_participant_name: String) -> void:
+remote func register_participant(new_participant_data: Dictionary) -> void:
 	print("Meeting: register_participant")
 	
 	# Here we get the rpc ID of the user that called register_participant
 	var id: int = get_tree().get_rpc_sender_id()
-	participants[id] = new_participant_name
+	print("Meeting: register_participant: ", id)
+	participants[id] = new_participant_data
 	
 	# Here we send signal to Lobby, which triggers refresh_lobby() method
 	emit_signal("participants_list_changed")
@@ -143,14 +155,11 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 	for p_id in spawn_locations:
 		# Get access to participant instance
 		var participant = participant_scene.instance()
-		
-		# TODO has to be taken from DB
-		participant.init(GlobalData.participant_data)
 
 		# TODO ask Yufus and Fatma why is name set as p_id, which is spawn location
 		participant.set_name(str(p_id))
 		# Set spawn locations for the participants
-		participant.position=spawn_locations[p_id]
+		participant.position = spawn_locations[p_id]
 		
 		# This means each other connected peer has authority over their own player.
 		participant.set_network_master(p_id)
@@ -158,11 +167,13 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 		# If the participant is himself, then camera is set to him and his name is displayed
 		if p_id == get_tree().get_network_unique_id():
 			participant.set_participant_camera(true)
-			participant.set_participant_name(participant_name)
+			# set data (name and colors) to participant 
+			participant.set_data(participant_data)
 		# If participant is another player, then camera is not following him for current peer and name is set
 		else:
 			participant.set_participant_camera(false)
-			participant.set_participant_name(participants[p_id])
+			# set data (name and colors) to participant
+			participant.set_data(participants[p_id])
 
 		# Adds participant to participant list in Default scene
 		meeting_area.get_node("Participants").add_child(participant)
@@ -178,14 +189,12 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 # This method is triggered from rpc_id call from _start_meeting() method in Meeting ( this script )			
 remote func postconfigure_meeting() -> void:
 	print("Meeting: postconfigure_meeting")
-	
 	# Pause the scene
 	get_tree().set_pause(false)
 	
 # This method is triggered from rpc_id call from _preconfigure_meeting() method in Meeting ( this script )	
 remote func ready_to_start(id: int) -> void:
 	print("Meeting: ready_to_start")
-	
 	assert(get_tree().is_network_server())
 
 	# If participant is not in participants_ready yet, then add him
@@ -199,10 +208,8 @@ remote func ready_to_start(id: int) -> void:
 		postconfigure_meeting()
 		
 # This method creates the hosting on the game by server
-func host_meeting(new_participant_name: String) -> void:
+func host_meeting() -> void:
 	print("Meeting: host_meeting")
-	
-	participant_name = new_participant_name
 	
 	# Initializing as a server, listening on the given port, with a given maximum number of peers
 	peer = NetworkedMultiplayerENet.new()
@@ -211,10 +218,8 @@ func host_meeting(new_participant_name: String) -> void:
 	
 # Method for joining existing session
 # This method is called when "online" button is pressed
-func join_meeting(ip: String, new_participant_name: String) -> void:
+func join_meeting(ip: String) -> void:
 	print("Meeting: join_meeting")
-	
-	participant_name = new_participant_name
 	
 	# Initializing as a client, connecting to a given IP and port:
 	peer = NetworkedMultiplayerENet.new()
@@ -231,7 +236,7 @@ func get_participant_list() -> Array:
 func get_participant_name() -> String:
 	print("Meeting: get_participant_name")
 	
-	return participant_name
+	return participant_data["Name"]
 	
 func start_meeting() -> void:
 	print("Meeting: start_meeting")
