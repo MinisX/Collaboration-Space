@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Chat/ChatUI.gd" type="Script" id=1]
 [ext_resource path="res://Chat/Client.gd" type="Script" id=2]
@@ -22,12 +22,6 @@ corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
-
-[sub_resource type="InputEventAction" id=3]
-action = "send_chat"
-
-[sub_resource type="ShortCut" id=4]
-shortcut = SubResource( 3 )
 
 [node name="ChatUI" type="Control"]
 anchor_right = 1.0
@@ -85,7 +79,6 @@ margin_right = 816.0
 margin_bottom = 44.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-shortcut = SubResource( 4 )
 text = "Send"
 
 [node name="Client" type="Node" parent="."]

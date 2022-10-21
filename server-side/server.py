@@ -1,58 +1,65 @@
 #!/usr/bin/env python
 
 import asyncio
+import signal
 import websockets
 import pymongo
 import datetime
 import mongodbconnector
 
-connected_clients = set()
+connected_clients = set()  
 
+# Open suitable DB collection
 def open_collection():
     return mongodbconnector.client.chat_godot.user1_2
 
-async def consume_message(websocket):
+# process messages
+async def process_message(websocket):
     # Register client.
     connected_clients.add(websocket)
     try:
         async for message in websocket: 
-            await update_db(message, websocket)
+            await update_db(websocket, message)
     finally:
         # Unregister client.
         connected_clients.remove(websocket)
-    # message = await websocket.recv()
-    # await websocket.wait_closed()
 
-async def produce_message(websocket):
-    message = await pull_message()
-    await websocket.send(message)
+# Send message to other clients
+async def send_message(ws, msg):
+    """ message = await pull_message()
+    await websocket.send(message) """
+    # Broadcast a message to all connected clients.
+    for client in connected_clients:
+        if (ws != client):
+            await client.send(msg)
 
-async def update_db(msg, ws):
+# Store message in DB
+async def update_db(ws, msg):
     try:
-        # Broadcast a message to all connected clients.
-        for client in connected_clients:
-            if (ws != client):
-                await client.send(msg)
         collection = open_collection()
-        message = {"sender": "user1", "receiver": "user2", "message": msg, "date": datetime.datetime.utcnow()}
+        await send_message(ws, msg)
+        message = {
+            "sender": "user1", 
+            "receiver": "user2", 
+            "message": msg, 
+            "date": datetime.datetime.utcnow()
+            }
         message_id = collection.insert_one(message)
-        # message_id = collection.insert_one(msg).inserted_id
-        # print(message_id)
         print("Successfully inserted message into DB.")
-    	# await websocket.send("Successfully inserted message into DB.")
     except Exception as e:
-        print("failed to insert into DB", e)
-        # await websocket.send("Failed to insert messages into DB.")
+        print("failed to insert into DB: ", e)
 
+# Pull message from Db in case if client reconnects
 async def pull_message():
     collection = open_collection()
     result = collection.find({
         "date" : { "$lte" : datetime.datetime.utcnow() - datetime.datetime.day}
     })
 
+# handle the client
 async def handler(websocket):
-    consumer_task = asyncio.create_task(consume_message(websocket))
-    producer_task = asyncio.create_task(produce_message(websocket))
+    consumer_task = asyncio.create_task(process_message(websocket))
+    producer_task = asyncio.create_task(send_message(websocket))
     done, pending = await asyncio.wait(
         [consumer_task, producer_task],
         return_when=asyncio.FIRST_COMPLETED,
@@ -61,8 +68,13 @@ async def handler(websocket):
         task.cancel()
 
 async def main():
-    async with websockets.serve(consume_message, "0.0.0.0", 8765):
-        await asyncio.Future()  # run forever
+    # Set the stop condition when receiving SIGTERM.
+    loop = asyncio.get_running_loop()
+    stop = loop.create_future()
+    loop.add_signal_handler(signal.SIGINT, stop.set_result, None)
+    # Serve clients on websocket server
+    async with websockets.serve(process_message, "0.0.0.0", 8765) as server:
+        await stop
 
 if __name__ == "__main__":
     asyncio.run(main())
