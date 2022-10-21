@@ -11,17 +11,15 @@ onready var interaction_area: Area2D = $InteractionArea
 var velocity: Vector2 = Vector2(0.0, 0.0)
 var direction: Vector2 = Vector2(0.0, 1.0)
 var current_animation: String = "idle_s"
-#var participant_data: Dictionary = GlobalData.participant_data
 
 # The puppet keyword means a call can be made from the network master to any network puppet.
 puppet var puppet_pos: Vector2 = Vector2()
 puppet var puppet_motion: Vector2 = Vector2()
 puppet var puppet_current_animation: String = "idle_s"
-puppet var puppet_participant_data: Dictionary = GlobalData.participant_data
 
 func _ready() -> void:
 	print("Participant: _ready()")
-	set_participant_name (GlobalData.participant_data["Name"])
+#	set_participant_name (GlobalData.participant_data["Name"])
 
 func _process(_delta: float) -> void:
 	# TODO 
@@ -30,42 +28,43 @@ func _process(_delta: float) -> void:
 		get_input()
 		rset("puppet_motion", velocity)
 		rset("puppet_pos", position)
-		rset("puppet_participant_data", GlobalData.participant_data)
 	else:
 		position = puppet_pos
 		velocity = puppet_motion
-		GlobalData.participant_data = puppet_participant_data
-		
+	
 	velocity = move_and_slide(velocity)
 	
 	if not is_network_master():
 		puppet_pos = position
-		puppet_participant_data = GlobalData.participant_data
 	
 	decide_animation()
 	animation_player.play(current_animation)
 
+func set_data(new_data: Dictionary) -> void:
+	$Name.text = new_data["Name"]
+	set_selected_color(new_data)
+	print("hiiiii")
 
-func init(participant_dictionary: Dictionary) -> void:
-	print("Participant: init()")
-	# Use $Name.text = ...
-	set_participant_name (participant_dictionary["Name"])
-	set_selected_color()
-	
-func set_participant_name(new_name: String) -> void:
-	$Name.text = new_name
 
 func set_participant_camera(active: bool) -> void:
 	$Camera.current = active
 
-func set_selected_color() -> void:
-	# $SpritesM. .....
-	$SpritesM.get_node("Hair").modulate = GlobalData.participant_data["Color"]["Hair"]
-	$SpritesM.get_node("Eyes").modulate = GlobalData.participant_data["Color"]["Eyes"]
-	$SpritesM.get_node("Skin").modulate = GlobalData.participant_data["Color"]["Skin"]
-	$SpritesM.get_node("Shirt").modulate = GlobalData.participant_data["Color"]["Shirt"]
-	$SpritesM.get_node("Pants").modulate = GlobalData.participant_data["Color"]["Pants"]
-	$SpritesM.get_node("Shoe").modulate = GlobalData.participant_data["Color"]["Shoe"]
+func set_selected_color(new_data: Dictionary) -> void:
+	# new
+	$SpritesM.get_node("Hair").modulate = new_data["Color"]["Hair"]
+	$SpritesM.get_node("Eyes").modulate = new_data["Color"]["Eyes"]
+	$SpritesM.get_node("Skin").modulate = new_data["Color"]["Skin"]
+	$SpritesM.get_node("Shirt").modulate = new_data["Color"]["Shirt"]
+	$SpritesM.get_node("Pants").modulate = new_data["Color"]["Pants"]
+	$SpritesM.get_node("Shoe").modulate = new_data["Color"]["Shoe"]
+	# old
+#	# $SpritesM. .....
+#	$SpritesM.get_node("Hair").modulate = GlobalData.participant_data["Color"]["Hair"]
+#	$SpritesM.get_node("Eyes").modulate = GlobalData.participant_data["Color"]["Eyes"]
+#	$SpritesM.get_node("Skin").modulate = GlobalData.participant_data["Color"]["Skin"]
+#	$SpritesM.get_node("Shirt").modulate = GlobalData.participant_data["Color"]["Shirt"]
+#	$SpritesM.get_node("Pants").modulate = GlobalData.participant_data["Color"]["Pants"]
+#	$SpritesM.get_node("Shoe").modulate = GlobalData.participant_data["Color"]["Shoe"]
 
 
 func get_input() -> void:
