@@ -7,7 +7,7 @@ onready var participants_panel: ColorRect = $ParticipantsPanel
 onready var participants_list_view: ItemList = $ParticipantsPanel/ParticipantList
 onready var offline_button: Button = $ConnectionPanel/VBoxContainer/Row3/Offline
 onready var online_button: Button = $ConnectionPanel/VBoxContainer/Row3/Online
-onready var ip: String = "34.159.28.32" #34.159.28.32
+onready var ip: String = "192.168.178.20" #34.159.28.32
 
 # Access HTTPRequest instance
 onready var http : HTTPRequest = $HTTPRequest
@@ -33,9 +33,13 @@ func _ready() -> void:
 	
 	# start meeting automaticaly after waiting 20 seconds if --server passed
 	if "--server" in OS.get_cmdline_args():
+		var delay: float = 15.0
+		# check if there is another arguement (defines the amount of delay)
+		if OS.get_cmdline_args().size() == 3 and OS.get_cmdline_args()[2].is_valid_float():
+			delay = OS.get_cmdline_args()[2] as float
 		Meeting.host_meeting()
 		refresh_lobby()
-		yield(get_tree().create_timer(20.0), "timeout")
+		yield(get_tree().create_timer(delay), "timeout")
 		Meeting.start_meeting()
 	else:
 		print("Main: client")
