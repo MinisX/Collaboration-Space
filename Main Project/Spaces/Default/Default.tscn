@@ -1,4 +1,4 @@
-[gd_scene load_steps=145 format=2]
+[gd_scene load_steps=146 format=2]
 
 [ext_resource path="res://Spaces/Default/Door.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ChatProposal/ChatUI/ChatUI.tscn" type="PackedScene" id=2]
@@ -23,6 +23,7 @@
 [ext_resource path="res://Spaces/Default/Tiles/wall_up.png" type="Texture" id=21]
 [ext_resource path="res://Spaces/Default/Tiles/wall_right.png" type="Texture" id=22]
 [ext_resource path="res://Spaces/Default/Default.gd" type="Script" id=23]
+[ext_resource path="res://Spaces/Default/Room.tscn" type="PackedScene" id=24]
 
 [sub_resource type="ConvexPolygonShape2D" id=21]
 points = PoolVector2Array( 8.036, 64, 0.152008, 64, 0, 0, 8.144, 0 )
@@ -1426,3 +1427,15 @@ margin_bottom = 20.0
 text = "Menu"
 
 [node name="Participants" type="YSort" parent="."]
+
+[node name="Room" parent="." instance=ExtResource( 24 )]
+position = Vector2( -221, 0 )
+scale = Vector2( 21.16, 18.36 )
+z_index = 99
+room_name = "Room one"
+
+[node name="Room2" parent="." instance=ExtResource( 24 )]
+position = Vector2( -221, 496 )
+scale = Vector2( 20.88, 13.28 )
+z_index = 99
+room_name = "Room two"
