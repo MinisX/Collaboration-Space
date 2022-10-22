@@ -154,29 +154,30 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 
 	for p_id in spawn_locations:
 		# Get access to participant instance
-		var participant = participant_scene.instance()
+		if p_id != 1:
+			var participant = participant_scene.instance()
 
-		# TODO ask Yufus and Fatma why is name set as p_id, which is spawn location
-		participant.set_name(str(p_id))
-		# Set spawn locations for the participants
-		participant.position = spawn_locations[p_id]
-		
-		# This means each other connected peer has authority over their own player.
-		participant.set_network_master(p_id)
+			# TODO ask Yufus and Fatma why is name set as p_id, which is spawn location
+			participant.set_name(str(p_id))
+			# Set spawn locations for the participants
+			participant.position = spawn_locations[p_id]
+			
+			# This means each other connected peer has authority over their own player.
+			participant.set_network_master(p_id)
 
-		# If the participant is himself, then camera is set to him and his name is displayed
-		if p_id == get_tree().get_network_unique_id():
-			participant.set_participant_camera(true)
-			# set data (name and colors) to participant 
-			participant.set_data(participant_data)
-		# If participant is another player, then camera is not following him for current peer and name is set
-		else:
-			participant.set_participant_camera(false)
-			# set data (name and colors) to participant
-			participant.set_data(participants[p_id])
+			# If the participant is himself, then camera is set to him and his name is displayed
+			if p_id == get_tree().get_network_unique_id():
+				participant.set_participant_camera(true)
+				# set data (name and colors) to participant 
+				participant.set_data(participant_data)
+			# If participant is another player, then camera is not following him for current peer and name is set
+			else:
+				participant.set_participant_camera(false)
+				# set data (name and colors) to participant
+				participant.set_data(participants[p_id])
 
-		# Adds participant to participant list in Default scene
-		meeting_area.get_node("Participants").add_child(participant)
+			# Adds participant to participant list in Default scene
+			meeting_area.get_node("Participants").add_child(participant)
 
 	# TODO Ask Yufus and Fatma what happens here
 	if not get_tree().is_network_server():
