@@ -16,7 +16,6 @@ config/icon="res://icon.png"
 
 [autoload]
 
-GlobalData="*res://GlobalData.gd"
 Firebase="*res://static/Firebase.gd"
 Meeting="*res://Spaces/Default/Meeting.gd"
 
