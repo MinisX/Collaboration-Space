@@ -15,7 +15,7 @@ func _ready():
 	participants_list_view.clear()
 	participants_list_view.add_item(Meeting.get_participant_name() + " (You)")
 	for p in participants:
-		participants_list_view.add_item(p)
+		participants_list_view.add_item(p["Name"])
 
 func _on_participants_ok_button_pressed() -> void:
 	self.hide()
