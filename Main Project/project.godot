@@ -23,6 +23,8 @@ Meeting="*res://Spaces/Default/Meeting.gd"
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+theme/custom="res://Assets/UI/CustomThemes/custom_theme.tres"
+theme/custom_font="res://Assets/UI/Fonts/custom_font.tres"
 
 [input]
 
