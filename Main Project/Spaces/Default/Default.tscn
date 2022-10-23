@@ -1415,10 +1415,14 @@ text = "Participants"
 
 [node name="ParticipantsUI" parent="CanvasLayer" instance=ExtResource( 4 )]
 visible = false
-margin_left = 1.0
-margin_top = 2.0
-margin_right = 1.0
-margin_bottom = 2.0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -235.0
+margin_top = -408.0
+margin_right = -235.0
+margin_bottom = -408.0
 
 [node name="MenuButton" type="Button" parent="CanvasLayer"]
 margin_right = 49.0
