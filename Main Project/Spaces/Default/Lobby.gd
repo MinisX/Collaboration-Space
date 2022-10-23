@@ -7,7 +7,7 @@ onready var participants_panel: ColorRect = $ParticipantsPanel
 onready var participants_list_view: ItemList = $ParticipantsPanel/ParticipantList
 onready var offline_button: Button = $ConnectionPanel/VBoxContainer/Row3/Offline
 onready var online_button: Button = $ConnectionPanel/VBoxContainer/Row3/Online
-onready var ip: String = "192.168.178.20"#"34.159.28.32"
+onready var ip: String = "34.159.28.32"
 
 # Access HTTPRequest instance
 onready var http : HTTPRequest = $HTTPRequest
