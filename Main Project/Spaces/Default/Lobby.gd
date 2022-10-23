@@ -7,10 +7,13 @@ onready var participants_panel: ColorRect = $ParticipantsPanel
 onready var participants_list_view: ItemList = $ParticipantsPanel/ParticipantList
 onready var offline_button: Button = $ConnectionPanel/VBoxContainer/Row3/Offline
 onready var online_button: Button = $ConnectionPanel/VBoxContainer/Row3/Online
+onready var host_toggle: Button = $ConnectionPanel/VBoxContainer/Row3/Host
+onready var start_button: Button = $ParticipantsPanel/Start
 onready var ip: String = "34.159.28.32"
 
 # Access HTTPRequest instance
 onready var http : HTTPRequest = $HTTPRequest
+
 
 func _ready() -> void:
 	print("Lobby: _ready")
@@ -31,19 +34,30 @@ func _ready() -> void:
 	Meeting.connect("meeting_ended", self, "_on_meeting_ended")
 	Meeting.connect("meeting_error", self, "_on_meeting_error")
 	
+	
+	# button connections
+	host_toggle.connect("pressed", self, "_on_host_pressed")
+	start_button.connect("pressed", self, "_on_start_pressed")
+	
 	# start meeting automaticaly after waiting 20 seconds if --server passed
 	if "--server" in OS.get_cmdline_args():
-		var delay: float = 15.0
+#		var delay: float = 15.0
 		# check if there is another arguement (defines the amount of delay)
-		if OS.get_cmdline_args().size() == 3 and OS.get_cmdline_args()[2].is_valid_float():
-			delay = OS.get_cmdline_args()[2] as float
+#		if OS.get_cmdline_args().size() == 3 and OS.get_cmdline_args()[2].is_valid_float():
+#			delay = OS.get_cmdline_args()[2] as float
 		Meeting.host_meeting()
-		refresh_lobby()
-		yield(get_tree().create_timer(delay), "timeout")
-		Meeting.start_meeting()
 	else:
 		print("Main: client")
-	
+
+# set role(host or cl) of the participant
+func _on_host_pressed() -> void:
+	if Meeting.participant_data["Role"] == "Host":
+		Meeting.participant_data["Role"] = "Participant"
+	elif Meeting.participant_data["Role"] == "Participant":
+		Meeting.participant_data["Role"] = "Host"
+
+
+
 # This method is triggered from Meeting.gd in _connected_ok() method
 func _on_connection_success() -> void:
 	print("Lobby: _on_connection_success")
@@ -89,7 +103,19 @@ func _on_offline_pressed():
 func _on_online_pressed():
 	print("Lobby: _on_online_pressed")
 	Meeting.join_meeting(ip)
-	
+	if Meeting.participant_data["Role"] == "Participant":
+		start_button.hide()
+
+
+func _on_start_pressed():
+	if Meeting.participant_data["Role"] == "Host":
+		refresh_lobby()
+		# call start_meeting
+		# use id 1 to call only on server  
+		Meeting.rpc_id(1, "start_meeting")
+
+
+
 func fetch_user_data_fromDB():
 	print("Lobby: fetch_user_data_fromDB()")
 	Firebase.get_document("users/%s" % Firebase.user_info.id, http)

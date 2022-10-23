@@ -23,7 +23,8 @@ var participant_data: Dictionary = {
 		Shirt = Color(1.0, 1.0, 1.0, 1.0),
 		Pants = Color(1.0, 1.0, 1.0, 1.0),
 		Shoe = Color(1.0, 1.0, 1.0, 1.0)
-	}
+	},
+	Role = "Participant"
 }
 
 # participant datas for remote participants in id:participant_data format.
@@ -154,6 +155,7 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 
 	for p_id in spawn_locations:
 		# Get access to participant instance
+		# do not instance participant for server
 		if p_id != 1:
 			var participant = participant_scene.instance()
 
@@ -239,7 +241,7 @@ func get_participant_name() -> String:
 	
 	return participant_data["Name"]
 	
-func start_meeting() -> void:
+remote func start_meeting() -> void:
 	print("Meeting: start_meeting")
 	assert(get_tree().is_network_server())
 	
