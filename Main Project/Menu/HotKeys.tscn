@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Menu/HotKeys.gd" type="Script" id=1]
+[ext_resource path="res://Assets/UI/panel_rect.png" type="Texture" id=2]
 
 [node name="HotKeys" type="Control"]
 anchor_right = 1.0
@@ -13,20 +14,34 @@ __meta__ = {
 [node name="Background" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.294118, 0.345098, 0.576471, 1 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.172549, 0.32549, 0.580392, 1 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color( 0.0352941, 0.12549, 0.278431, 1 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -227.0
+margin_top = -189.0
+margin_right = 227.0
+margin_bottom = 189.0
+texture = ExtResource( 2 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -155.0
-margin_top = -105.0
-margin_right = 155.0
-margin_bottom = 262.0
+margin_left = -183.0
+margin_top = -121.5
+margin_right = 183.0
+margin_bottom = 121.5
 custom_constants/margin_right = 50
 custom_constants/margin_top = 50
 custom_constants/margin_left = 50
@@ -36,7 +51,7 @@ custom_constants/margin_bottom = 50
 margin_left = 50.0
 margin_top = 50.0
 margin_right = 316.0
-margin_bottom = 317.0
+margin_bottom = 193.0
 custom_constants/separation = 16
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
