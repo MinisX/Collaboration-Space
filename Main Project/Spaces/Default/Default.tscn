@@ -1391,8 +1391,8 @@ position = Vector2( 32, 96 )
 [node name="ChatButton" type="Button" parent="CanvasLayer"]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_top = -20.0
-margin_right = 40.0
+margin_top = -41.0
+margin_right = 64.0
 text = "Chat"
 
 [node name="ChatUI" parent="CanvasLayer" instance=ExtResource( 2 )]
@@ -1400,18 +1400,17 @@ visible = false
 
 [node name="MenuUI" parent="CanvasLayer" instance=ExtResource( 3 )]
 visible = false
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 1024.0
-margin_bottom = 600.0
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="ParticipantsButton" type="Button" parent="CanvasLayer"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -87.0
-margin_top = -20.0
+margin_left = -131.0
+margin_top = -41.0
 text = "Participants"
 
 [node name="ParticipantsUI" parent="CanvasLayer" instance=ExtResource( 4 )]
