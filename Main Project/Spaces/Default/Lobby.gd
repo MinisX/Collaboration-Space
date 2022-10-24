@@ -51,6 +51,7 @@ func _ready() -> void:
 
 # set role(host or cl) of the participant
 func _on_host_pressed() -> void:
+	print("Lobby: _on_host_pressed()")
 	if Meeting.participant_data["Role"] == "Host":
 		Meeting.participant_data["Role"] = "Participant"
 	elif Meeting.participant_data["Role"] == "Participant":
@@ -96,18 +97,20 @@ func refresh_lobby() -> void:
 		participants_list_view.add_item(p["Name"])
 	
 func _on_offline_pressed():
+	print("Lobby: _on_offline_pressed()")
 	Meeting.host_meeting()
 	refresh_lobby()
 	Meeting.start_meeting()
 
 func _on_online_pressed():
-	print("Lobby: _on_online_pressed")
+	print("Lobby: _on_online_pressed()")
 	Meeting.join_meeting(ip)
 	if Meeting.participant_data["Role"] == "Participant":
 		start_button.hide()
 
 
 func _on_start_pressed():
+	print("Lobby: _on_start_pressed()")
 	if Meeting.participant_data["Role"] == "Host":
 		refresh_lobby()
 		# call start_meeting

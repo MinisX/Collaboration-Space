@@ -119,8 +119,6 @@ func _connected_fail() -> void:
 # The puppet keyword means a call can be made from the network 
 # master to any network puppet. The master keyword means a call can be made from any network puppet to the network master.
 remote func register_participant(new_participant_data: Dictionary) -> void:
-	print("Meeting: register_participant")
-	
 	# Here we get the rpc ID of the user that called register_participant
 	var id: int = get_tree().get_rpc_sender_id()
 	print("Meeting: register_participant: ", id)
