@@ -43,6 +43,24 @@ func _ready() -> void:
 	
 # Here we receive HTTP response from Firestore. First when accesing the document
 # and second time when saving it
+
+func _process(_delta):
+	if Input.is_action_just_pressed("ui_next"):
+		Meeting.participant_data["Name"] = name_input.text
+	
+		# Pushing data to Firestore
+		convert_data_for_firebase()
+		match new_profile:
+			true:
+				print("true")
+				Firebase.save_document("users?documentId=%s" % Firebase.user_info.id, profile, http)
+			false: 
+				print("false")
+				Firebase.update_document("users/%s" % Firebase.user_info.id, profile, http)
+				
+		information_sent = true
+
+
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
 	match response_code:
