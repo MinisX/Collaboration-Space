@@ -61,7 +61,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			self.profile = result_body.fields
 
 func _on_ok_pressed() -> void:
-	GlobalData.participant_data["Name"] = name_input.text
+	Meeting.participant_data["Name"] = name_input.text
 	
 	# Pushing data to Firestore
 	convert_data_for_firebase()
@@ -79,15 +79,15 @@ func _on_ok_pressed() -> void:
 
 # This method converts the user data to the format we need for Firestore
 func convert_data_for_firebase() -> void:
-	profile.name = { "stringValue": GlobalData.participant_data["Name"]}
-	profile.hair = { "stringValue": GlobalData.participant_data["Color"]["Hair"].to_html()}
-	profile.eyes = { "stringValue": GlobalData.participant_data["Color"]["Eyes"].to_html()}
-	profile.legs = { "stringValue": GlobalData.participant_data["Color"]["Pants"].to_html()}
-	profile.feet = { "stringValue": GlobalData.participant_data["Color"]["Shoe"].to_html()}
-	profile.hands = { "stringValue": GlobalData.participant_data["Color"]["Skin"].to_html()}
-	profile.head = { "stringValue": GlobalData.participant_data["Color"]["Skin"].to_html()}
-	profile.torso = { "stringValue": GlobalData.participant_data["Color"]["Shirt"].to_html()}
-	profile.arms = { "stringValue": GlobalData.participant_data["Color"]["Shirt"].to_html()}
+	profile.name = { "stringValue": Meeting.participant_data["Name"]}
+	profile.hair = { "stringValue": Meeting.participant_data["Color"]["Hair"].to_html()}
+	profile.eyes = { "stringValue": Meeting.participant_data["Color"]["Eyes"].to_html()}
+	profile.legs = { "stringValue": Meeting.participant_data["Color"]["Pants"].to_html()}
+	profile.feet = { "stringValue": Meeting.participant_data["Color"]["Shoe"].to_html()}
+	profile.hands = { "stringValue": Meeting.participant_data["Color"]["Skin"].to_html()}
+	profile.head = { "stringValue": Meeting.participant_data["Color"]["Skin"].to_html()}
+	profile.torso = { "stringValue": Meeting.participant_data["Color"]["Shirt"].to_html()}
+	profile.arms = { "stringValue": Meeting.participant_data["Color"]["Shirt"].to_html()}
 
 # This is setter and getter function for our profile dictionary	
 func set_profile(value: Dictionary) -> void:
@@ -95,7 +95,7 @@ func set_profile(value: Dictionary) -> void:
 
 func _on_color_value_changed(color: Color) -> void:
 	active_color = color
-	GlobalData.participant_data["Color"][active_part] = active_color
+	Meeting.participant_data["Color"][active_part] = active_color
 	set_selected_color()
 
 
@@ -123,16 +123,16 @@ func _on_avatar_part_selected(selected: Button) -> void:
 
 
 func set_selected_color() -> void:
-	sprites.get_node("Hair").modulate = GlobalData.participant_data["Color"]["Hair"]
-	sprites.get_node("Eyes").modulate = GlobalData.participant_data["Color"]["Eyes"]
-	sprites.get_node("Legs").modulate = GlobalData.participant_data["Color"]["Pants"]
-	sprites.get_node("Feet").modulate = GlobalData.participant_data["Color"]["Shoe"]
+	sprites.get_node("Hair").modulate = Meeting.participant_data["Color"]["Hair"]
+	sprites.get_node("Eyes").modulate = Meeting.participant_data["Color"]["Eyes"]
+	sprites.get_node("Legs").modulate = Meeting.participant_data["Color"]["Pants"]
+	sprites.get_node("Feet").modulate = Meeting.participant_data["Color"]["Shoe"]
 	# skin
-	sprites.get_node("Hands").modulate = GlobalData.participant_data["Color"]["Skin"]
-	sprites.get_node("Head").modulate = GlobalData.participant_data["Color"]["Skin"]
+	sprites.get_node("Hands").modulate = Meeting.participant_data["Color"]["Skin"]
+	sprites.get_node("Head").modulate = Meeting.participant_data["Color"]["Skin"]
 	# shirt
-	sprites.get_node("Torso").modulate = GlobalData.participant_data["Color"]["Shirt"]
-	sprites.get_node("Arms").modulate = GlobalData.participant_data["Color"]["Shirt"]
+	sprites.get_node("Torso").modulate = Meeting.participant_data["Color"]["Shirt"]
+	sprites.get_node("Arms").modulate = Meeting.participant_data["Color"]["Shirt"]
 	
 
 func _on_color_selected() -> void:

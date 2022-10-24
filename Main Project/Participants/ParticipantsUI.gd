@@ -1,7 +1,7 @@
 extends Control
 
-onready var participants_ok_button = $ParticipantsPanel/HideButton
-onready var participants_list_view: ItemList = $ParticipantsPanel/ItemList
+onready var participants_ok_button = $HideButton
+onready var participants_list_view: ItemList = $ItemList
 onready var participants: Array = Meeting.get_participant_list()
 # Declare member variables here. Examples:
 # var a = 2
@@ -15,7 +15,7 @@ func _ready():
 	participants_list_view.clear()
 	participants_list_view.add_item(Meeting.get_participant_name() + " (You)")
 	for p in participants:
-		participants_list_view.add_item(p)
+		participants_list_view.add_item(p["Name"])
 
 func _on_participants_ok_button_pressed() -> void:
 	self.hide()

@@ -11,18 +11,19 @@ config_version=4
 [application]
 
 config/name="simple-base"
-run/main_scene="res://login/LoginScreen.tscn"
+run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-GlobalData="*res://GlobalData.gd"
 Firebase="*res://static/Firebase.gd"
 Meeting="*res://Spaces/Default/Meeting.gd"
 
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+theme/custom="res://Assets/UI/CustomThemes/custom_theme.tres"
+theme/custom_font="res://Assets/UI/Fonts/custom_font.tres"
 
 [input]
 
@@ -62,6 +63,11 @@ ui_open={
 ui_close={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":67,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+send_chat={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777221,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 

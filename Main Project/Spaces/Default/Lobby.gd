@@ -1,21 +1,30 @@
 extends Control
 
 onready var connection_panel: ColorRect = $ConnectionPanel
-onready var name_input = GlobalData.participant_data["Name"]
+#onready var name_input = GlobalData.participant_data["Name"]
+onready var name_input = Meeting.participant_data["Name"]
 onready var participants_panel: ColorRect = $ParticipantsPanel
 onready var participants_list_view: ItemList = $ParticipantsPanel/ParticipantList
 onready var offline_button: Button = $ConnectionPanel/VBoxContainer/Row3/Offline
 onready var online_button: Button = $ConnectionPanel/VBoxContainer/Row3/Online
+onready var host_toggle: Button = $ConnectionPanel/VBoxContainer/Row3/Host
+onready var start_button: Button = $ParticipantsPanel/Start
 onready var ip: String = "34.159.28.32"
 
 # Access HTTPRequest instance
 onready var http : HTTPRequest = $HTTPRequest
 
+
 func _ready() -> void:
 	print("Lobby: _ready")
 	
-	# Fetch data from DB
-	fetch_user_data_fromDB()
+	# fetch if not --server
+	# command line args example:
+	# godot-server server.pck --server
+	if "--server" in OS.get_cmdline_args():
+		print("Lobby: --server")
+	else:
+		fetch_user_data_fromDB()
 	
 	# The signals are emitted ( sent ) from Meeting to Lobby
 	# E.g connection_succeeded is sent from Meeting _connected_ok() method
@@ -25,6 +34,31 @@ func _ready() -> void:
 	Meeting.connect("meeting_ended", self, "_on_meeting_ended")
 	Meeting.connect("meeting_error", self, "_on_meeting_error")
 	
+	
+	# button connections
+	host_toggle.connect("pressed", self, "_on_host_pressed")
+	start_button.connect("pressed", self, "_on_start_pressed")
+	
+	# start meeting automaticaly after waiting 20 seconds if --server passed
+	if "--server" in OS.get_cmdline_args():
+#		var delay: float = 15.0
+		# check if there is another arguement (defines the amount of delay)
+#		if OS.get_cmdline_args().size() == 3 and OS.get_cmdline_args()[2].is_valid_float():
+#			delay = OS.get_cmdline_args()[2] as float
+		Meeting.host_meeting()
+	else:
+		print("Main: client")
+
+# set role(host or cl) of the participant
+func _on_host_pressed() -> void:
+	print("Lobby: _on_host_pressed()")
+	if Meeting.participant_data["Role"] == "Host":
+		Meeting.participant_data["Role"] = "Participant"
+	elif Meeting.participant_data["Role"] == "Participant":
+		Meeting.participant_data["Role"] = "Host"
+
+
+
 # This method is triggered from Meeting.gd in _connected_ok() method
 func _on_connection_success() -> void:
 	print("Lobby: _on_connection_success")
@@ -60,18 +94,31 @@ func refresh_lobby() -> void:
 	participants_list_view.clear()
 	participants_list_view.add_item(Meeting.get_participant_name() + " (You)")
 	for p in participants:
-		participants_list_view.add_item(p)
+		participants_list_view.add_item(p["Name"])
 	
 func _on_offline_pressed():
-	Meeting.host_meeting(GlobalData.participant_data["Name"])
+	print("Lobby: _on_offline_pressed()")
+	Meeting.host_meeting()
 	refresh_lobby()
 	Meeting.start_meeting()
 
 func _on_online_pressed():
-	print("Lobby: _on_online_pressed")
+	print("Lobby: _on_online_pressed()")
+	Meeting.join_meeting(ip)
+	if Meeting.participant_data["Role"] == "Participant":
+		start_button.hide()
 
-	Meeting.join_meeting(ip, GlobalData.participant_data["Name"])
-	
+
+func _on_start_pressed():
+	print("Lobby: _on_start_pressed()")
+	if Meeting.participant_data["Role"] == "Host":
+		refresh_lobby()
+		# call start_meeting
+		# use id 1 to call only on server  
+		Meeting.rpc_id(1, "start_meeting")
+
+
+
 func fetch_user_data_fromDB():
 	print("Lobby: fetch_user_data_fromDB()")
 	Firebase.get_document("users/%s" % Firebase.user_info.id, http)
@@ -98,18 +145,30 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		profile = result_body.fields
 		
 		name_input = profile.name
-		GlobalData.participant_data["Name"] = profile.name["stringValue"]
+		# new
+		Meeting.participant_data["Name"] = profile.name["stringValue"]
 		
-		GlobalData.participant_data["Color"]["Hair"] = Color(profile.hair["stringValue"])
-		GlobalData.participant_data["Color"]["Eyes"] = Color(profile.eyes["stringValue"])
-		GlobalData.participant_data["Color"]["Pants"] = Color(profile.legs["stringValue"])
-		GlobalData.participant_data["Color"]["Shoe"] = Color(profile.feet["stringValue"])
+		Meeting.participant_data["Color"]["Hair"] = Color(profile.hair["stringValue"])
+		Meeting.participant_data["Color"]["Eyes"] = Color(profile.eyes["stringValue"])
+		Meeting.participant_data["Color"]["Pants"] = Color(profile.legs["stringValue"])
+		Meeting.participant_data["Color"]["Shoe"] = Color(profile.feet["stringValue"])
 		# skin
-		GlobalData.participant_data["Color"]["Skin"] = Color(profile.hands["stringValue"])
-		GlobalData.participant_data["Color"]["Skin"] = Color(profile.head["stringValue"])
+		Meeting.participant_data["Color"]["Skin"] = Color(profile.hands["stringValue"])
+		Meeting.participant_data["Color"]["Skin"] = Color(profile.head["stringValue"])
 		# shirt
-		GlobalData.participant_data["Color"]["Shirt"] = Color(profile.torso["stringValue"])
-		GlobalData.participant_data["Color"]["Shirt"] = Color(profile.arms["stringValue"])
-		
+		Meeting.participant_data["Color"]["Shirt"] = Color(profile.torso["stringValue"])
+		Meeting.participant_data["Color"]["Shirt"] = Color(profile.arms["stringValue"])
+
 	else:
 		print("HTTP Response: Not 200 -> Information not fetched")
+
+
+
+
+
+
+
+
+
+
+
