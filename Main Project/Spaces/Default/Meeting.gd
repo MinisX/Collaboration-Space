@@ -74,11 +74,13 @@ func _participant_disconnected(id: int) -> void:
 	if has_node("/root/Default"):
 		# If the server disconnects, all participants get an error message
 		if get_tree().is_network_server():
+			print("is_network_server == true")
 			# Meeting sends signal "meeting_error " to Lobby, which triggers _on_meeting_error() method in Lobby
 			# Second parameter is the message of the error
 			emit_signal("meeting_error", "Server has been disconnected")
 			end_meeting()
 	else:
+		print("is_network_server == false")
 		# If the user disconnects ( not the server ), we just deregister him from the session
 		# and continue the session without him
 		unregister_participant(id)	
@@ -259,7 +261,7 @@ remote func start_meeting() -> void:
 	preconfigure_meeting(spawn_locations)
 	
 func end_meeting() -> void:
-	print("end_meeting: start_meeting")
+	print("end_meeting: end_meeting")
 	
 	if has_node("/root/Default"):
 		get_node("/root/Default").queue_free()

@@ -13,7 +13,8 @@ onready var ip: String = "34.159.28.32"
 
 # Access HTTPRequest instance
 onready var http : HTTPRequest = $HTTPRequest
-
+# This variable counts the amount of HTTP responses/requests
+onready var http_responses_count = 0
 
 func _ready() -> void:
 	print("Lobby: _ready")
@@ -74,9 +75,12 @@ func _on_connection_failed() -> void:
 func _on_meeting_ended() -> void:
 	print("Lobby: _on_meeting_ended")
 	
-	self.show()
-	connection_panel.show()
-	participants_panel.hide()
+	if !Firebase.user_info.is_registered:
+		Firebase.delete_document("users/%s" % Firebase.user_info.id, http)
+	else: 
+		self.show()
+		connection_panel.show()
+		participants_panel.hide()
 	
 # This method is triggered from Meeting.gd in _server_disconnected() and _participant_disconnected() methods	
 func _on_meeting_error(error) -> void:
@@ -117,52 +121,66 @@ func _on_start_pressed():
 		# use id 1 to call only on server  
 		Meeting.rpc_id(1, "start_meeting")
 
-
-
 func fetch_user_data_fromDB():
 	print("Lobby: fetch_user_data_fromDB()")
 	Firebase.get_document("users/%s" % Firebase.user_info.id, http)
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
-	print("HTTP Request Completed")
+	http_responses_count += 1
 	
-	var profile : = {
-	"name": {},
-	"hair": {},
-	"eyes": {},
-	"legs": {},
-	"feet": {},
-	"hands": {},
-	"head": {},
-	"torso": {},
-	"arms": {}
-	}
-	
-	var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
-	
-	if response_code == 200:
-		print("HTTP Response: Code 200 -> Information fetched")
-		profile = result_body.fields
+	if http_responses_count == 1:
+		var profile : = {
+		"name": {},
+		"hair": {},
+		"eyes": {},
+		"legs": {},
+		"feet": {},
+		"hands": {},
+		"head": {},
+		"torso": {},
+		"arms": {}
+		}
 		
-		name_input = profile.name
-		# new
-		Meeting.participant_data["Name"] = profile.name["stringValue"]
+		var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
 		
-		Meeting.participant_data["Color"]["Hair"] = Color(profile.hair["stringValue"])
-		Meeting.participant_data["Color"]["Eyes"] = Color(profile.eyes["stringValue"])
-		Meeting.participant_data["Color"]["Pants"] = Color(profile.legs["stringValue"])
-		Meeting.participant_data["Color"]["Shoe"] = Color(profile.feet["stringValue"])
-		# skin
-		Meeting.participant_data["Color"]["Skin"] = Color(profile.hands["stringValue"])
-		Meeting.participant_data["Color"]["Skin"] = Color(profile.head["stringValue"])
-		# shirt
-		Meeting.participant_data["Color"]["Shirt"] = Color(profile.torso["stringValue"])
-		Meeting.participant_data["Color"]["Shirt"] = Color(profile.arms["stringValue"])
+		if response_code == 200:
+			print("HTTP Response: Code 200 -> Information fetched")
+			profile = result_body.fields
+			
+			name_input = profile.name
+			# new
+			Meeting.participant_data["Name"] = profile.name["stringValue"]
+			
+			Meeting.participant_data["Color"]["Hair"] = Color(profile.hair["stringValue"])
+			Meeting.participant_data["Color"]["Eyes"] = Color(profile.eyes["stringValue"])
+			Meeting.participant_data["Color"]["Pants"] = Color(profile.legs["stringValue"])
+			Meeting.participant_data["Color"]["Shoe"] = Color(profile.feet["stringValue"])
+			# skin
+			Meeting.participant_data["Color"]["Skin"] = Color(profile.hands["stringValue"])
+			Meeting.participant_data["Color"]["Skin"] = Color(profile.head["stringValue"])
+			# shirt
+			Meeting.participant_data["Color"]["Shirt"] = Color(profile.torso["stringValue"])
+			Meeting.participant_data["Color"]["Shirt"] = Color(profile.arms["stringValue"])
 
-	else:
-		print("HTTP Response: Not 200 -> Information not fetched")
+		else:
+			print("HTTP Response: Not 200 -> Information not fetched")
+			
+	if http_responses_count == 2:
+		if response_code == 200:
+			print("\nHTTP Response: Code 200 -> User data deleted from DB, requesting delete of user account")
+			Firebase.delete_account(http)
+		else:
+			print("\nHTTP Response: %s -> User data was not deleted" % response_code)
+			
 
-
+	if http_responses_count == 3:
+		if response_code == 200:
+			print("\nHTTP Response: Code 200 -> User account was deleted")
+			self.show()
+			connection_panel.show()
+			participants_panel.hide()
+		else:
+			print("\nHTTP Response: %s -> User account not deleted" % response_code)
 
 
 
