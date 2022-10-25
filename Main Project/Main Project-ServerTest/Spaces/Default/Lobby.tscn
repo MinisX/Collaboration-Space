@@ -40,20 +40,20 @@ margin_right = 89.5
 margin_bottom = 20.5
 
 [node name="Row3" type="HBoxContainer" parent="ConnectionPanel/VBoxContainer"]
-margin_right = 273.0
+margin_right = 312.0
 margin_bottom = 41.0
 custom_constants/separation = 16
 
 [node name="ServerTest" type="Button" parent="ConnectionPanel/VBoxContainer/Row3"]
-margin_right = 84.0
+margin_right = 123.0
 margin_bottom = 41.0
 size_flags_horizontal = 3
 size_flags_vertical = 2
-text = "Offline"
+text = "ServerTest"
 
 [node name="Online" type="Button" parent="ConnectionPanel/VBoxContainer/Row3"]
-margin_left = 100.0
-margin_right = 179.0
+margin_left = 139.0
+margin_right = 218.0
 margin_bottom = 41.0
 size_flags_horizontal = 3
 size_flags_vertical = 2
@@ -66,8 +66,8 @@ margin_right = 179.0
 margin_bottom = 41.0
 
 [node name="Host" type="CheckBox" parent="ConnectionPanel/VBoxContainer/Row3"]
-margin_left = 195.0
-margin_right = 273.0
+margin_left = 234.0
+margin_right = 312.0
 margin_bottom = 41.0
 text = "Host"
 
@@ -100,7 +100,7 @@ margin_bottom = 318.5
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
-[node name="Join" type="Button" parent="ParticipantsPanel"]
+[node name="Start" type="Button" parent="ParticipantsPanel"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -109,7 +109,7 @@ margin_left = -34.5
 margin_top = -60.0
 margin_right = 34.5
 margin_bottom = -19.0
-text = "Join"
+text = "Start"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 

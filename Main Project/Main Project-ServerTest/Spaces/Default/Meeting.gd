@@ -155,6 +155,7 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 	for p_id in spawn_locations:
 		# Get access to participant instance
 		# do not instance participant for server
+		print("In preconfigure_meeting through spawn_locations: %s" % p_id)
 		if p_id != 1:
 			var participant = participant_scene.instance()
 
@@ -187,7 +188,7 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 	# If there are no participants, we postconfigure the meeting
 	elif participants.size() == 0:
 		postconfigure_meeting()
-		
+	
 	unpause_game()
 	
 # This method is triggered from rpc_id call from _start_meeting() method in Meeting ( this script )			
@@ -244,14 +245,11 @@ func get_participant_name() -> String:
 	
 remote func start_meeting() -> void:
 	print("Meeting: start_meeting, ID: %s" % get_tree().get_network_unique_id() )
-	pause_game()
-	#assert(get_tree().is_network_server())
-	
-	var currentUserID = get_tree().get_network_unique_id()
+	assert(get_tree().is_network_server())
 	
 	randomize()
 	var spawn_locations: Dictionary = {}
-	spawn_locations[currentUserID] = Vector2(randi()%500, randi()%500)
+	spawn_locations[1] = Vector2(randi()%500, randi()%500)
 
 	# Assign random spawn locations to participants
 	for p in participants:
@@ -265,7 +263,6 @@ remote func start_meeting() -> void:
 		rpc_id(p, "preconfigure_meeting", spawn_locations)
 
 	preconfigure_meeting(spawn_locations)
-	unpause_game()
 	
 func end_meeting() -> void:
 	print("end_meeting: start_meeting")
@@ -277,9 +274,9 @@ func end_meeting() -> void:
 	participants.clear()
 
 remote func pause_game() ->void:
-	print("unpausing game")
+	print("pausing game")
 	get_tree().set_pause(true)
 	
 remote func unpause_game() ->void:
-	print("pausing game")
+	print("unpausing game")
 	get_tree().set_pause(false)
