@@ -19,3 +19,12 @@ func _ready():
 
 func _on_participants_ok_button_pressed() -> void:
 	self.hide()
+	while true:
+		var time_in_seconds = 2
+		yield(get_tree().create_timer(time_in_seconds), "timeout")
+		#The list will be updated every 2 seconds
+		participants.sort()
+		participants_list_view.clear()
+		participants_list_view.add_item(Meeting.get_participant_name() + " (You)")
+		for p in participants:
+			participants_list_view.add_item(p["Name"])
