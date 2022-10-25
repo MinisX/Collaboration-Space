@@ -7,3 +7,4 @@ def get_database():
     return client
 
 client = get_database()
+

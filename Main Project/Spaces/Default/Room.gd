@@ -2,6 +2,7 @@ extends Area2D
 
 export (String) var room_name: String
 
+var Chatui = load("res://ChatProposal/ChatUI/ChatUI.gd").new()
 var participants_inside: Array = []
 
 # {Name = "room name", ListOfParticipants = participants_inside}
@@ -29,10 +30,12 @@ func _on_body_entered(body: KinematicBody2D) -> void:
 	if body:
 		print("Room: ", "participant: ", body.name, " entered to the room ", room_name)
 		participants_inside.push_back(body.name)
+		Chatui.send_to_server(body.name, "room_1", "join")
 
 # remove id of a participant from "participants_inside" array
 func _on_body_exited(body: KinematicBody2D) -> void:
 	if body:
 		print("Room: ", "participant: ", body.name, " exited from the room ", room_name)
 		participants_inside.erase(body.name)
+		Chatui.send_to_server(body.name, "room_1", "depart")
 
