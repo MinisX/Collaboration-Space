@@ -86,12 +86,12 @@ func login(email: String, password: String, http: HTTPRequest) -> void:
 		
 func change_password(new_password: String, http: HTTPRequest) -> void:
 	var body := {
-		"idToken": user_info.id,
+		"idToken": user_info.token,
 		"password": new_password,
 		"returnSecureToken": true
 	}
 	
-	http.request(FIRESTORE_URL, [], false, HTTPClient.METHOD_POST, to_json(body))
+	http.request(CHANGE_PASSWORD_URL, [], false, HTTPClient.METHOD_POST, to_json(body))
 	
 func delete_account(http: HTTPRequest) -> void:
 	var body := {

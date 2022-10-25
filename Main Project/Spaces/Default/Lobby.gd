@@ -9,6 +9,7 @@ onready var offline_button: Button = $ConnectionPanel/VBoxContainer/Row3/Offline
 onready var online_button: Button = $ConnectionPanel/VBoxContainer/Row3/Online
 onready var host_toggle: Button = $ConnectionPanel/VBoxContainer/Row3/Host
 onready var start_button: Button = $ParticipantsPanel/Start
+onready var changePassword_button: Button = $ConnectionPanel/VBoxContainer/ChangePassword
 onready var ip: String = "34.159.28.32"
 
 # Access HTTPRequest instance
@@ -124,6 +125,11 @@ func _on_start_pressed():
 func fetch_user_data_fromDB():
 	print("Lobby: fetch_user_data_fromDB()")
 	Firebase.get_document("users/%s" % Firebase.user_info.id, http)
+	
+	# Hide change password if user is not registered
+	if !Firebase.user_info.is_registered:
+		changePassword_button.hide()
+		
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	http_responses_count += 1
@@ -182,5 +188,5 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		else:
 			print("\nHTTP Response: %s -> User account not deleted" % response_code)
 
-func _on_change_password_toggled(button_pressed):
-	get_tree().change_scene("res://Change_password/Avatar.tscn")
+func _on_ChangePassword_pressed():
+	get_tree().change_scene("res://ChangePassword/ChangePassword.tscn")

@@ -40,7 +40,7 @@ margin_right = 89.5
 margin_bottom = 20.5
 
 [node name="Row3" type="HBoxContainer" parent="ConnectionPanel/VBoxContainer"]
-margin_right = 179.0
+margin_right = 184.0
 margin_bottom = 41.0
 custom_constants/separation = 16
 
@@ -53,7 +53,7 @@ size_flags_vertical = 2
 text = "Offline"
 
 [node name="Online" type="Button" parent="ConnectionPanel/VBoxContainer/Row3"]
-margin_right = 85.0
+margin_right = 90.0
 margin_bottom = 41.0
 size_flags_horizontal = 3
 size_flags_vertical = 2
@@ -66,10 +66,16 @@ margin_right = 179.0
 margin_bottom = 41.0
 
 [node name="Host" type="CheckBox" parent="ConnectionPanel/VBoxContainer/Row3"]
-margin_left = 101.0
-margin_right = 179.0
+margin_left = 106.0
+margin_right = 184.0
 margin_bottom = 41.0
 text = "Host"
+
+[node name="ChangePassword" type="Button" parent="ConnectionPanel/VBoxContainer"]
+margin_top = 45.0
+margin_right = 184.0
+margin_bottom = 86.0
+text = "Change password"
 
 [node name="ParticipantsPanel" type="ColorRect" parent="."]
 visible = false
@@ -115,4 +121,5 @@ text = "Start"
 
 [connection signal="pressed" from="ConnectionPanel/VBoxContainer/Row3/Offline" to="." method="_on_offline_pressed"]
 [connection signal="pressed" from="ConnectionPanel/VBoxContainer/Row3/Online" to="." method="_on_online_pressed"]
+[connection signal="pressed" from="ConnectionPanel/VBoxContainer/ChangePassword" to="." method="_on_ChangePassword_pressed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
