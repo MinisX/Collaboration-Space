@@ -74,7 +74,6 @@ func get_cmd_args() -> Dictionary:
 		else:
 			arguments[argument.lstrip("--")] = ""
 	return arguments
-	
 
 # This method is triggered from a signal "network_peer_connected" from NetworkedMultiplayerENet 
 func _participant_connected(id: int) -> void:
