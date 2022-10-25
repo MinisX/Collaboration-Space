@@ -182,11 +182,5 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		else:
 			print("\nHTTP Response: %s -> User account not deleted" % response_code)
 
-
-
-
-
-
-
-
-
+func _on_change_password_toggled(button_pressed):
+	get_tree().change_scene("res://Change_password/Avatar.tscn")
