@@ -2,7 +2,7 @@ extends Node
 
 # The URL we will connect to.
 export var websocket_url = "ws://34.159.28.32:8765"
-var Chatui = load("res://ChatProposal/ChatUI/ChatUI.gd").new()
+
 # Our WebSocketClient instance.
 var _client = WebSocketClient.new()
 
