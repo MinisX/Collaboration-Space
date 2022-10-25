@@ -20,11 +20,12 @@ var user_info := {}
 # We are passing to it result which is the response that we have got from Firebase
 # Then we parse it as a dictionary as we get it as Array
 # And then we return our idToken and user id as Dictionary
-func _get_user_info(result: Array) -> Dictionary:
+func _get_user_info(result: Array, is_registered: bool) -> Dictionary:
 	var result_body := JSON.parse(result[3].get_string_from_ascii()).result as Dictionary
 	return {
 		"token": result_body.idToken,
-		"id": result_body.localId
+		"id": result_body.localId,
+		"is_registered": is_registered
 	}
 
 # Since we want to authenticate our users when they are making a request, we have to use 
@@ -53,7 +54,7 @@ func register(email: String, password: String, http: HTTPRequest) -> void:
 	var result := yield(http, "request_completed") as Array
 	# If our response is OK ( 200 ), we store user information
 	if result[1] == 200:
-		user_info = _get_user_info(result)
+		user_info = _get_user_info(result, true)
 	
 func anon_login(http: HTTPRequest) -> void:
 	print("anon_login_start")
@@ -67,7 +68,7 @@ func anon_login(http: HTTPRequest) -> void:
 	# If our response is OK ( 200 ), we store user information
 	if result[1] == 200:
 		print("anon_login_success")
-		user_info = _get_user_info(result)
+		user_info = _get_user_info(result, false)
 	
 func login(email: String, password: String, http: HTTPRequest) -> void:
 	var body := {
@@ -81,7 +82,7 @@ func login(email: String, password: String, http: HTTPRequest) -> void:
 	var result := yield(http, "request_completed") as Array
 	# If our response is OK ( 200 ), we store user information
 	if result[1] == 200:
-		user_info = _get_user_info(result)
+		user_info = _get_user_info(result, true)
 		
 func change_password(new_password: String, http: HTTPRequest) -> void:
 	var body := {
@@ -92,10 +93,12 @@ func change_password(new_password: String, http: HTTPRequest) -> void:
 	
 	http.request(FIRESTORE_URL, [], false, HTTPClient.METHOD_POST, to_json(body))
 	
-func delete_account() -> void:
+func delete_account(http: HTTPRequest) -> void:
 	var body := {
-		"idToken": user_info.id
+		"idToken": user_info.token
 	}
+	
+	http.request(DELETE_ACCOUNT_URL, [], false, HTTPClient.METHOD_POST, to_json(body))
 
 # Function to create a new document
 # Path parameter is the path to the ducument
