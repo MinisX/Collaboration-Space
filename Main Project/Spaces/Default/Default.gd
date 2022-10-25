@@ -65,8 +65,7 @@ func _on_menu_button_pressed() -> void:
 func _notification(what):
 	if (what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST):
 		if !Firebase.user_info.is_registered:
-			http_responses_count += 1
-			Firebase.delete_account(http)
+			Firebase.delete_document("users/%s" % Firebase.user_info.id, http)
 		else: 
 			get_tree().quit()
 	# TODO Safely remove the participant from the meeting
@@ -77,20 +76,20 @@ func _notification(what):
 # This is response from HTTP request when closing the window
 # If user is anon, it's deleted. If registered, just logged off
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
+	http_responses_count += 1
 	var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
 	
 	if http_responses_count == 1:
 		if response_code == 200:
-			print("\nHTTP Response: Code 200 -> User account deleted, requesting delete of DB data")
-			http_responses_count += 1
-			Firebase.delete_document("users?documentId=%s" % Firebase.user_info.id, http)
+			print("\nHTTP Response: Code 200 -> User data deleted from DB, requesting delete of user account")
+			Firebase.delete_account(http)
 		else:
-			print("\nHTTP Response: %s -> User account was not deleted" % response_code)
+			print("\nHTTP Response: %s -> User data was not deleted" % response_code)
 			
 
 	if http_responses_count == 2:
 		if response_code == 200:
-			print("\nHTTP Response: Code 200 -> User data deleted from DB")
+			print("\nHTTP Response: Code 200 -> User account was deleted")
 			get_tree().quit()
 		else:
-			print("\nHTTP Response: %s -> User data was not deleted" % response_code)
+			print("\nHTTP Response: %s -> User account not deleted" % response_code)
