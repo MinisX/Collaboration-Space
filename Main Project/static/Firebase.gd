@@ -8,6 +8,8 @@ const REGISTER_URL := "https://identitytoolkit.googleapis.com/v1/accounts:signUp
 const LOGIN_URL := "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=%s" % API_KEY
 const ANON_LOGIN_URL:= "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=%s" % API_KEY
 const FIRESTORE_URL := "https://firestore.googleapis.com/v1/projects/%s/databases/(default)/documents/" % PROJECT_ID
+const CHANGE_PASSWORD_URL:= "https://identitytoolkit.googleapis.com/v1/accounts:update?key=%s" % API_KEY
+const DELETE_ACCOUNT_URL:= "https://identitytoolkit.googleapis.com/v1/accounts:delete?key=%s" % API_KEY
 
 # In user_info dictionary we store user token and user id
 # The token tells us that the user has been logged in. Later we will 
@@ -80,6 +82,20 @@ func login(email: String, password: String, http: HTTPRequest) -> void:
 	# If our response is OK ( 200 ), we store user information
 	if result[1] == 200:
 		user_info = _get_user_info(result)
+		
+func change_password(new_password: String, http: HTTPRequest) -> void:
+	var body := {
+		"idToken": user_info.id,
+		"password": new_password,
+		"returnSecureToken": true
+	}
+	
+	http.request(FIRESTORE_URL, [], false, HTTPClient.METHOD_POST, to_json(body))
+	
+func delete_account() -> void:
+	var body := {
+		"idToken": user_info.id
+	}
 
 # Function to create a new document
 # Path parameter is the path to the ducument
