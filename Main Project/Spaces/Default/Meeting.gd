@@ -4,7 +4,7 @@ extends Node
 # ---------------------------
 
 # Confriration parameters
-const DEFAULT_PORT: int = 4242
+var DEFAULT_PORT: int = 4242
 const MAX_PARTICIPANT: int = 30
 
 # Create new NetworkedMultiplayerENet object. 
@@ -53,6 +53,27 @@ func _ready() -> void:
 	get_tree().connect("connection_failed", self, "_connected_fail")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 	
+	# get argc to a dictionary
+	var arguments: Dictionary = get_cmd_args()
+	# change the default port if argv has port and it 
+	if arguments.has("port") and arguments["port"].is_valid_integer():
+		var port: int = arguments["port"] as int
+		if port <= 65535:
+			DEFAULT_PORT = arguments["port"] as int
+	print(DEFAULT_PORT)
+
+# get argc to a dictionary
+# format of the args
+# --key or --key=value
+func get_cmd_args() -> Dictionary:
+	var arguments = {}
+	for argument in OS.get_cmdline_args():
+		if argument.find("=") > -1:
+			var key_value = argument.split("=")
+			arguments[key_value[0].lstrip("--")] = key_value[1]
+		else:
+			arguments[argument.lstrip("--")] = ""
+	return arguments
 
 # This method is triggered from a signal "network_peer_connected" from NetworkedMultiplayerENet 
 func _participant_connected(id: int) -> void:
