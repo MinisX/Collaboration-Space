@@ -4,8 +4,8 @@ extends YSort
 onready var chat_button: Button = $CanvasLayer/ChatButton
 onready var chat_UI = $CanvasLayer/ChatUI
 onready var menu_UI = $CanvasLayer/MenuUI
-onready var participants_button = $CanvasLayer/ParticipantsButton
-onready var menu_button = $CanvasLayer/MenuButton
+onready var participants_button:Button = $CanvasLayer/ParticipantsButton
+onready var menu_button:Button = $CanvasLayer/MenuButton
 
 
 var menu_visibility: bool = false
@@ -21,9 +21,13 @@ func _ready() -> void:
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"):
 		if menu_visibility == true:
+			participants_button.show()
+			menu_button.show()
 			menu_UI.hide()
 			menu_visibility = false
 		else:
+			participants_button.hide()
+			menu_button.hide()
 			menu_UI.show()
 			menu_visibility = true
 
@@ -41,10 +45,12 @@ func _on_participants_button_pressed() -> void:
 		
 func _on_menu_button_pressed() -> void:
 		if menu_visibility == true:
+			menu_button.show()
 			menu_UI.hide()
 			menu_visibility = false
 			participants_button.show()
 		else:
+			menu_button.hide()
 			menu_UI.show()
 			menu_visibility = true
 			participants_button.hide()
