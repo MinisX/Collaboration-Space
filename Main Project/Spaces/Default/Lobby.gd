@@ -96,8 +96,8 @@ func refresh_lobby() -> void:
 	for p in participants:
 		participants_list_view.add_item(p["Name"])
 	
-func _on_offline_pressed():
-	print("Lobby: _on_offline_pressed()")
+func _on_servertest_pressed():
+	print("Lobby: _on_servertest_pressed()")
 	Meeting.host_meeting()
 	refresh_lobby()
 	Meeting.start_meeting()
@@ -161,14 +161,3 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 
 	else:
 		print("HTTP Response: Not 200 -> Information not fetched")
-
-
-
-
-
-
-
-
-
-
-
