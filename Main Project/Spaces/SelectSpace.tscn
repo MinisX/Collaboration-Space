@@ -1,0 +1,136 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/UI/Fonts/SztyletBold-aOKK.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://Assets/Spaces/library_space.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Spaces/library_space_pressed.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Spaces/office_space.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Spaces/office_space_pressed.png" type="Texture" id=5]
+[ext_resource path="res://Assets/UI/Space_ButtonGroup.tres" type="ButtonGroup" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 28
+font_data = ExtResource( 1 )
+
+[node name="SelectSpace" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.172549, 0.32549, 0.580392, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -337.0
+margin_top = -97.0
+margin_right = 337.0
+margin_bottom = 97.0
+custom_constants/separation = 32
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_right = 674.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 1 )
+text = "Choose where to join!"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 68.0
+margin_right = 674.0
+margin_bottom = 246.0
+custom_constants/separation = 16
+
+[node name="THU" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+margin_right = 214.0
+margin_bottom = 178.0
+custom_constants/separation = 8
+
+[node name="THU" type="Label" parent="VBoxContainer/HBoxContainer/THU"]
+margin_right = 214.0
+margin_bottom = 18.0
+text = "THU"
+align = 1
+
+[node name="THUMap" type="TextureButton" parent="VBoxContainer/HBoxContainer/THU"]
+margin_top = 26.0
+margin_right = 214.0
+margin_bottom = 152.0
+toggle_mode = true
+group = ExtResource( 6 )
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 3 )
+
+[node name="OnlineParticipants" type="Label" parent="VBoxContainer/HBoxContainer/THU"]
+margin_top = 160.0
+margin_right = 214.0
+margin_bottom = 178.0
+text = "38 online"
+align = 1
+
+[node name="Library" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 230.0
+margin_right = 444.0
+margin_bottom = 178.0
+custom_constants/separation = 8
+
+[node name="Library" type="Label" parent="VBoxContainer/HBoxContainer/Library"]
+margin_right = 214.0
+margin_bottom = 18.0
+text = "Library"
+align = 1
+
+[node name="LibraryMap" type="TextureButton" parent="VBoxContainer/HBoxContainer/Library"]
+margin_top = 26.0
+margin_right = 214.0
+margin_bottom = 152.0
+toggle_mode = true
+group = ExtResource( 6 )
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 3 )
+
+[node name="OnlineParticipants" type="Label" parent="VBoxContainer/HBoxContainer/Library"]
+margin_top = 160.0
+margin_right = 214.0
+margin_bottom = 178.0
+text = "24 online"
+align = 1
+
+[node name="Office" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 460.0
+margin_right = 644.0
+margin_bottom = 178.0
+custom_constants/separation = 8
+
+[node name="Office" type="Label" parent="VBoxContainer/HBoxContainer/Office"]
+margin_right = 184.0
+margin_bottom = 18.0
+text = "Office"
+align = 1
+
+[node name="Office2" type="TextureButton" parent="VBoxContainer/HBoxContainer/Office"]
+margin_top = 26.0
+margin_right = 184.0
+margin_bottom = 152.0
+toggle_mode = true
+group = ExtResource( 6 )
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 5 )
+
+[node name="OnlineParticipants" type="Label" parent="VBoxContainer/HBoxContainer/Office"]
+margin_top = 160.0
+margin_right = 184.0
+margin_bottom = 178.0
+text = "10 online"
+align = 1
