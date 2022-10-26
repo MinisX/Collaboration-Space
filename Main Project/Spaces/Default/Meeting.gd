@@ -91,7 +91,7 @@ func _participant_connected(id: int) -> void:
 # This method is triggered from a signal "network_peer_disconnected" from NetworkedMultiplayerENet 
 func _participant_disconnected(id: int) -> void:
 	print("Meeting: _participant_disconnected, ID: %s" % id)
-	
+		
 	if id == 1:
 		print("is_network_server == true")
 		# Meeting sends signal "meeting_error " to Lobby, which triggers _on_meeting_error() method in Lobby
@@ -152,10 +152,11 @@ remote func register_participant(new_participant_data: Dictionary) -> void:
 func unregister_participant(id: int) -> void:
 	print("Meeting: unregister_participant, ID: %s " % id)
 	
-	var childNode = get_tree().get_root().get_node("Default").get_node("Participants").get_node(str(id))
-	get_tree().get_root().get_node("Default").get_node("Participants").remove_child(childNode)
-	participants.erase(id)
+	if has_node("/root/Default"):
+		var childNode = get_tree().get_root().get_node("Default").get_node("Participants").get_node(str(id))
+		get_tree().get_root().get_node("Default").get_node("Participants").remove_child(childNode)
 	
+	participants.erase(id)
 	# Send signal to Lobby.gd, which triggers resfresh_lobby() method in Lobby
 	emit_signal("participants_list_changed")
 	
