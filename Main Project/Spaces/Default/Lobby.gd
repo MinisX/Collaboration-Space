@@ -19,6 +19,9 @@ onready var http_responses_count = 0
 
 func _ready() -> void:
 	print("Lobby: _ready")
+	# Disable auto accept of quiting by cross
+	# It's handeled in _notification method
+	get_tree().set_auto_accept_quit(false)
 	
 	# fetch if not --server
 	# command line args example:
@@ -196,3 +199,12 @@ func _on_JoinRunningGame_pressed():
 
 func _on_Customize_avatar_pressed():
 	get_tree().change_scene("res://Customization/Avatar.tscn")
+
+# Here we receive notification that user has pressed X to quit the game
+func _notification(what):
+	if (what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST):
+		if !Firebase.user_info.is_registered:
+			get_tree().change_scene("res://Exit_Meeting/Exit_Meeting.tscn")
+		else: 
+			Firebase.user_info = {}
+			get_tree().quit()

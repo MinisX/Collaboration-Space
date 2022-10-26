@@ -14,6 +14,10 @@ onready var http_responses_count = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# Disable auto accept of quiting by cross
+	# It's handeled in _notification method
+	get_tree().set_auto_accept_quit(false)
+	
 	continue_button.connect("pressed", self, "_on_continue_pressed")
 	hot_keys_button.connect("pressed", self, "_on_hot_keys_pressed")
 	exit_button.connect("pressed", self, "_on_exit_pressed")
@@ -64,3 +68,12 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			redirect_to_login()
 		else:
 			print("\nHTTP Response: %s -> User account not deleted" % response_code)
+			
+# Here we receive notification that user has pressed X to quit the game
+func _notification(what):
+	if (what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST):
+		if !Firebase.user_info.is_registered:
+			get_tree().change_scene("res://Exit_Meeting/Exit_Meeting.tscn")
+		else: 
+			Firebase.user_info = {}
+			get_tree().quit()

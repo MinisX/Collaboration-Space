@@ -4,7 +4,7 @@ extends Node
 # ---------------------------
 
 # Confriration parameters
-var DEFAULT_PORT: int = 4242
+var DEFAULT_PORT: int = 1234
 const MAX_PARTICIPANT: int = 30
 
 # Create new NetworkedMultiplayerENet object. 

@@ -1444,7 +1444,3 @@ position = Vector2( -221, 496 )
 scale = Vector2( 20.88, 13.28 )
 z_index = 99
 room_name = "Room two"
-
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
-
-[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
