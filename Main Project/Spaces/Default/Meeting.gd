@@ -4,7 +4,7 @@ extends Node
 # ---------------------------
 
 # Confriration parameters
-var DEFAULT_PORT: int = 4242
+var DEFAULT_PORT: int = 1234
 const MAX_PARTICIPANT: int = 30
 
 # Create new NetworkedMultiplayerENet object. 
@@ -150,11 +150,14 @@ remote func register_participant(new_participant_data: Dictionary) -> void:
 
 # Unregister participant
 func unregister_participant(id: int) -> void:
-	print("Meeting: unregister_participant")
+	print("Meeting: unregister_participant, ID: %s " % id)
 	participants.erase(id)
+	var childNode = get_tree().get_root().get_node("Default").get_node("Participants").get_child(1).remove_and_skip()
+
+	#remove_child(childNode)
 	
 	# Send signal to Lobby.gd, which triggers resfresh_lobby() method in Lobby
-	emit_signal("participants_list_changed")
+	# emit_signal("participants_list_changed")
 	
 # This method is triggered from rpc_id call from start_meeting() method in Meeting ( this cript )
 # Remote keyword allows a function to be called by a remote procedure call (RPC).
@@ -200,6 +203,11 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 
 			# Adds participant to participant list in Default scene
 			meeting_area.get_node("Participants").add_child(participant)
+			print("Child node index: %s" % participant)
+			print("Child node index: %s" % participant.get_index())
+			var networkIDAsString = str(get_tree().get_network_unique_id())
+			print("Network id: %s " % networkIDAsString)
+			print("Trying to find child node: %s" % get_tree().get_root().get_node("Default").get_node("Participants").get_child(0))
 
 	# TODO Ask Yufus and Fatma what happens here
 	if not get_tree().is_network_server():
