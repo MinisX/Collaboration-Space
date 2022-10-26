@@ -18,7 +18,6 @@ config/icon="res://icon.png"
 
 Firebase="*res://static/Firebase.gd"
 Meeting="*res://Spaces/Default/Meeting.gd"
-Client="*res://Chat/Client.gd"
 
 [gui]
 

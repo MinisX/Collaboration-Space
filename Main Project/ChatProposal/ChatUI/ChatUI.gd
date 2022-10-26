@@ -6,8 +6,8 @@ onready var hide_button: Button = $ChatContainer/VBoxContainer/HBoxContainer/Hid
 onready var _chat_text: RichTextLabel = $ChatContainer/VBoxContainer/ChatText
 onready var _line_edit: LineEdit = $ChatContainer/VBoxContainer/Chat/ChatEnter
 onready var send_button: Button = $ChatContainer/VBoxContainer/Chat/SendButton
+onready var Client = $Client
 onready var participant_name: String
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -46,6 +46,8 @@ func _on_send() -> void:
 	# Add text to text of the chat
 	_chat_text.add_text(_line_edit.text)
 	_chat_text.newline()
+	print("ChatUI: inside _on_send called")
+	print(_line_edit.text)
 	_line_edit.text = ""
 
 func _on_hide() -> void:
