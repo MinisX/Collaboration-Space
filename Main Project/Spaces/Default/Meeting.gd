@@ -4,7 +4,7 @@ extends Node
 # ---------------------------
 
 # Confriration parameters
-var DEFAULT_PORT: int = 1234
+var DEFAULT_PORT: int = 4242
 const MAX_PARTICIPANT: int = 30
 
 # Create new NetworkedMultiplayerENet object. 
@@ -152,8 +152,9 @@ remote func register_participant(new_participant_data: Dictionary) -> void:
 func unregister_participant(id: int) -> void:
 	print("Meeting: unregister_participant, ID: %s " % id)
 	participants.erase(id)
-	var childNode = get_tree().get_root().get_node("Default").get_node("Participants").get_child(1).remove_and_skip()
-
+	var childNode = get_tree().get_root().get_node("Default").get_node("Participants").get_child(1)
+	get_tree().get_root().get_node("Default").get_node("Participants").remove_child(childNode)
+	
 	#remove_child(childNode)
 	
 	# Send signal to Lobby.gd, which triggers resfresh_lobby() method in Lobby
@@ -203,6 +204,8 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 
 			# Adds participant to participant list in Default scene
 			meeting_area.get_node("Participants").add_child(participant)
+			
+			
 			print("Child node index: %s" % participant)
 			print("Child node index: %s" % participant.get_index())
 			var networkIDAsString = str(get_tree().get_network_unique_id())
