@@ -190,3 +190,6 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 
 func _on_ChangePassword_pressed():
 	get_tree().change_scene("res://ChangePassword/ChangePassword.tscn")
+
+func _on_JoinRunningGame_pressed():
+	pass # Replace with function body.

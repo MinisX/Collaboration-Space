@@ -40,6 +40,7 @@ func _on_join_pressed() -> void:
 # This function is called when we receive response on our HTTP request. This is done with use of HTTPRequest node, which
 # is attached to Login scene
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
+	print("LoginScreen: ")
 	var response_body := JSON.parse(body.get_string_from_ascii())
 	if response_code != 200:
 		Notification.text = response_body.result.error.message.capitalize()
@@ -49,7 +50,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		#yield(get_tree().create_timer(2.0), "timeout")
 #		GlobalData.participant_data["name"] = Username.text # Logic to be refined
 		Meeting.participant_data["Name"] = Username.text
-		if(anonLogin):
+		if anonLogin:
 			get_tree().change_scene("res://Customization/Avatar.tscn")
 		else:
 			get_tree().change_scene("res://Spaces/Default/Lobby.tscn")
