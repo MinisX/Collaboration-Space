@@ -39,3 +39,6 @@ func _process(_delta):
 
 func _exit_tree():
 	_client.disconnect_from_host()
+	
+func send_to_server(msg):
+	_client.get_peer(1).put_packet(msg.to_utf8())

@@ -28,7 +28,7 @@ func _on_data():
 	
 func send_to_server(id, room, state):
 	var to_send = "{\"user_id\": " + id + ", \"room\": \"" + room + "\", \"state\": \"" + state + "\"}"
-	Client._client.get_peer(1).put_packet(to_send.to_utf8())
+	Client.send_to_server(to_send)
 	print("ChatUI: inside send_to_server")
 	
 func _on_send() -> void:
