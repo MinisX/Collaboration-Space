@@ -1,7 +1,12 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
+[ext_resource path="res://Assets/UI/Fonts/SztyletBold-aOKK.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://ChatProposal/ChatUI/ChatUI.gd" type="Script" id=2]
+[ext_resource path="res://Assets/UI/Fonts/NotoNew.ttf" type="DynamicFontData" id=3]
 
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 3 )
+fallback/0 = ExtResource( 1 )
 
 [node name="ChatUI" type="Control"]
 anchor_bottom = 1.0
@@ -11,6 +16,7 @@ script = ExtResource( 2 )
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = 49.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.227451, 0.317647, 0.572549, 1 )
@@ -24,49 +30,52 @@ margin_right = -15.0
 margin_bottom = -15.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ChatContainer"]
-margin_right = 220.0
+margin_right = 267.0
 margin_bottom = 570.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ChatContainer/VBoxContainer"]
-margin_right = 220.0
-margin_bottom = 20.0
+margin_right = 267.0
+margin_bottom = 41.0
 custom_constants/separation = 100
+alignment = 1
 
 [node name="Chat" type="Label" parent="ChatContainer/VBoxContainer/HBoxContainer"]
-margin_top = 3.0
-margin_right = 28.0
-margin_bottom = 17.0
+margin_left = 49.0
+margin_top = 11.0
+margin_right = 87.0
+margin_bottom = 29.0
 text = "Chat"
 
 [node name="HideButton" type="Button" parent="ChatContainer/VBoxContainer/HBoxContainer"]
-margin_left = 200.0
-margin_right = 148.0
-margin_bottom = 20.0
+margin_left = 187.0
+margin_right = 218.0
+margin_bottom = 41.0
 text = "<"
 
 [node name="ItemList" type="ScrollContainer" parent="ChatContainer/VBoxContainer"]
-margin_top = 24.0
-margin_right = 220.0
-margin_bottom = 542.0
+margin_top = 45.0
+margin_right = 267.0
+margin_bottom = 525.0
 size_flags_vertical = 3
 
 [node name="MessageContainer" type="VBoxContainer" parent="ChatContainer/VBoxContainer/ItemList"]
-margin_right = 220.0
+margin_right = 267.0
 size_flags_horizontal = 3
 custom_constants/separation = 16
 
 [node name="Chat" type="HBoxContainer" parent="ChatContainer/VBoxContainer"]
-margin_top = 546.0
-margin_right = 220.0
+margin_top = 529.0
+margin_right = 267.0
 margin_bottom = 570.0
 
 [node name="ChatText" type="LineEdit" parent="ChatContainer/VBoxContainer/Chat"]
-margin_right = 173.0
-margin_bottom = 24.0
+margin_right = 200.0
+margin_bottom = 41.0
 size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
 
 [node name="SendButton" type="Button" parent="ChatContainer/VBoxContainer/Chat"]
-margin_left = 177.0
-margin_right = 220.0
-margin_bottom = 24.0
+margin_left = 204.0
+margin_right = 267.0
+margin_bottom = 41.0
 text = "send"
