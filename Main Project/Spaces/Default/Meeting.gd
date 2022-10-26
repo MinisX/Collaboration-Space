@@ -90,16 +90,14 @@ func _participant_connected(id: int) -> void:
 
 # This method is triggered from a signal "network_peer_disconnected" from NetworkedMultiplayerENet 
 func _participant_disconnected(id: int) -> void:
-	print("Meeting: _participant_disconnected")
+	print("Meeting: _participant_disconnected, ID: %s" % id)
 	
-	if has_node("/root/Default"):
-		# If the server disconnects, all participants get an error message
-		if get_tree().is_network_server():
-			print("is_network_server == true")
-			# Meeting sends signal "meeting_error " to Lobby, which triggers _on_meeting_error() method in Lobby
-			# Second parameter is the message of the error
-			emit_signal("meeting_error", "Server has been disconnected")
-			end_meeting()
+	if id == 1:
+		print("is_network_server == true")
+		# Meeting sends signal "meeting_error " to Lobby, which triggers _on_meeting_error() method in Lobby
+		# Second parameter is the message of the error
+		emit_signal("meeting_error", "Server has been disconnected")
+		end_meeting()
 	else:
 		print("is_network_server == false")
 		# If the user disconnects ( not the server ), we just deregister him from the session
