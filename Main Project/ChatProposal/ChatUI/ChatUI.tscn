@@ -16,6 +16,7 @@ script = ExtResource( 2 )
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = 49.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.227451, 0.317647, 0.572549, 1 )
@@ -36,16 +37,18 @@ margin_bottom = 570.0
 margin_right = 267.0
 margin_bottom = 41.0
 custom_constants/separation = 100
+alignment = 1
 
 [node name="Chat" type="Label" parent="ChatContainer/VBoxContainer/HBoxContainer"]
+margin_left = 49.0
 margin_top = 11.0
-margin_right = 38.0
+margin_right = 87.0
 margin_bottom = 29.0
 text = "Chat"
 
 [node name="HideButton" type="Button" parent="ChatContainer/VBoxContainer/HBoxContainer"]
-margin_left = 138.0
-margin_right = 169.0
+margin_left = 187.0
+margin_right = 218.0
 margin_bottom = 41.0
 text = "<"
 
@@ -70,7 +73,6 @@ margin_right = 200.0
 margin_bottom = 41.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
-text = "dfs😁😁😁"
 
 [node name="SendButton" type="Button" parent="ChatContainer/VBoxContainer/Chat"]
 margin_left = 204.0
