@@ -1,8 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Assets/avatar-1.png" type="Texture" id=1]
 [ext_resource path="res://ChatProposal/Message/Message.gd" type="Script" id=2]
+[ext_resource path="res://Assets/UI/Fonts/SztyletBold-aOKK.otf" type="DynamicFontData" id=3]
+[ext_resource path="res://Assets/UI/Fonts/NotoNew.ttf" type="DynamicFontData" id=4]
 
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 4 )
+fallback/0 = ExtResource( 3 )
 
 [node name="Message" type="MarginContainer"]
 margin_right = 148.0
@@ -12,7 +17,7 @@ script = ExtResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_right = 148.0
-margin_bottom = 196.0
+margin_bottom = 337.0
 custom_constants/separation = 8
 
 [node name="Avatar" type="TextureRect" parent="VBoxContainer"]
@@ -27,14 +32,15 @@ stretch_mode = 5
 [node name="MessageInfo" type="RichTextLabel" parent="VBoxContainer"]
 margin_top = 40.0
 margin_right = 148.0
-margin_bottom = 55.0
+margin_bottom = 62.0
 bbcode_enabled = true
 fit_content_height = true
 scroll_active = false
 
 [node name="MessageText" type="Label" parent="VBoxContainer"]
-margin_top = 63.0
+margin_top = 69.0
 margin_right = 148.0
-margin_bottom = 196.0
-text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo elit at imperdiet dui."
+margin_bottom = 336.882
+custom_fonts/font = SubResource( 1 )
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo elit at imperdiet dui. 😁😁😁😁😁"
 autowrap = true
