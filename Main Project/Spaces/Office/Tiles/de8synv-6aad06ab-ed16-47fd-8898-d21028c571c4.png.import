@@ -1,0 +1,35 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/de8synv-6aad06ab-ed16-47fd-8898-d21028c571c4.png-88ddebab394830232142765693f5f779.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://Spaces/Office/Tiles/de8synv-6aad06ab-ed16-47fd-8898-d21028c571c4.png"
+dest_files=[ "res://.import/de8synv-6aad06ab-ed16-47fd-8898-d21028c571c4.png-88ddebab394830232142765693f5f779.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=1
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+process/normal_map_invert_y=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0
