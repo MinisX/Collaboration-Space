@@ -151,9 +151,10 @@ remote func register_participant(new_participant_data: Dictionary) -> void:
 # Unregister participant
 func unregister_participant(id: int) -> void:
 	print("Meeting: unregister_participant, ID: %s " % id)
-	participants.erase(id)
-	var childNode = get_tree().get_root().get_node("Default").get_node("Participants").get_child(1)
+	
+	var childNode = get_tree().get_root().get_node("Default").get_node("Participants").get_node(str(id))
 	get_tree().get_root().get_node("Default").get_node("Participants").remove_child(childNode)
+	participants.erase(id)
 	
 	#remove_child(childNode)
 	
@@ -210,6 +211,7 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 			print("Child node index: %s" % participant.get_index())
 			var networkIDAsString = str(get_tree().get_network_unique_id())
 			print("Network id: %s " % networkIDAsString)
+			print(get_tree().get_root().get_node("Default").get_node("Participants").get_node(str(p_id)))
 			print("Trying to find child node: %s" % get_tree().get_root().get_node("Default").get_node("Participants").get_child(0))
 
 	# TODO Ask Yufus and Fatma what happens here
