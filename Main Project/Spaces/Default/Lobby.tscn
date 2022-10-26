@@ -83,6 +83,12 @@ margin_right = 184.0
 margin_bottom = 131.0
 text = "JoinRunningGame"
 
+[node name="Customize avatar" type="Button" parent="ConnectionPanel/VBoxContainer"]
+margin_top = 135.0
+margin_right = 184.0
+margin_bottom = 176.0
+text = "Customize avatar"
+
 [node name="ParticipantsPanel" type="ColorRect" parent="."]
 visible = false
 anchor_left = 0.5
@@ -129,4 +135,5 @@ text = "Start"
 [connection signal="pressed" from="ConnectionPanel/VBoxContainer/Row3/Online" to="." method="_on_online_pressed"]
 [connection signal="pressed" from="ConnectionPanel/VBoxContainer/ChangePassword" to="." method="_on_ChangePassword_pressed"]
 [connection signal="pressed" from="ConnectionPanel/VBoxContainer/JoinRunningGame" to="." method="_on_JoinRunningGame_pressed"]
+[connection signal="pressed" from="ConnectionPanel/VBoxContainer/Customize avatar" to="." method="_on_Customize_avatar_pressed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

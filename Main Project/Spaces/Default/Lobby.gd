@@ -193,3 +193,6 @@ func _on_ChangePassword_pressed():
 
 func _on_JoinRunningGame_pressed():
 	pass # Replace with function body.
+
+func _on_Customize_avatar_pressed():
+	get_tree().change_scene("res://Customization/Avatar.tscn")

@@ -52,10 +52,8 @@ func _process(_delta):
 		convert_data_for_firebase()
 		match new_profile:
 			true:
-				print("true")
 				Firebase.save_document("users?documentId=%s" % Firebase.user_info.id, profile, http)
 			false: 
-				print("false")
 				Firebase.update_document("users/%s" % Firebase.user_info.id, profile, http)
 				
 		information_sent = true
@@ -71,12 +69,19 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			return
 		# If response code is 200 it means that the document exists in the DB, so we saved it succesfully
 		200:
+			self.profile = result_body.fields
+			
 			if information_sent:
 				print("HTTP Response: Code 200 -> Information saved")
 				#notification.text = ""
 				information_sent = false
 				get_tree().change_scene("res://Spaces/Default/Lobby.tscn")
-			self.profile = result_body.fields
+			# This is entered when user is already registered and wants to modify the existing avatar
+			else:
+				print("HTTP Response: Code 200 -> Information changed")
+				convert_data_from_firebase()
+				set_selected_color()
+			
 
 func _on_ok_pressed() -> void:
 	Meeting.participant_data["Name"] = name_input.text
@@ -95,6 +100,24 @@ func _on_ok_pressed() -> void:
 	
 	#get_tree().change_scene("res://Spaces/Default/Default.tscn")
 
+# This method converts the user data from Firestore to Meeting.participant_data
+func convert_data_from_firebase() -> void:
+	
+	#name
+	Meeting.participant_data["Name"] = profile.name["stringValue"]
+	name_input.text = Meeting.participant_data["Name"]
+			
+	Meeting.participant_data["Color"]["Hair"] = Color(profile.hair["stringValue"])
+	Meeting.participant_data["Color"]["Eyes"] = Color(profile.eyes["stringValue"])
+	Meeting.participant_data["Color"]["Pants"] = Color(profile.legs["stringValue"])
+	Meeting.participant_data["Color"]["Shoe"] = Color(profile.feet["stringValue"])
+	# skin
+	Meeting.participant_data["Color"]["Skin"] = Color(profile.hands["stringValue"])
+	Meeting.participant_data["Color"]["Skin"] = Color(profile.head["stringValue"])
+	# shirt
+	Meeting.participant_data["Color"]["Shirt"] = Color(profile.torso["stringValue"])
+	Meeting.participant_data["Color"]["Shirt"] = Color(profile.arms["stringValue"])
+	
 # This method converts the user data to the format we need for Firestore
 func convert_data_for_firebase() -> void:
 	profile.name = { "stringValue": Meeting.participant_data["Name"]}
