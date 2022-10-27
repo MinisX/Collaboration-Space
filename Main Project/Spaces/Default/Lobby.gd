@@ -79,12 +79,15 @@ func _on_connection_failed() -> void:
 func _on_meeting_ended() -> void:
 	print("Lobby: _on_meeting_ended")
 	
+	"""
 	if !Firebase.user_info.is_registered:
 		Firebase.delete_document("users/%s" % Firebase.user_info.id, http)
-	else: 
-		self.show()
-		connection_panel.show()
-		participants_panel.hide()
+	
+	else:
+	""" 
+	self.show()
+	connection_panel.show()
+	participants_panel.hide()
 	
 # This method is triggered from Meeting.gd in _server_disconnected() and _participant_disconnected() methods	
 func _on_meeting_error(error) -> void:
