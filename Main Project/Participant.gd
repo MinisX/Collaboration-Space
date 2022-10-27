@@ -43,7 +43,6 @@ func _process(_delta: float) -> void:
 func set_data(new_data: Dictionary) -> void:
 	$Name.text = new_data["Name"]
 	set_selected_color(new_data)
-	print("hiiiii")
 
 
 func set_participant_camera(active: bool) -> void:

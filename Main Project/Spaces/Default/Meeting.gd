@@ -212,7 +212,8 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 			# Adds participant to participant list in Default scene
 			meeting_area.get_node("Participants").add_child(participant)
 
-	# TODO Ask Yufus and Fatma what happens here
+	# If the current user is not server, we inform the server that the current user is ready
+	# for the meeting to start
 	if not get_tree().is_network_server():
 		# Send RPC method call to ready_to_start() method here in Meeting.gd
 		rpc_id(1, "ready_to_start", get_tree().get_network_unique_id())
