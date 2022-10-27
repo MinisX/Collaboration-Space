@@ -1,7 +1,13 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Spaces/Default/Lobby.gd" type="Script" id=1]
-[ext_resource path="res://Assets/UI/panel_rect.png" type="Texture" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.0352941, 0.12549, 0.278431, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="Lobby" type="Control"]
 anchor_right = 1.0
@@ -17,27 +23,26 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.172549, 0.32549, 0.580392, 1 )
 
-[node name="TextureRect" type="TextureRect" parent="ConnectionPanel"]
-modulate = Color( 0.034668, 0.125306, 0.277344, 1 )
+[node name="Panel" type="Panel" parent="ConnectionPanel"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -227.0
-margin_top = -189.0
-margin_right = 227.0
-margin_bottom = 189.0
-texture = ExtResource( 2 )
+margin_left = -175.0
+margin_top = -150.0
+margin_right = 175.0
+margin_bottom = 150.0
+custom_styles/panel = SubResource( 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ConnectionPanel"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -89.5
-margin_top = -20.5
-margin_right = 89.5
-margin_bottom = 20.5
+margin_left = -92.0
+margin_top = -88.0
+margin_right = 92.0
+margin_bottom = 88.0
 
 [node name="Row3" type="HBoxContainer" parent="ConnectionPanel/VBoxContainer"]
 margin_right = 184.0
