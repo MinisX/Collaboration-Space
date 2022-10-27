@@ -8,6 +8,7 @@ func _ready()-> void:
 	exit_meeting()
 		
 func exit_meeting() -> void:
+	print("Exit_Meeting: exit_meeting()")
 	Firebase.delete_document("users/%s" % Firebase.user_info.id, http)
 
 # This is response from HTTP request when closing the window
@@ -27,6 +28,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		if response_code == 200:
 			print("\nHTTP Response: Code 200 -> User account was deleted")
 			Firebase.user_info = {}
+			print("Exit_Meeting: get_tree().quit()")
 			get_tree().quit()
 		else:
 			print("\nHTTP Response: %s -> User account not deleted" % response_code)

@@ -82,6 +82,7 @@ func login(email: String, password: String, http: HTTPRequest) -> void:
 	var result := yield(http, "request_completed") as Array
 	# If our response is OK ( 200 ), we store user information
 	if result[1] == 200:
+		print("LoginScreen.gd: login succesful, set to true")
 		user_info = _get_user_info(result, true)
 		
 func change_password(new_password: String, http: HTTPRequest) -> void:

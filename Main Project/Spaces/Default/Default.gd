@@ -13,7 +13,7 @@ var participants_UI_visibility: bool = false
 func _ready() -> void:
 	# Disable auto accept of quiting by cross
 	# It's handeled in _notification method
-	get_tree().set_auto_accept_quit(false)
+	#get_tree().set_auto_accept_quit(false)
 	
 	chat_button.connect("pressed", self, "_on_chat_button_pressed")
 	participants_button.connect("pressed", self, "_on_participants_button_pressed")
@@ -56,12 +56,18 @@ func _on_menu_button_pressed() -> void:
 			menu_visibility = true
 			participants_button.hide()
 
+"""
 # Here we receive notification that user has pressed X to quit the game
 func _notification(what):
 	if (what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST):
+		print("Default.gd: Notification in first if")
+		
 		if !Firebase.user_info.is_registered:
+			print("Default.gd: Notification in second if")
 			get_tree().change_scene("res://Exit_Meeting/Exit_Meeting.tscn")
 		else: 
+			print("Default.gd: Notification in else")
 			Firebase.user_info = {}
 			get_tree().quit()
+"""
 

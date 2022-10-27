@@ -132,7 +132,6 @@ func fetch_user_data_fromDB():
 	# Hide change password if user is not registered
 	if !Firebase.user_info.is_registered:
 		changePassword_button.hide()
-		
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	http_responses_count += 1
@@ -203,8 +202,11 @@ func _on_Customize_avatar_pressed():
 # Here we receive notification that user has pressed X to quit the game
 func _notification(what):
 	if (what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST):
+		print("Lobby.gd: Nofitication in first if")
 		if !Firebase.user_info.is_registered:
+			print("Lobby.gd: Nofitication in second if")
 			get_tree().change_scene("res://Exit_Meeting/Exit_Meeting.tscn")
 		else: 
+			print("Lobby.gd: Nofitication in else")
 			Firebase.user_info = {}
 			get_tree().quit()
