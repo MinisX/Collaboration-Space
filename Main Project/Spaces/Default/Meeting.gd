@@ -130,7 +130,7 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 	print("Meeting: preconfigure_meeting")
 	
 	# Get access to Default scene
-	var meeting_area = load("res://Spaces/Default/Default.tscn").instance()
+	var meeting_area = load("res://Spaces/Office/Office.tscn").instance()
 	# Add Default.tscn as child of current screen
 	get_tree().get_root().add_child(meeting_area)
 	
