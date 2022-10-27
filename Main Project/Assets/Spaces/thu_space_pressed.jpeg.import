@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/office_space.png-46315f0294b33e8d2321b6a94e5e8015.stex"
+path="res://.import/thu_space_pressed.jpeg-d611824a393b54b39da4e718c72361cf.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Spaces/office_space.png"
-dest_files=[ "res://.import/office_space.png-46315f0294b33e8d2321b6a94e5e8015.stex" ]
+source_file="res://Assets/Spaces/thu_space_pressed.jpeg"
+dest_files=[ "res://.import/thu_space_pressed.jpeg-d611824a393b54b39da4e718c72361cf.stex" ]
 
 [params]
 

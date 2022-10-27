@@ -1,11 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Assets/UI/Fonts/SztyletBold-aOKK.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Assets/Spaces/library_space.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Spaces/library_space_pressed.png" type="Texture" id=3]
-[ext_resource path="res://Assets/Spaces/office_space.png" type="Texture" id=4]
-[ext_resource path="res://Assets/Spaces/office_space_pressed.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Spaces/office_space.jpeg" type="Texture" id=4]
+[ext_resource path="res://Assets/Spaces/office_space_pressed.jpeg" type="Texture" id=5]
 [ext_resource path="res://Assets/UI/Space_ButtonGroup.tres" type="ButtonGroup" id=6]
+[ext_resource path="res://Assets/Spaces/thu_space_pressed.jpeg" type="Texture" id=7]
+[ext_resource path="res://Assets/Spaces/thu_space.jpeg" type="Texture" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 28
@@ -69,8 +71,8 @@ margin_right = 214.0
 margin_bottom = 152.0
 toggle_mode = true
 group = ExtResource( 6 )
-texture_normal = ExtResource( 2 )
-texture_pressed = ExtResource( 3 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 7 )
 
 [node name="OnlineParticipants" type="Label" parent="VBoxContainer/HBoxContainer/THU"]
 margin_top = 160.0
@@ -109,19 +111,19 @@ align = 1
 
 [node name="Office" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 margin_left = 460.0
-margin_right = 644.0
+margin_right = 674.0
 margin_bottom = 178.0
 custom_constants/separation = 8
 
 [node name="Office" type="Label" parent="VBoxContainer/HBoxContainer/Office"]
-margin_right = 184.0
+margin_right = 214.0
 margin_bottom = 18.0
 text = "Office"
 align = 1
 
 [node name="Office2" type="TextureButton" parent="VBoxContainer/HBoxContainer/Office"]
 margin_top = 26.0
-margin_right = 184.0
+margin_right = 214.0
 margin_bottom = 152.0
 toggle_mode = true
 group = ExtResource( 6 )
@@ -130,7 +132,7 @@ texture_pressed = ExtResource( 5 )
 
 [node name="OnlineParticipants" type="Label" parent="VBoxContainer/HBoxContainer/Office"]
 margin_top = 160.0
-margin_right = 184.0
+margin_right = 214.0
 margin_bottom = 178.0
 text = "10 online"
 align = 1
