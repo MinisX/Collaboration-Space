@@ -77,10 +77,11 @@ func get_cmd_args() -> Dictionary:
 
 # This method is triggered from a signal "network_peer_connected" from NetworkedMultiplayerENet 
 func _participant_connected(id: int) -> void:
-	print("Meeting: _participant_connected")
+	print("Meeting: _participant_connected, ID: %s " % id)
 	
 	# Start registration
 	# The remote function register_participant of Meeting is triggered here
+	# Here the signal is sent to another users to register the rpc caller at their game
 	rpc_id(id, "register_participant", participant_data)
 	
 	# A little bit about RPC

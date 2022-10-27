@@ -115,7 +115,9 @@ func _on_online_pressed():
 	Meeting.join_meeting(ip)
 	if Meeting.participant_data["Role"] == "Participant":
 		start_button.hide()
-
+		
+func _on_JoinRunningGame_pressed():
+	pass # Replace with function body.
 
 func _on_start_pressed():
 	print("Lobby: _on_start_pressed()")
@@ -192,9 +194,6 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 
 func _on_ChangePassword_pressed():
 	get_tree().change_scene("res://ChangePassword/ChangePassword.tscn")
-
-func _on_JoinRunningGame_pressed():
-	pass # Replace with function body.
 
 func _on_Customize_avatar_pressed():
 	get_tree().change_scene("res://Customization/Avatar.tscn")
