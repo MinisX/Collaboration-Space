@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Assets/Sprites/idle_legs.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Sprites/idle_feet.png" type="Texture" id=2]
@@ -919,6 +919,13 @@ tracks/7/keys = {
 "values": [ 30, 31, 32, 33, 34 ]
 }
 
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.0823529, 0.203922, 0.407843, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [node name="Avatar" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -933,6 +940,7 @@ anchor_bottom = 1.0
 color = Color( 0.172549, 0.32549, 0.580392, 1 )
 
 [node name="ColorPickeBg" type="TextureRect" parent="."]
+visible = false
 modulate = Color( 0.0823529, 0.203922, 0.407843, 1 )
 anchor_left = 0.5
 anchor_top = 0.5
@@ -944,9 +952,6 @@ margin_right = 41.0
 margin_bottom = 90.0
 rect_scale = Vector2( 0.825, 1.5 )
 texture = ExtResource( 11 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Sprites" type="Control" parent="."]
 anchor_left = 0.5
@@ -1080,14 +1085,25 @@ margin_right = 71.0
 margin_bottom = 286.0
 max_value = 7.0
 
+[node name="Panel" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -420.0
+margin_top = -282.0
+margin_right = -40.0
+margin_bottom = 283.0
+custom_styles/panel = SubResource( 10 )
+
 [node name="ColorPicker" type="ColorPicker" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -396.0
+margin_left = -403.0
 margin_top = -259.0
-margin_right = -55.0
+margin_right = -62.0
 margin_bottom = 263.0
 edit_alpha = false
 
