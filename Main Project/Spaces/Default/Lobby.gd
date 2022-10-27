@@ -125,7 +125,6 @@ func _on_JoinRunningGame_pressed():
 func _on_start_pressed():
 	print("Lobby: _on_start_pressed()")
 	if Meeting.participant_data["Role"] == "Host":
-		refresh_lobby()
 		# call start_meeting
 		# use id 1 to call only on server  
 		Meeting.rpc_id(1, "start_meeting")

@@ -4,7 +4,7 @@ extends Node
 # ---------------------------
 
 # Confriration parameters
-var DEFAULT_PORT: int = 1234
+var DEFAULT_PORT: int = 1235
 const MAX_PARTICIPANT: int = 30
 
 # Create new NetworkedMultiplayerENet object. 
@@ -76,6 +76,12 @@ func get_cmd_args() -> Dictionary:
 	return arguments
 
 # This method is triggered from a signal "network_peer_connected" from NetworkedMultiplayerENet 
+"""
+Sequence:
+	1) When user 1 joins the server as host, the server receives information in this method
+	   saying "Meeting: _participant_connected, ID: <user1id>"
+	2) 
+"""
 func _participant_connected(id: int) -> void:
 	print("Meeting: _participant_connected, ID: %s " % id)
 	
