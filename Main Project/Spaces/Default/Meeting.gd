@@ -91,7 +91,7 @@ func _participant_connected(id: int) -> void:
 	# Start registration
 	# The remote function register_participant of Meeting is triggered here
 	# Here the signal is sent to another users to register the rpc caller at their game
-	rpc_id(id, "register_participant", participant_data)
+	rpc_id(id, "register_participant", participant_data, id)
 	
 	# A little bit about RPC
 	# To communicate between peers, the easiest way is to use RPCs (remote procedure calls). This is implemented as a set of functions in Node:
@@ -149,9 +149,16 @@ func _connected_fail() -> void:
 # The remote keyword can be called by any peer, including the server and all clients. 
 # The puppet keyword means a call can be made from the network 
 # master to any network puppet. The master keyword means a call can be made from any network puppet to the network master.
-remote func register_participant(new_participant_data: Dictionary) -> void:
+remote func register_participant(new_participant_data: Dictionary, _id : int) -> void:
 	# Here we get the rpc ID of the user that called register_participant
-	var id: int = get_tree().get_rpc_sender_id()
+	var id: int = _id
+	
+	# We insert this if statement, since when user1 is sending the request, he already has
+	# himself as participant in the tree. So get_tree() for user that is already in game
+	# and get_tree() for user who is trying to join while game is running will be different
+	if !meeting_is_running:
+		id = get_tree().get_rpc_sender_id()
+		
 	print("Meeting: register_participant: ", id)
 	participants[id] = new_participant_data
 	
