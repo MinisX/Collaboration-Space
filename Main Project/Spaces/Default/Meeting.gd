@@ -92,8 +92,11 @@ func _participant_connected(id: int) -> void:
 	# Start registration
 	# The remote function register_participant of Meeting is triggered here
 	# Here the signal is sent to another users to register the rpc caller at their game
-	var participants_array = get_tree().get_root().get_node("Default").get_node("Participants").get_children()
-	rpc_id(id, "register_participant", participant_data, participants_array)
+	if meeting_is_running:
+		var participants_array = get_tree().get_root().get_node("Default").get_node("Participants").get_children()
+		rpc_id(id, "register_participant", participant_data, participants_array)
+	else:
+		rpc_id(id, "register_participant", participant_data, null)
 	
 	# A little bit about RPC
 	# To communicate between peers, the easiest way is to use RPCs (remote procedure calls). This is implemented as a set of functions in Node:
