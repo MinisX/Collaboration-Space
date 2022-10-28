@@ -93,9 +93,12 @@ func _participant_connected(id: int) -> void:
 	# The remote function register_participant of Meeting is triggered here
 	# Here the signal is sent to another users to register the rpc caller at their game
 	if meeting_is_running:
-		print("Sending this over rpc register: %s " % get_tree().get_root().get_node("Default").get_node("Participants").get_children()[0])
-		var participants_array = get_tree().get_root().get_node("Default").get_node("Participants").get_children()
-		rpc_id(id, "register_participant", participant_data, participants_array)
+		if get_tree().get_network_unique_id() == 1:
+			print("Sending this over rpc register: %s " % get_tree().get_root().get_node("Default").get_node("Participants").get_children()[0])
+			var participant_node = get_tree().get_root().get_node("Default").get_node("Participants").get_children()[0]
+			#var participants_array = get_tree().get_root().get_node("Default").get_node("Participants").get_children()
+			#rpc_id(id, "register_participant", participant_data, participants_array)
+			rpc_id(id, "register_participant", participant_data, participant_node)
 	else:
 		rpc_id(id, "register_participant", participant_data, [])
 	
@@ -155,7 +158,7 @@ func _connected_fail() -> void:
 # The remote keyword can be called by any peer, including the server and all clients. 
 # The puppet keyword means a call can be made from the network 
 # master to any network puppet. The master keyword means a call can be made from any network puppet to the network master.
-remote func register_participant(new_participant_data: Dictionary, participants_array : Array) -> void:	
+remote func register_participant(new_participant_data: Dictionary, participant_node : KinematicBody2D) -> void:	
 	""" TODO
 	1) Try unreliable RPC call from user1 to user2 - tried, does the same as normal RPC call
 	2) Try to send RPC call from user1 get_tree().get_parent().rpc_id....
@@ -167,8 +170,10 @@ remote func register_participant(new_participant_data: Dictionary, participants_
 	
 	# We do this only if the call is from server
 	if id == 1 && join_running_game_pressed:
-		for p in participants_array:
-			print("printing participants array %s " % participants_array[0])
+		print("Printing received participant node: %s " % participant_node)
+		meeting_area_running.get_node("Participants").add_child(participant_node)
+		#for p in participants_array:
+			#print("printing participants array %s " % participants_array[0])
 			#print(meeting_area_running.get_node("Participants").get_children()[0])
 			#meeting_area_running.get_node("Participants").add_child(p)
 			
