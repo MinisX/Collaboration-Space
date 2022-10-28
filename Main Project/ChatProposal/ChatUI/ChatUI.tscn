@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://ChatProposal/ChatUI/Client.gd" type="Script" id=1]
 [ext_resource path="res://ChatProposal/ChatUI/ChatUI.gd" type="Script" id=2]
 
 [node name="ChatUI" type="Control"]
@@ -66,6 +65,3 @@ margin_left = 157.0
 margin_right = 220.0
 margin_bottom = 41.0
 text = "send"
-
-[node name="Client" type="Node" parent="."]
-script = ExtResource( 1 )

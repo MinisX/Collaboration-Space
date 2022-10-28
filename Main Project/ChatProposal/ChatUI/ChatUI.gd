@@ -6,7 +6,6 @@ onready var hide_button: Button = $ChatContainer/VBoxContainer/HBoxContainer/Hid
 onready var _chat_text: RichTextLabel = $ChatContainer/VBoxContainer/ChatText
 onready var _line_edit: LineEdit = $ChatContainer/VBoxContainer/Chat/ChatEnter
 onready var send_button: Button = $ChatContainer/VBoxContainer/Chat/SendButton
-onready var Client = $Client
 onready var participant_name: String
 
 # Called when the node enters the scene tree for the first time.
@@ -26,10 +25,9 @@ func _on_data():
 	print("ChatUI: inside _on_data")
 	print(Client._client.get_peer(1).get_packet().get_string_from_utf8())
 	
-func send_to_server(id, room, state):
-	var to_send = "{\"user_id\": " + id + ", \"room\": \"" + room + "\", \"state\": \"" + state + "\"}"
-	Client.send_to_server(to_send)
-	print("ChatUI: inside send_to_server")
+#func send_to_server(id, room, state):
+#	var to_send = "{\"user_id\": " + id + ", \"room\": \"" + room + "\", \"state\": \"" + state + "\"}"
+#	print("ChatUI: inside send_to_server")
 	
 func _on_send() -> void:
 #	# var message = MESSAGE.instance()
@@ -52,3 +50,6 @@ func _on_send() -> void:
 
 func _on_hide() -> void:
 	self.hide()
+
+func _exit_tree():
+	print("ChatUI: _exit_tree")
