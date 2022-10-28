@@ -169,6 +169,7 @@ remote func register_participant(new_participant_data: Dictionary, participants_
 		for p in participants_array:
 			print("printing participants array")
 			print(p)
+			meeting_area_running.get_node("Participants").add_child(p)
 			
 	participants[id] = new_participant_data
 	
