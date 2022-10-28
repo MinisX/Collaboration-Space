@@ -17,6 +17,7 @@ onready var http : HTTPRequest = $HTTPRequest
 # This variable counts the amount of HTTP responses/requests
 onready var http_responses_count = 0
 
+
 func _ready() -> void:
 	print("Lobby: _ready")
 	# Disable auto accept of quiting by cross
@@ -70,7 +71,8 @@ func _on_connection_success() -> void:
 	
 	# Hide the connection panel and show participants panel
 	connection_panel.hide()
-	participants_panel.show()
+	if Meeting.meeting_is_running == true:
+		participants_panel.show()
 
 # This method is triggered from Meeting.gd in _connected_fail() method
 func _on_connection_failed() -> void:
@@ -120,6 +122,8 @@ func _on_online_pressed():
 		start_button.hide()
 		
 func _on_JoinRunningGame_pressed():
+	print("Lobby: _on_JoinRunningGame_pressed()")
+	Meeting.meeting_is_running = true
 	Meeting.join_meeting(ip)
 
 func _on_start_pressed():

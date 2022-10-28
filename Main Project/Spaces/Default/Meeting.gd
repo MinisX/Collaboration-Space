@@ -7,6 +7,9 @@ extends Node
 var DEFAULT_PORT: int = 1235
 const MAX_PARTICIPANT: int = 30
 
+var meeting_is_running = false
+var meeting_area_running = null
+
 # Create new NetworkedMultiplayerENet object. 
 # It containts useful methods for serializing, sending and receiving data. On top of that, it adds methods to set a peer, 
 # transfer mode, etc. It also includes signals that will let you know when peers connect or disconnect.
@@ -225,6 +228,7 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 remote func postconfigure_meeting() -> void:
 	print("Meeting: postconfigure_meeting")
 	# Pause the scene
+	meeting_is_running = true
 	get_tree().set_pause(false)
 	
 # This method is triggered from rpc_id call from _preconfigure_meeting() method in Meeting ( this script )	
@@ -255,6 +259,16 @@ func host_meeting() -> void:
 # This method is called when "online" button is pressed
 func join_meeting(ip: String) -> void:
 	print("Meeting: join_meeting")
+	
+	# If meeting is running, add default scene to the user who is trying to join
+	# while game is already running. So that all users have the same tree
+	if meeting_is_running:
+		# Get access to Default scene
+		meeting_area_running = load("res://Spaces/Default/Default.tscn").instance()
+		# Add Default.tscn as child of current screen
+		get_tree().get_root().add_child(meeting_area_running)
+		# Hide lobby scene
+		get_tree().get_root().get_node("Lobby").hide()
 	
 	# Initializing as a client, connecting to a given IP and port:
 	peer = NetworkedMultiplayerENet.new()
