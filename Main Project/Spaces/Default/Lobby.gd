@@ -120,7 +120,7 @@ func _on_online_pressed():
 		start_button.hide()
 		
 func _on_JoinRunningGame_pressed():
-	pass # Replace with function body.
+	Meeting.join_meeting(ip)
 
 func _on_start_pressed():
 	print("Lobby: _on_start_pressed()")
