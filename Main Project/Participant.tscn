@@ -1,5 +1,6 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=31 format=2]
 
+[ext_resource path="res://Assets/UI/Fonts/SztyletBold-aOKK.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Participant.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Sprites/Combined/m/shoe.png" type="Texture" id=18]
 [ext_resource path="res://Assets/Sprites/Combined/m/hair.png" type="Texture" id=19]
@@ -7,6 +8,9 @@
 [ext_resource path="res://Assets/Sprites/Combined/m/eyes.png" type="Texture" id=21]
 [ext_resource path="res://Assets/Sprites/Combined/m/pants.png" type="Texture" id=22]
 [ext_resource path="res://Assets/Sprites/Combined/m/skin.png" type="Texture" id=23]
+
+[sub_resource type="DynamicFont" id=40]
+font_data = ExtResource( 1 )
 
 [sub_resource type="Animation" id=20]
 length = 0.001
@@ -1322,6 +1326,14 @@ height = 6.0
 [sub_resource type="CircleShape2D" id=37]
 radius = 50.0
 
+[sub_resource type="StyleBoxFlat" id=39]
+bg_color = Color( 0.0823529, 0.203922, 0.407843, 1 )
+border_color = Color( 0.227451, 0.282353, 0.47451, 1 )
+
+[sub_resource type="CapsuleShape2D" id=38]
+radius = 13.0
+height = 32.0
+
 [node name="Participant" type="KinematicBody2D"]
 z_index = 5
 script = ExtResource( 2 )
@@ -1336,6 +1348,7 @@ margin_top = -50.0
 margin_right = 20.0
 margin_bottom = -36.0
 grow_horizontal = 2
+custom_fonts/font = SubResource( 40 )
 text = "Name"
 align = 1
 
@@ -1404,3 +1417,21 @@ shape = SubResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape2D" parent="InteractionArea"]
 shape = SubResource( 37 )
+
+[node name="Location" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -24.0
+margin_top = -73.0
+margin_right = 24.0
+margin_bottom = -55.0
+custom_styles/normal = SubResource( 39 )
+text = "Lobby"
+align = 1
+
+[node name="BodyArea" type="Area2D" parent="."]
+
+[node name="CollisionShape" type="CollisionShape2D" parent="BodyArea"]
+shape = SubResource( 38 )

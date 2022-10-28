@@ -1444,3 +1444,8 @@ position = Vector2( -221, 496 )
 scale = Vector2( 20.88, 13.28 )
 z_index = 99
 room_name = "Room two"
+
+[node name="Room3" parent="." instance=ExtResource( 24 )]
+position = Vector2( 716, 310 )
+scale = Vector2( 70.7688, 53.1187 )
+room_name = "Library"

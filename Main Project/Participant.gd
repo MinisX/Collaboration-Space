@@ -8,6 +8,8 @@ onready var animation_player: AnimationPlayer = $AnimationPlayer
 # onready var sprites_m: Node2D = $SpritesM
 onready var interaction_area: Area2D = $InteractionArea
 
+onready var location: Label = $Location
+
 var velocity: Vector2 = Vector2(0.0, 0.0)
 var direction: Vector2 = Vector2(0.0, 1.0)
 var current_animation: String = "idle_s"
@@ -19,6 +21,7 @@ puppet var puppet_current_animation: String = "idle_s"
 
 func _ready() -> void:
 	print("Participant: _ready()")
+	$BodyArea.connect("area_entered", self, "_display_location")
 #	set_participant_name (GlobalData.participant_data["Name"])
 
 func _process(_delta: float) -> void:
@@ -40,10 +43,16 @@ func _process(_delta: float) -> void:
 	decide_animation()
 	animation_player.play(current_animation)
 
+# TODO Display location UI in other place
+# Set room name to participant's location label
+func _display_location(area: Area2D) -> void:
+	if area.get("room_name") != null:
+		location.text = area.room_name
+		print("Participant: ", area.room_name)
+
 func set_data(new_data: Dictionary) -> void:
 	$Name.text = new_data["Name"]
 	set_selected_color(new_data)
-	print("hiiiii")
 
 
 func set_participant_camera(active: bool) -> void:
@@ -129,7 +138,5 @@ func decide_animation() -> void:
 		rset("puppet_current_animation", current_animation)
 	else:
 		current_animation = puppet_current_animation
-
-
 
 

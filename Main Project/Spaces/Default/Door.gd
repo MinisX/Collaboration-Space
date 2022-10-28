@@ -32,12 +32,15 @@ func _process(delta: float) -> void:
 		rpc("interact")
 
 
-func _on_interaction_range_entered(area) -> void:
-	interaction_active = true
+func _on_interaction_range_entered(area: Area2D) -> void: 
+	if area.get_parent().get("speed") != null:
+		interaction_active = true
+		
 
 
-func _on_interaction_range_exited(area) -> void:
-	interaction_active = false
+func _on_interaction_range_exited(area: Area2D) -> void:
+	if area.get_parent().get("speed") != null:
+		interaction_active = false
 
 
 
