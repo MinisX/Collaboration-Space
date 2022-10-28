@@ -71,7 +71,9 @@ func _on_connection_success() -> void:
 	
 	# Hide the connection panel and show participants panel
 	connection_panel.hide()
-	if Meeting.meeting_is_running == true:
+	if Meeting.meeting_is_running == false:
+		# Hide the connection panel and show participants panel
+		connection_panel.hide()
 		participants_panel.show()
 
 # This method is triggered from Meeting.gd in _connected_fail() method
@@ -125,6 +127,7 @@ func _on_JoinRunningGame_pressed():
 	print("Lobby: _on_JoinRunningGame_pressed()")
 	Meeting.meeting_is_running = true
 	Meeting.join_meeting(ip)
+	connection_panel.hide()
 
 func _on_start_pressed():
 	print("Lobby: _on_start_pressed()")
