@@ -92,7 +92,7 @@ func _participant_connected(id: int) -> void:
 	# Start registration
 	# The remote function register_participant of Meeting is triggered here
 	# Here the signal is sent to another users to register the rpc caller at their game
-	rpc_id(id, "register_participant", participant_data, get_tree())
+	rpc_unreliable_id(id, "register_participant", participant_data)
 	
 	# A little bit about RPC
 	# To communicate between peers, the easiest way is to use RPCs (remote procedure calls). This is implemented as a set of functions in Node:
@@ -150,25 +150,13 @@ func _connected_fail() -> void:
 # The remote keyword can be called by any peer, including the server and all clients. 
 # The puppet keyword means a call can be made from the network 
 # master to any network puppet. The master keyword means a call can be made from any network puppet to the network master.
-remote func register_participant(new_participant_data: Dictionary, sceneTree: SceneTree) -> void:
-	var id: int = get_tree().get_rpc_sender_id()
-	
-	print("register_participant | Before creating tween: " )
-	print_tree()
-	
-	if join_running_game_pressed && id == 1:
-		sceneTree.create_tween()
-		print("register_participant | Created tween")
-		
-	print("register_participant | After creating tween: " )	
-	print_tree()
-	
+remote func register_participant(new_participant_data: Dictionary) -> void:	
 	""" TODO
 	1) Try unreliable RPC call from user1 to user2
 	2) Try to send RPC call from user1 get_tree().get_parent().rpc_id....
-	3) Try to send the tree from user1 to user2"""
+	3) Try to send the tree from user1 to user2: - doesnt work, can't say current tree = received tree'"""
 	# Here we get the rpc ID of the user that called register_participant
-	
+	var id: int = get_tree().get_rpc_sender_id()
 	print("Meeting: register_participant: ", id)
 	participants[id] = new_participant_data
 	
