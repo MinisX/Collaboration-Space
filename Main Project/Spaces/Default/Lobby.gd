@@ -125,7 +125,7 @@ func _on_online_pressed():
 		
 func _on_JoinRunningGame_pressed():
 	print("Lobby: _on_JoinRunningGame_pressed()")
-	join_running_game_pressed = true
+	Meeting.join_running_game_pressed = true
 	Meeting.meeting_is_running = true
 	Meeting.join_meeting(ip)
 	connection_panel.hide()
