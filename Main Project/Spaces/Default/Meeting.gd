@@ -93,6 +93,7 @@ func _participant_connected(id: int) -> void:
 	# The remote function register_participant of Meeting is triggered here
 	# Here the signal is sent to another users to register the rpc caller at their game
 	if meeting_is_running:
+		print("Sending this over rpc register: %s " % get_tree().get_root().get_node("Default").get_node("Participants").get_children()[0])
 		var participants_array = get_tree().get_root().get_node("Default").get_node("Participants").get_children()
 		rpc_id(id, "register_participant", participant_data, participants_array)
 	else:
@@ -167,9 +168,9 @@ remote func register_participant(new_participant_data: Dictionary, participants_
 	# We do this only if the call is from server
 	if id == 1 && join_running_game_pressed:
 		for p in participants_array:
-			print("printing participants array")
-			print(p)
-			meeting_area_running.get_node("Participants").add_child(p)
+			print("printing participants array %s " % participants_array[0])
+			#print(meeting_area_running.get_node("Participants").get_children()[0])
+			#meeting_area_running.get_node("Participants").add_child(p)
 			
 	participants[id] = new_participant_data
 	
@@ -231,7 +232,11 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 				participant.set_data(participants[p_id])
 
 			# Adds participant to participant list in Default scene
+			print("Meeting: preconfigure_meeting: adding child: %s" % participant)
 			meeting_area.get_node("Participants").add_child(participant)
+			print("Meeting: preconfigure_meeting: accessing child from node: %s" % meeting_area.get_node("Participants").get_children()[0])
+			var default = get_tree().get_root().get_node("Default").get_node("Participants").get_children()[0]
+			print("Accessing differentely: %s" % default)
 
 	# If the current user is not server, we inform the server that the current user is ready
 	# for the meeting to start
