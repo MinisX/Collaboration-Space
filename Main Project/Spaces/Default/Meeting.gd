@@ -98,7 +98,7 @@ func _participant_connected(id: int) -> void:
 			var participant_node = get_tree().get_root().get_node("Default").get_node("Participants").get_children()[0]
 			#var participants_array = get_tree().get_root().get_node("Default").get_node("Participants").get_children()
 			#rpc_id(id, "register_participant", participant_data, participants_array)
-			rpc_id(id, "register_participant", participant_data, participant_node)
+			rpc_unreliable_id(id, "register_participant", participant_data, participant_node)
 	else:
 		rpc_id(id, "register_participant", participant_data, [])
 	
@@ -160,10 +160,14 @@ func _connected_fail() -> void:
 # master to any network puppet. The master keyword means a call can be made from any network puppet to the network master.
 remote func register_participant(new_participant_data: Dictionary, participant_node : KinematicBody2D) -> void:	
 	""" TODO
-	1) Try unreliable RPC call from user1 to user2 - tried, does the same as normal RPC call
-	2) Try to send RPC call from user1 get_tree().get_parent().rpc_id....
-	3) Try to send the tree from user1 to user2: - doesnt work, can't say current tree = received tree'
-	4) Try to send participants nodes as array from server"""
+	1) DIDNTWORK: Try unreliable RPC call from user1 to user2 - tried, does the same as normal RPC call
+	2) DIDNTWORK: Try to send RPC call from user1 get_tree().get_parent().rpc_id....
+	3) DIDNTWORK: Try to send the tree from user1 to user2: - doesnt work, can't say current tree = received tree'
+	4) DIDNTWORK: Try to send participants nodes as array from server
+	5) Try to send data for user1 from server and create it at user2
+	5) SEEMSTOWORK: Try to send data for user1 from server and create it at user2
+	6) Try to send participant node of user1 from server over unreliable_rpc ( mby thats why it's encoded object')
+	7) Try populating the scene with 5 extra instances and then "summon" participants into bodies"""
 	# Here we get the rpc ID of the user that called register_participant
 	var id: int = get_tree().get_rpc_sender_id()
 	print("Meeting: register_participant: ", id)
