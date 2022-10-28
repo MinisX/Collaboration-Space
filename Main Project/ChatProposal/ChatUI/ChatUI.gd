@@ -15,6 +15,7 @@ func _ready():
 	Client._client.connect("data_received", self, "_on_data")
 	_chat_text.scroll_following = true
 	print("ChatUI: inside _ready called")
+
 	
 func _on_data():
 	# Add the newly received message to chat, you MUST always use get_peer(1).
@@ -24,10 +25,6 @@ func _on_data():
 	_chat_text.newline()
 	print("ChatUI: inside _on_data")
 	print(Client._client.get_peer(1).get_packet().get_string_from_utf8())
-	
-#func send_to_server(id, room, state):
-#	var to_send = "{\"user_id\": " + id + ", \"room\": \"" + room + "\", \"state\": \"" + state + "\"}"
-#	print("ChatUI: inside send_to_server")
 	
 func _on_send() -> void:
 #	# var message = MESSAGE.instance()

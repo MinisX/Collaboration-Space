@@ -10,7 +10,7 @@ const MAX_PARTICIPANT: int = 30
 # Create new NetworkedMultiplayerENet object. 
 # It containts useful methods for serializing, sending and receiving data. On top of that, it adds methods to set a peer, 
 # transfer mode, etc. It also includes signals that will let you know when peers connect or disconnect.
-var peer: NetworkedMultiplayerENet = null
+var peer: NetworkedMultiplayerENet = null	
 
 
 # Dictionary to store particpant name and custom colors
@@ -290,3 +290,6 @@ func end_meeting() -> void:
 
 	emit_signal("meeting_ended")
 	participants.clear()
+
+func get_current_user_network_id() -> String:
+	return str(get_tree().get_network_unique_id())

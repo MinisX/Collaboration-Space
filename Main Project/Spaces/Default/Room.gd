@@ -27,11 +27,17 @@ func get_room_info() -> String:
 # push id of a participant to "participants_inside" array
 func _on_body_entered(body: KinematicBody2D) -> void:
 	if body:
-		print("Room: ", "participant: ", body.name, " entered to the room ", room_name)
-		Client.send_to_server(body.name, "room_1", "join")
+		print(body.name)
+		print(Meeting.get_current_user_network_id())
+		if body.name == Meeting.get_current_user_network_id():
+			print("Room: ", "participant: " + Firebase.user_info.id + " entered to the room ", room_name)
+			Client.send_to_server(Firebase.user_info.id, "room_1", "join")
 
 # remove id of a participant from "participants_inside" array
 func _on_body_exited(body: KinematicBody2D) -> void:
 	if body:
-		print("Room: ", "participant: ", body.name, " exited from the room ", room_name)
-		Client.send_to_server(body.name, "room_1", "depart")
+		print(body.name)
+		print(Meeting.get_current_user_network_id())
+		if body.name == Meeting.get_current_user_network_id():
+			print("Room: ", "participant: " + Firebase.user_info.id + " exited from the room ", room_name)
+			Client.send_to_server(Firebase.user_info.id, "room_1", "depart")
