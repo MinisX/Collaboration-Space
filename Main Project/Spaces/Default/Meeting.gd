@@ -92,7 +92,8 @@ func _participant_connected(id: int) -> void:
 	# Start registration
 	# The remote function register_participant of Meeting is triggered here
 	# Here the signal is sent to another users to register the rpc caller at their game
-	rpc_unreliable_id(id, "register_participant", participant_data)
+	var participants_array = get_tree().get_root().get_node("Default").get_node("Participants").get_children()
+	rpc_id(id, "register_participant", participant_data, participants_array)
 	
 	# A little bit about RPC
 	# To communicate between peers, the easiest way is to use RPCs (remote procedure calls). This is implemented as a set of functions in Node:
@@ -150,14 +151,22 @@ func _connected_fail() -> void:
 # The remote keyword can be called by any peer, including the server and all clients. 
 # The puppet keyword means a call can be made from the network 
 # master to any network puppet. The master keyword means a call can be made from any network puppet to the network master.
-remote func register_participant(new_participant_data: Dictionary) -> void:	
+remote func register_participant(new_participant_data: Dictionary, participants_array : Array) -> void:	
 	""" TODO
-	1) Try unreliable RPC call from user1 to user2
+	1) Try unreliable RPC call from user1 to user2 - tried, does the same as normal RPC call
 	2) Try to send RPC call from user1 get_tree().get_parent().rpc_id....
-	3) Try to send the tree from user1 to user2: - doesnt work, can't say current tree = received tree'"""
+	3) Try to send the tree from user1 to user2: - doesnt work, can't say current tree = received tree'
+	4) Try to send participants nodes as array from server"""
 	# Here we get the rpc ID of the user that called register_participant
 	var id: int = get_tree().get_rpc_sender_id()
 	print("Meeting: register_participant: ", id)
+	
+	# We do this only if the call is from server
+	if id == 1 && join_running_game_pressed:
+		for p in participants_array:
+			print("printing participants array")
+			print(p)
+			
 	participants[id] = new_participant_data
 	
 	# Here we send signal to Lobby, which triggers refresh_lobby() method
