@@ -92,15 +92,28 @@ func _participant_connected(id: int) -> void:
 	# Start registration
 	# The remote function register_participant of Meeting is triggered here
 	# Here the signal is sent to another users to register the rpc caller at their game
+	"""
 	if meeting_is_running:
 		if get_tree().get_network_unique_id() == 1:
 			print("Sending this over rpc register: %s " % get_tree().get_root().get_node("Default").get_node("Participants").get_children()[0])
 			var participant_node = get_tree().get_root().get_node("Default").get_node("Participants").get_children()[0]
 			#var participants_array = get_tree().get_root().get_node("Default").get_node("Participants").get_children()
 			#rpc_id(id, "register_participant", participant_data, participants_array)
-			rpc_unreliable_id(id, "register_participant", participant_data, participant_node)
+			rpc_id(id, "register_participant", participant_data)
 	else:
 		rpc_id(id, "register_participant", participant_data, [])
+	"""
+	
+	"""
+	print("\n PARENTS:")
+	
+	if get_tree().get_network_unique_id() != 1 && has_node("/root/Default"):
+		print("Send like my scene tree contains only default")
+		print(get_tree().get_root().get_node("Default"))
+		get_tree().get_root().get_node("Default").get_node("Participants").rpc_id(id, "register_participant", participant_data)
+	"""
+	
+	rpc_id(id, "register_participant", participant_data)
 	
 	# A little bit about RPC
 	# To communicate between peers, the easiest way is to use RPCs (remote procedure calls). This is implemented as a set of functions in Node:
@@ -158,20 +171,58 @@ func _connected_fail() -> void:
 # The remote keyword can be called by any peer, including the server and all clients. 
 # The puppet keyword means a call can be made from the network 
 # master to any network puppet. The master keyword means a call can be made from any network puppet to the network master.
-remote func register_participant(new_participant_data: Dictionary, participant_node : KinematicBody2D) -> void:	
+remote func register_participant(new_participant_data: Dictionary) -> void:	
 	""" TODO
 	1) DIDNTWORK: Try unreliable RPC call from user1 to user2 - tried, does the same as normal RPC call
 	2) DIDNTWORK: Try to send RPC call from user1 get_tree().get_parent().rpc_id....
 	3) DIDNTWORK: Try to send the tree from user1 to user2: - doesnt work, can't say current tree = received tree'
 	4) DIDNTWORK: Try to send participants nodes as array from server
 	5) Try to send data for user1 from server and create it at user2
-	5) SEEMSTOWORK: Try to send data for user1 from server and create it at user2
 	6) Try to send participant node of user1 from server over unreliable_rpc ( mby thats why it's encoded object')
 	7) Try populating the scene with 5 extra instances and then "summon" participants into bodies"""
 	# Here we get the rpc ID of the user that called register_participant
 	var id: int = get_tree().get_rpc_sender_id()
 	print("Meeting: register_participant: ", id)
+	print("Participant data: %s" % new_participant_data)
 	
+	if join_running_game_pressed && id == 1:
+		var user1_id = 0
+		var userPosition = Vector2(randi()%500, randi()%300)
+		var participant_data: Dictionary = {
+			Name = "Notebook",
+			Color = {
+				Hair = Color(1.0, 1.0, 1.0, 1.0),
+				Skin = Color(1.0, 1.0, 1.0, 1.0),
+				Eyes = Color(1.0, 1.0, 1.0, 1.0),
+				Shirt = Color(1.0, 1.0, 1.0, 1.0),
+				Pants = Color(1.0, 1.0, 1.0, 1.0),
+				Shoe = Color(1.0, 1.0, 1.0, 1.0)
+			},
+			Role = "Host"
+		}
+		
+		# Get access to participant scene
+		var participant_scene = load("res://Participant.tscn")
+
+		var participant = participant_scene.instance()
+
+		# TODO ask Yufus and Fatma why is name set as p_id, which is spawn location
+		participant.set_name(str(user1_id))
+		# Set spawn locations for the participants
+		participant.position = Vector2(userPosition)
+			
+		# This means each other connected peer has authority over their own player.
+		participant.set_network_master(user1_id)
+
+		participant.set_participant_camera(false)
+		# set data (name and colors) to participant
+		participant.set_data(participants[participant_data])
+
+		# Adds participant to participant list in Default scene
+		#print("Meeting: preconfigure_meeting: adding child: %s" % participant)
+		meeting_area_running.get_node("Participants").add_child(participant)
+	
+	"""
 	# We do this only if the call is from server
 	if id == 1 && join_running_game_pressed:
 		print("Printing received participant node: %s " % participant_node)
@@ -180,6 +231,7 @@ remote func register_participant(new_participant_data: Dictionary, participant_n
 			#print("printing participants array %s " % participants_array[0])
 			#print(meeting_area_running.get_node("Participants").get_children()[0])
 			#meeting_area_running.get_node("Participants").add_child(p)
+	"""
 			
 	participants[id] = new_participant_data
 	
@@ -225,6 +277,7 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 			participant.set_name(str(p_id))
 			# Set spawn locations for the participants
 			participant.position = spawn_locations[p_id]
+			print("\n SPAWN LOCATIONS: %s \n" % spawn_locations)
 			
 			# This means each other connected peer has authority over their own player.
 			participant.set_network_master(p_id)
@@ -234,6 +287,7 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 				participant.set_participant_camera(true)
 				# set data (name and colors) to participant 
 				participant.set_data(participant_data)
+				print("\n PARTICIPANT DATA: %s \n" % participant_data)
 			# If participant is another player, then camera is not following him for current peer and name is set
 			else:
 				participant.set_participant_camera(false)
@@ -241,11 +295,11 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 				participant.set_data(participants[p_id])
 
 			# Adds participant to participant list in Default scene
-			print("Meeting: preconfigure_meeting: adding child: %s" % participant)
+			#print("Meeting: preconfigure_meeting: adding child: %s" % participant)
 			meeting_area.get_node("Participants").add_child(participant)
-			print("Meeting: preconfigure_meeting: accessing child from node: %s" % meeting_area.get_node("Participants").get_children()[0])
-			var default = get_tree().get_root().get_node("Default").get_node("Participants").get_children()[0]
-			print("Accessing differentely: %s" % default)
+			#print("Meeting: preconfigure_meeting: accessing child from node: %s" % meeting_area.get_node("Participants").get_children()[0])
+			#var default = get_tree().get_root().get_node("Default").get_node("Participants").get_children()[0]
+			#print("Accessing differentely: %s" % default)
 
 	# If the current user is not server, we inform the server that the current user is ready
 	# for the meeting to start
