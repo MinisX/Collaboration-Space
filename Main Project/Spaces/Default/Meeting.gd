@@ -96,7 +96,7 @@ func _participant_connected(id: int) -> void:
 		var participants_array = get_tree().get_root().get_node("Default").get_node("Participants").get_children()
 		rpc_id(id, "register_participant", participant_data, participants_array)
 	else:
-		rpc_id(id, "register_participant", participant_data, null)
+		rpc_id(id, "register_participant", participant_data, [])
 	
 	# A little bit about RPC
 	# To communicate between peers, the easiest way is to use RPCs (remote procedure calls). This is implemented as a set of functions in Node:
