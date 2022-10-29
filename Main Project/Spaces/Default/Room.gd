@@ -7,10 +7,15 @@ var participants_inside: Array = []
 # {Name = "room name", ListOfParticipants = participants_inside}
 var room_info: Dictionary = {}
 
+var disabled: bool = true
+
 func _ready():
 	self.connect("body_entered", self, "_on_body_entered")
 	self.connect("body_exited", self, "_on_body_exited")
 
+remotesync func remove_me() -> void:
+	print("------------------- Room: remove_me")
+	self.queue_free()
 
 func _process(delta) -> void:
 	# print participants_inside array when "ui_accept" pressed
@@ -26,13 +31,13 @@ func get_room_info() -> String:
 
 # push id of a participant to "participants_inside" array
 func _on_body_entered(body: KinematicBody2D) -> void:
-	if body:
+	if body and !disabled:
 		print("Room: ", "participant: ", body.name, " entered to the room ", room_name)
 		participants_inside.push_back(body.name)
 
 # remove id of a participant from "participants_inside" array
 func _on_body_exited(body: KinematicBody2D) -> void:
-	if body:
+	if body and !disabled:
 		print("Room: ", "participant: ", body.name, " exited from the room ", room_name)
 		participants_inside.erase(body.name)
 
