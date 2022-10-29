@@ -1336,6 +1336,7 @@ height = 32.0
 
 [node name="Participant" type="KinematicBody2D"]
 z_index = 5
+collision_mask = 0
 script = ExtResource( 2 )
 
 [node name="Name" type="Label" parent="."]

@@ -3,11 +3,8 @@ extends KinematicBody2D
 
 export (float) var speed: float = 200.0
 
-# onready var participant_name: Label = $Name
 onready var animation_player: AnimationPlayer = $AnimationPlayer
-# onready var sprites_m: Node2D = $SpritesM
 onready var interaction_area: Area2D = $InteractionArea
-
 onready var location: Label = $Location
 
 var velocity: Vector2 = Vector2(0.0, 0.0)
@@ -22,7 +19,7 @@ puppet var puppet_current_animation: String = "idle_s"
 func _ready() -> void:
 	print("Participant: _ready()")
 	$BodyArea.connect("area_entered", self, "_display_location")
-#	set_participant_name (GlobalData.participant_data["Name"])
+
 
 func _process(_delta: float) -> void:
 	# TODO 
@@ -49,6 +46,7 @@ func _display_location(area: Area2D) -> void:
 	if area.get("room_name") != null:
 		location.text = area.room_name
 		print("Participant: ", area.room_name)
+
 
 func set_data(new_data: Dictionary) -> void:
 	$Name.text = new_data["Name"]
