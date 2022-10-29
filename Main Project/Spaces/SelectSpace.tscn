@@ -63,13 +63,13 @@ margin_right = 214.0
 margin_bottom = 178.0
 custom_constants/separation = 8
 
-[node name="THU" type="Label" parent="VBoxContainer/HBoxContainer/THU"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/THU"]
 margin_right = 214.0
 margin_bottom = 18.0
 text = "THU"
 align = 1
 
-[node name="THUMap" type="TextureButton" parent="VBoxContainer/HBoxContainer/THU"]
+[node name="THU" type="TextureButton" parent="VBoxContainer/HBoxContainer/THU"]
 margin_top = 26.0
 margin_right = 214.0
 margin_bottom = 152.0
@@ -91,13 +91,13 @@ margin_right = 444.0
 margin_bottom = 178.0
 custom_constants/separation = 8
 
-[node name="Library" type="Label" parent="VBoxContainer/HBoxContainer/Library"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/Library"]
 margin_right = 214.0
 margin_bottom = 18.0
 text = "Library"
 align = 1
 
-[node name="LibraryMap" type="TextureButton" parent="VBoxContainer/HBoxContainer/Library"]
+[node name="Library" type="TextureButton" parent="VBoxContainer/HBoxContainer/Library"]
 margin_top = 26.0
 margin_right = 214.0
 margin_bottom = 152.0
@@ -119,13 +119,13 @@ margin_right = 674.0
 margin_bottom = 178.0
 custom_constants/separation = 8
 
-[node name="Office" type="Label" parent="VBoxContainer/HBoxContainer/Office"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/Office"]
 margin_right = 214.0
 margin_bottom = 18.0
 text = "Office"
 align = 1
 
-[node name="OfficeMap" type="TextureButton" parent="VBoxContainer/HBoxContainer/Office"]
+[node name="Office" type="TextureButton" parent="VBoxContainer/HBoxContainer/Office"]
 margin_top = 26.0
 margin_right = 214.0
 margin_bottom = 152.0

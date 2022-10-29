@@ -1,7 +1,6 @@
 extends Control
 
 onready var connection_panel: ColorRect = $ConnectionPanel
-#onready var name_input = GlobalData.participant_data["Name"]
 onready var name_input = Meeting.participant_data["Name"]
 onready var participants_panel: ColorRect = $ParticipantsPanel
 onready var participants_list_view: ItemList = $ParticipantsPanel/ParticipantList
@@ -10,7 +9,7 @@ onready var online_button: Button = $ConnectionPanel/VBoxContainer/Row3/Online
 onready var host_toggle: Button = $ConnectionPanel/VBoxContainer/Row3/Host
 onready var start_button: Button = $ParticipantsPanel/Start
 onready var changePassword_button: Button = $ConnectionPanel/VBoxContainer/ChangePassword
-onready var ip: String = "34.159.28.32"
+onready var ip: String = "127.0.0.1"#"34.159.28.32"
 
 # Access HTTPRequest instance
 onready var http : HTTPRequest = $HTTPRequest
@@ -46,10 +45,6 @@ func _ready() -> void:
 	
 	# start meeting automaticaly after waiting 20 seconds if --server passed
 	if "--server" in OS.get_cmdline_args():
-#		var delay: float = 15.0
-		# check if there is another arguement (defines the amount of delay)
-#		if OS.get_cmdline_args().size() == 3 and OS.get_cmdline_args()[2].is_valid_float():
-#			delay = OS.get_cmdline_args()[2] as float
 		Meeting.host_meeting()
 	else:
 		print("Main: client")
@@ -61,7 +56,6 @@ func _on_host_pressed() -> void:
 		Meeting.participant_data["Role"] = "Participant"
 	elif Meeting.participant_data["Role"] == "Participant":
 		Meeting.participant_data["Role"] = "Host"
-
 
 
 # This method is triggered from Meeting.gd in _connected_ok() method
@@ -121,9 +115,13 @@ func _on_start_pressed():
 	print("Lobby: _on_start_pressed()")
 	if Meeting.participant_data["Role"] == "Host":
 		refresh_lobby()
-		# call start_meeting
+		# use id 1 to call only on server
+		# call set_selected_space on server to inform server about selected space 
+		Meeting.rpc_id(1, "set_selected_space", Meeting.selected_space)
 		# use id 1 to call only on server  
+		# tell server to start meeting
 		Meeting.rpc_id(1, "start_meeting")
+#		Meeting.rset("selected_space", Meeting.selected_space)
 
 func fetch_user_data_fromDB():
 	print("Lobby: fetch_user_data_fromDB()")
