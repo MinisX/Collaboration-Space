@@ -164,6 +164,8 @@ func unregister_participant(id: int) -> void:
 remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 	print("Meeting: preconfigure_meeting")
 	
+	Client.send_user_id()
+	
 	# Get access to Default scene
 	var meeting_area = load("res://Spaces/Default/Default.tscn").instance()
 	# Add Default.tscn as child of current screen

@@ -1437,13 +1437,13 @@ text = "Menu"
 position = Vector2( -221, 0 )
 scale = Vector2( 21.16, 18.36 )
 z_index = 99
-room_name = "Room one"
+room_name = "room_1"
 
 [node name="Room2" parent="." instance=ExtResource( 24 )]
 position = Vector2( -221, 496 )
 scale = Vector2( 20.88, 13.28 )
 z_index = 99
-room_name = "Room two"
+room_name = "room_2"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 

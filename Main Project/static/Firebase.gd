@@ -83,7 +83,7 @@ func login(email: String, password: String, http: HTTPRequest) -> void:
 	# If our response is OK ( 200 ), we store user information
 	if result[1] == 200:
 		user_info = _get_user_info(result, true)
-		Client.send_user_id()
+	
 		
 func change_password(new_password: String, http: HTTPRequest) -> void:
 	var body := {
