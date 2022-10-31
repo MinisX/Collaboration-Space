@@ -3,6 +3,7 @@ extends Control
 onready var sprites: Control = $Sprites
 onready var animation: AnimationPlayer = $Animation
 onready var button_group: ButtonGroup = null
+onready var f_m_button_group: ButtonGroup = null
 onready var color_picker: ColorPicker = $ColorPicker
 onready var turn_avatar_slider: HSlider = $MarginContainer/VBoxContainer/TurnAvatarSlider
 onready var ok_button: Button = $Ok
@@ -28,10 +29,13 @@ var profile : = {
 
 var active_part: String = "Skin"
 var active_color: Color = Color(1.0, 1.0, 1.0, 1.0)
+var active_sprite: String = "SpritesM"
 
 func _ready() -> void:
 	button_group = $MarginContainer/VBoxContainer/Hair.group
+	f_m_button_group = $MarginContainer/VBoxContainer/HBoxContainer/female.group
 	button_group.connect("pressed", self, "_on_avatar_part_selected")
+	f_m_button_group.connect("pressed", self, "_on_avatar_type_selected")
 	color_picker.connect("color_changed", self, "_on_color_value_changed")
 	turn_avatar_slider.connect("value_changed", self, "_on_avatar_turned")
 	ok_button.connect("pressed", self, "_on_ok_pressed")
@@ -162,9 +166,21 @@ func _on_avatar_turned(value: int) -> void:
 func _on_avatar_part_selected(selected: Button) -> void:
 	active_part = selected.name
 
+func _on_avatar_type_selected(selected: Button) -> void:
+	if selected.name == "female":
+		active_sprite = "SpritesF"
+		sprites.get_node("SpritesF").show()
+		sprites.get_node("SpritesM").hide()
+		Meeting.participant_data["Sprite"] = "female"
+		set_selected_color()
+	elif selected.name == "male":
+		active_sprite = "SpritesM"
+		sprites.get_node("SpritesM").show()
+		sprites.get_node("SpritesF").hide()
+		Meeting.participant_data["Sprite"] = "male"
+		set_selected_color()
 
 func set_selected_color() -> void:
-	var active_sprite: String = "SpritesM"
 	if true:
 		pass
 	

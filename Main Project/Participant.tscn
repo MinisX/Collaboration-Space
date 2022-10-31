@@ -2447,37 +2447,37 @@ visible = false
 texture = ExtResource( 23 )
 hframes = 11
 vframes = 8
-frame = 22
+frame = 77
 
 [node name="Eyes" type="Sprite" parent="SpritesM"]
 texture = ExtResource( 21 )
 hframes = 11
 vframes = 8
-frame = 22
+frame = 77
 
 [node name="Hair" type="Sprite" parent="SpritesM"]
 texture = ExtResource( 19 )
 hframes = 11
 vframes = 8
-frame = 22
+frame = 77
 
 [node name="Pants" type="Sprite" parent="SpritesM"]
 texture = ExtResource( 22 )
 hframes = 11
 vframes = 8
-frame = 22
+frame = 77
 
 [node name="Shirt" type="Sprite" parent="SpritesM"]
 texture = ExtResource( 20 )
 hframes = 11
 vframes = 8
-frame = 22
+frame = 77
 
 [node name="Shoe" type="Sprite" parent="SpritesM"]
 texture = ExtResource( 18 )
 hframes = 11
 vframes = 8
-frame = 22
+frame = 77
 
 [node name="SpritesF" type="Node2D" parent="."]
 visible = false
@@ -2486,37 +2486,37 @@ visible = false
 texture = ExtResource( 3 )
 hframes = 11
 vframes = 8
-frame = 22
+frame = 77
 
 [node name="Eyes" type="Sprite" parent="SpritesF"]
 texture = ExtResource( 4 )
 hframes = 11
 vframes = 8
-frame = 22
+frame = 77
 
 [node name="Hair" type="Sprite" parent="SpritesF"]
 texture = ExtResource( 8 )
 hframes = 11
 vframes = 8
-frame = 22
+frame = 77
 
 [node name="Pants" type="Sprite" parent="SpritesF"]
 texture = ExtResource( 6 )
 hframes = 11
 vframes = 8
-frame = 22
+frame = 77
 
 [node name="Shirt" type="Sprite" parent="SpritesF"]
 texture = ExtResource( 5 )
 hframes = 11
 vframes = 8
-frame = 22
+frame = 77
 
 [node name="Shoe" type="Sprite" parent="SpritesF"]
 texture = ExtResource( 7 )
 hframes = 11
 vframes = 8
-frame = 22
+frame = 77
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 15 )
