@@ -212,7 +212,7 @@ remote func register_participant(new_participant_data: Dictionary) -> void:
 		#print("Meeting: preconfigure_meeting: adding child: %s" % participant)
 		meeting_area_running.get_node("Participants").add_child(participant)
 		
-	# If statement for user2 adding user1
+	# If statement for user2 adding user1 and user2
 	if join_running_game_pressed == true && id == 1:
 		print("In if statement for user2, adding user 1 ")
 		
@@ -237,7 +237,7 @@ remote func register_participant(new_participant_data: Dictionary) -> void:
 		#print("Meeting: preconfigure_meeting: adding child: %s" % participant)
 		meeting_area_running.get_node("Participants").add_child(participant)
 		
-		print("In if statement for user2, adding user 2 ")
+		print("In if statement for user2, adding user 2 ( myself )")
 		
 		# Get access to participant scene
 		var participant_scene_2 = load("res://Participant.tscn")
@@ -258,7 +258,7 @@ remote func register_participant(new_participant_data: Dictionary) -> void:
 
 		# Adds participant to participant list in Default scene
 		#print("Meeting: preconfigure_meeting: adding child: %s" % participant)
-		meeting_area_running.get_node("Participants").add_child(participant)
+		meeting_area_running.get_node("Participants").add_child(participant_2)
 	
 	participants[id] = new_participant_data
 	
