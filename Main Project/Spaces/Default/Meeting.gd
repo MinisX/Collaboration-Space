@@ -18,9 +18,9 @@ var meeting_is_running = false
 var join_running_game_pressed = false
 var meeting_area_running = null
 
-var user1_id = 0
+var user1_id = 1887667424
 var user2_id = 0
-var user1_position = Vector2(20, 20)
+var user1_position = Vector2(419, 181)
 var user2_position = Vector2(30, 30)
 var user1_data: Dictionary = {
 			Name = "user1",
@@ -186,7 +186,7 @@ remote func register_participant(new_participant_data: Dictionary) -> void:
 	print("Participant data: %s" % new_participant_data)
 		
 	# If statement for user1
-	if meeting_is_running && id != 1:
+	if meeting_is_running == true && id != 1 && join_running_game_pressed == false:
 		print("In if statement for user 1")
 		
 		user2_id = id
@@ -206,15 +206,15 @@ remote func register_participant(new_participant_data: Dictionary) -> void:
 
 		participant.set_participant_camera(false)
 		# set data (name and colors) to participant
-		participant.set_data(user1_data)
+		participant.set_data(user2_data)
 
 		# Adds participant to participant list in Default scene
 		#print("Meeting: preconfigure_meeting: adding child: %s" % participant)
 		meeting_area_running.get_node("Participants").add_child(participant)
 		
 	# If statement for user2	
-	if join_running_game_pressed && id == 1:
-		print("In if statement for user2 ")
+	if join_running_game_pressed == true && id == 1:
+		print("In if statement for user2, adding user 2 ")
 		
 		# Get access to participant scene
 		var participant_scene = load("res://Participant.tscn")
@@ -231,12 +231,35 @@ remote func register_participant(new_participant_data: Dictionary) -> void:
 
 		participant.set_participant_camera(false)
 		# set data (name and colors) to participant
+		participant.set_data(user1_data)
+
+		# Adds participant to participant list in Default scene
+		#print("Meeting: preconfigure_meeting: adding child: %s" % participant)
+		meeting_area_running.get_node("Participants").add_child(participant)
+		
+		print("In if statement for user2, adding user 1 ")
+		
+		# Get access to participant scene
+		var participant_scene_2 = load("res://Participant.tscn")
+
+		var participant_2 = participant_scene_2.instance()
+
+		# TODO ask Yufus and Fatma why is name set as p_id, which is spawn location
+		participant.set_name(str(get_tree().get_network_unique_id()))
+		# Set spawn locations for the participants
+		participant.position = Vector2(user2_position)
+			
+		# This means each other connected peer has authority over their own player.
+		participant.set_network_master(get_tree().get_network_unique_id())
+
+		participant.set_participant_camera(true)
+		# set data (name and colors) to participant
 		participant.set_data(user2_data)
 
 		# Adds participant to participant list in Default scene
 		#print("Meeting: preconfigure_meeting: adding child: %s" % participant)
 		meeting_area_running.get_node("Participants").add_child(participant)
-			
+	
 	participants[id] = new_participant_data
 	
 	# Here we send signal to Lobby, which triggers refresh_lobby() method
