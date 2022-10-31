@@ -24,7 +24,7 @@ var participant_data: Dictionary = {
 		Pants = Color(1.0, 1.0, 1.0, 1.0),
 		Shoe = Color(1.0, 1.0, 1.0, 1.0)
 	},
-	Sprite = "female",
+	Sprite = "male",
 	Role = "Participant"
 }
 

@@ -61,6 +61,8 @@ func set_selected_color(new_data: Dictionary) -> void:
 	var sprite: Node2D = $SpritesM
 	if new_data["Sprite"] == "female":
 		sprite = $SpritesF
+	elif new_data["Sprite"] == "male":
+		sprite = $SpritesM
 	sprite.show()
 	sprite.get_node("Hair").modulate = new_data["Color"]["Hair"]
 	sprite.get_node("Eyes").modulate = new_data["Color"]["Eyes"]
