@@ -3154,6 +3154,21 @@ tile_data = PoolIntArray( -3014660, 3, 0, -3014659, 3, 0, -3014658, 3, 0, -30146
 
 [node name="Doors" type="Node2D" parent="University"]
 
+[node name="Door" parent="University/Doors" instance=ExtResource( 1 )]
+position = Vector2( 1760, -1312 )
+
+[node name="Door3" parent="University/Doors" instance=ExtResource( 1 )]
+position = Vector2( 2016, -1192 )
+rotation = 1.5708
+
+[node name="Door4" parent="University/Doors" instance=ExtResource( 1 )]
+position = Vector2( 2400, -800 )
+rotation = -1.5708
+
+[node name="Door2" parent="University/Doors" instance=ExtResource( 1 )]
+position = Vector2( 1888, -1760 )
+rotation = 3.14159
+
 [node name="Rooms" type="Node2D" parent="University"]
 
 [node name="SpawnPoint" type="Position2D" parent="University"]
