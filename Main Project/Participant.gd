@@ -58,12 +58,16 @@ func set_participant_camera(active: bool) -> void:
 
 
 func set_selected_color(new_data: Dictionary) -> void:
-	$SpritesM.get_node("Hair").modulate = new_data["Color"]["Hair"]
-	$SpritesM.get_node("Eyes").modulate = new_data["Color"]["Eyes"]
-	$SpritesM.get_node("Skin").modulate = new_data["Color"]["Skin"]
-	$SpritesM.get_node("Shirt").modulate = new_data["Color"]["Shirt"]
-	$SpritesM.get_node("Pants").modulate = new_data["Color"]["Pants"]
-	$SpritesM.get_node("Shoe").modulate = new_data["Color"]["Shoe"]
+	var sprite: Node2D = $SpritesM
+	if new_data["Sprite"] == "female":
+		sprite = $SpritesF
+	sprite.show()
+	sprite.get_node("Hair").modulate = new_data["Color"]["Hair"]
+	sprite.get_node("Eyes").modulate = new_data["Color"]["Eyes"]
+	sprite.get_node("Skin").modulate = new_data["Color"]["Skin"]
+	sprite.get_node("Shirt").modulate = new_data["Color"]["Shirt"]
+	sprite.get_node("Pants").modulate = new_data["Color"]["Pants"]
+	sprite.get_node("Shoe").modulate = new_data["Color"]["Shoe"]
 
 
 func get_input() -> void:
