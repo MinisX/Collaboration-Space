@@ -206,7 +206,7 @@ remote func register_participant(new_participant_data: Dictionary) -> void:
 
 		participant.set_participant_camera(false)
 		# set data (name and colors) to participant
-		participant.set_data(participants[participant_data])
+		participant.set_data(user1_data)
 
 		# Adds participant to participant list in Default scene
 		#print("Meeting: preconfigure_meeting: adding child: %s" % participant)
@@ -231,7 +231,7 @@ remote func register_participant(new_participant_data: Dictionary) -> void:
 
 		participant.set_participant_camera(false)
 		# set data (name and colors) to participant
-		participant.set_data(participants[participant_data])
+		participant.set_data(user2_data)
 
 		# Adds participant to participant list in Default scene
 		#print("Meeting: preconfigure_meeting: adding child: %s" % participant)
