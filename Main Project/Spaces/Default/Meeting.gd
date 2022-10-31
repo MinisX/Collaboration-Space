@@ -67,6 +67,8 @@ func _ready() -> void:
 		var port: int = arguments["port"] as int
 		if port <= 65535:
 			DEFAULT_PORT = arguments["port"] as int
+
+
 	print(DEFAULT_PORT)
 
 # get argc to a dictionary

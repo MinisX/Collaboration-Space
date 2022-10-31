@@ -9,7 +9,7 @@ onready var online_button: Button = $ConnectionPanel/VBoxContainer/Row3/Online
 onready var host_toggle: Button = $ConnectionPanel/VBoxContainer/Row3/Host
 onready var start_button: Button = $ParticipantsPanel/Start
 onready var changePassword_button: Button = $ConnectionPanel/VBoxContainer/ChangePassword
-onready var ip: String = "127.0.0.1"#"34.159.28.32"
+onready var ip: String = "34.159.28.32"
 
 # Access HTTPRequest instance
 onready var http : HTTPRequest = $HTTPRequest
@@ -29,6 +29,11 @@ func _ready() -> void:
 		print("Lobby: --server")
 	else:
 		fetch_user_data_fromDB()
+	
+	# get ip address from argv
+	var arguments: Dictionary = Meeting.get_cmd_args()
+	if arguments.has("ip") and arguments["ip"].is_valid_ip_address():
+		ip = arguments["ip"] as String
 	
 	# The signals are emitted ( sent ) from Meeting to Lobby
 	# E.g connection_succeeded is sent from Meeting _connected_ok() method
