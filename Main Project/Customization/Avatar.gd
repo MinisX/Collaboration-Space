@@ -164,17 +164,16 @@ func _on_avatar_part_selected(selected: Button) -> void:
 
 
 func set_selected_color() -> void:
-	sprites.get_node("Hair").modulate = Meeting.participant_data["Color"]["Hair"]
-	sprites.get_node("Eyes").modulate = Meeting.participant_data["Color"]["Eyes"]
-	sprites.get_node("Legs").modulate = Meeting.participant_data["Color"]["Pants"]
-	sprites.get_node("Feet").modulate = Meeting.participant_data["Color"]["Shoe"]
-	# skin
-	sprites.get_node("Hands").modulate = Meeting.participant_data["Color"]["Skin"]
-	sprites.get_node("Head").modulate = Meeting.participant_data["Color"]["Skin"]
-	# shirt
-	sprites.get_node("Torso").modulate = Meeting.participant_data["Color"]["Shirt"]
-	sprites.get_node("Arms").modulate = Meeting.participant_data["Color"]["Shirt"]
+	var active_sprite: String = "SpritesM"
+	if true:
+		pass
 	
+	sprites.get_node(active_sprite+"/Skin").modulate = Meeting.participant_data["Color"]["Skin"]
+	sprites.get_node(active_sprite+"/Eyes").modulate = Meeting.participant_data["Color"]["Eyes"]
+	sprites.get_node(active_sprite+"/Hair").modulate = Meeting.participant_data["Color"]["Hair"]
+	sprites.get_node(active_sprite+"/Pants").modulate = Meeting.participant_data["Color"]["Pants"]
+	sprites.get_node(active_sprite+"/Shirt").modulate = Meeting.participant_data["Color"]["Shirt"]
+	sprites.get_node(active_sprite+"/Shoe").modulate = Meeting.participant_data["Color"]["Shoe"]
 
 func _on_color_selected() -> void:
 	pass
