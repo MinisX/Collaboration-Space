@@ -7,15 +7,49 @@ extends Node
 var DEFAULT_PORT: int = 1235
 const MAX_PARTICIPANT: int = 30
 
-var meeting_is_running = false
-var join_running_game_pressed = false
-var meeting_area_running = null
-
 # Create new NetworkedMultiplayerENet object. 
 # It containts useful methods for serializing, sending and receiving data. On top of that, it adds methods to set a peer, 
 # transfer mode, etc. It also includes signals that will let you know when peers connect or disconnect.
 var peer: NetworkedMultiplayerENet = null
 
+# Some data for testing
+# ----------------------------
+var meeting_is_running = false
+var join_running_game_pressed = false
+var meeting_area_running = null
+
+var user1_id = 0
+var user2_id = 0
+var user1_position = Vector2(20, 20)
+var user2_position = Vector2(30, 30)
+var user1_data: Dictionary = {
+			Name = "user1",
+			Color = {
+				Hair = Color(1.0, 1.0, 1.0, 1.0),
+				Skin = Color(1.0, 1.0, 1.0, 1.0),
+				Eyes = Color(1.0, 1.0, 1.0, 1.0),
+				Shirt = Color(1.0, 1.0, 1.0, 1.0),
+				Pants = Color(1.0, 1.0, 1.0, 1.0),
+				Shoe = Color(1.0, 1.0, 1.0, 1.0)
+			},
+			Role = "Host"
+		}
+		
+var user2_data: Dictionary = {
+			Name = "user2",
+			Color = {
+				Hair = Color(1.0, 1.0, 1.0, 1.0),
+				Skin = Color(1.0, 1.0, 1.0, 1.0),
+				Eyes = Color(1.0, 1.0, 1.0, 1.0),
+				Shirt = Color(1.0, 1.0, 1.0, 1.0),
+				Pants = Color(1.0, 1.0, 1.0, 1.0),
+				Shoe = Color(1.0, 1.0, 1.0, 1.0)
+			},
+			Role = "Participant"
+		}
+
+#-----------------------------
+# End of some data for testing
 
 # Dictionary to store particpant name and custom colors
 var participant_data: Dictionary = {
@@ -80,39 +114,12 @@ func get_cmd_args() -> Dictionary:
 	return arguments
 
 # This method is triggered from a signal "network_peer_connected" from NetworkedMultiplayerENet 
-"""
-Sequence:
-	1) When user 1 joins the server as host, the server receives information in this method
-	   saying "Meeting: _participant_connected, ID: <user1id>"
-	2) 
-"""
 func _participant_connected(id: int) -> void:
 	print("Meeting: _participant_connected, ID: %s " % id)
 	
 	# Start registration
 	# The remote function register_participant of Meeting is triggered here
 	# Here the signal is sent to another users to register the rpc caller at their game
-	"""
-	if meeting_is_running:
-		if get_tree().get_network_unique_id() == 1:
-			print("Sending this over rpc register: %s " % get_tree().get_root().get_node("Default").get_node("Participants").get_children()[0])
-			var participant_node = get_tree().get_root().get_node("Default").get_node("Participants").get_children()[0]
-			#var participants_array = get_tree().get_root().get_node("Default").get_node("Participants").get_children()
-			#rpc_id(id, "register_participant", participant_data, participants_array)
-			rpc_id(id, "register_participant", participant_data)
-	else:
-		rpc_id(id, "register_participant", participant_data, [])
-	"""
-	
-	"""
-	print("\n PARENTS:")
-	
-	if get_tree().get_network_unique_id() != 1 && has_node("/root/Default"):
-		print("Send like my scene tree contains only default")
-		print(get_tree().get_root().get_node("Default"))
-		get_tree().get_root().get_node("Default").get_node("Participants").rpc_id(id, "register_participant", participant_data)
-	"""
-	
 	rpc_id(id, "register_participant", participant_data)
 	
 	# A little bit about RPC
@@ -172,34 +179,42 @@ func _connected_fail() -> void:
 # The puppet keyword means a call can be made from the network 
 # master to any network puppet. The master keyword means a call can be made from any network puppet to the network master.
 remote func register_participant(new_participant_data: Dictionary) -> void:	
-	""" TODO
-	1) DIDNTWORK: Try unreliable RPC call from user1 to user2 - tried, does the same as normal RPC call
-	2) DIDNTWORK: Try to send RPC call from user1 get_tree().get_parent().rpc_id....
-	3) DIDNTWORK: Try to send the tree from user1 to user2: - doesnt work, can't say current tree = received tree'
-	4) DIDNTWORK: Try to send participants nodes as array from server
-	5) Try to send data for user1 from server and create it at user2
-	6) Try to send participant node of user1 from server over unreliable_rpc ( mby thats why it's encoded object')
-	7) Try populating the scene with 5 extra instances and then "summon" participants into bodies"""
+	
 	# Here we get the rpc ID of the user that called register_participant
 	var id: int = get_tree().get_rpc_sender_id()
 	print("Meeting: register_participant: ", id)
 	print("Participant data: %s" % new_participant_data)
-	
+		
+	# If statement for user1
+	if meeting_is_running && id != 1:
+		print("In if statement for user 1")
+		
+		user2_id = id
+		
+		# Get access to participant scene
+		var participant_scene = load("res://Participant.tscn")
+
+		var participant = participant_scene.instance()
+
+		# TODO ask Yufus and Fatma why is name set as p_id, which is spawn location
+		participant.set_name(str(user2_id))
+		# Set spawn locations for the participants
+		participant.position = Vector2(user2_position)
+			
+		# This means each other connected peer has authority over their own player.
+		participant.set_network_master(user2_id)
+
+		participant.set_participant_camera(false)
+		# set data (name and colors) to participant
+		participant.set_data(participants[participant_data])
+
+		# Adds participant to participant list in Default scene
+		#print("Meeting: preconfigure_meeting: adding child: %s" % participant)
+		meeting_area_running.get_node("Participants").add_child(participant)
+		
+	# If statement for user2	
 	if join_running_game_pressed && id == 1:
-		var user1_id = 0
-		var userPosition = Vector2(randi()%500, randi()%300)
-		var participant_data: Dictionary = {
-			Name = "Notebook",
-			Color = {
-				Hair = Color(1.0, 1.0, 1.0, 1.0),
-				Skin = Color(1.0, 1.0, 1.0, 1.0),
-				Eyes = Color(1.0, 1.0, 1.0, 1.0),
-				Shirt = Color(1.0, 1.0, 1.0, 1.0),
-				Pants = Color(1.0, 1.0, 1.0, 1.0),
-				Shoe = Color(1.0, 1.0, 1.0, 1.0)
-			},
-			Role = "Host"
-		}
+		print("In if statement for user2 ")
 		
 		# Get access to participant scene
 		var participant_scene = load("res://Participant.tscn")
@@ -209,7 +224,7 @@ remote func register_participant(new_participant_data: Dictionary) -> void:
 		# TODO ask Yufus and Fatma why is name set as p_id, which is spawn location
 		participant.set_name(str(user1_id))
 		# Set spawn locations for the participants
-		participant.position = Vector2(userPosition)
+		participant.position = Vector2(user1_position)
 			
 		# This means each other connected peer has authority over their own player.
 		participant.set_network_master(user1_id)
@@ -221,17 +236,6 @@ remote func register_participant(new_participant_data: Dictionary) -> void:
 		# Adds participant to participant list in Default scene
 		#print("Meeting: preconfigure_meeting: adding child: %s" % participant)
 		meeting_area_running.get_node("Participants").add_child(participant)
-	
-	"""
-	# We do this only if the call is from server
-	if id == 1 && join_running_game_pressed:
-		print("Printing received participant node: %s " % participant_node)
-		meeting_area_running.get_node("Participants").add_child(participant_node)
-		#for p in participants_array:
-			#print("printing participants array %s " % participants_array[0])
-			#print(meeting_area_running.get_node("Participants").get_children()[0])
-			#meeting_area_running.get_node("Participants").add_child(p)
-	"""
 			
 	participants[id] = new_participant_data
 	
