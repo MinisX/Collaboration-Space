@@ -2615,10 +2615,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -395.0
-margin_top = -251.0
-margin_right = -54.0
-margin_bottom = 271.0
+margin_left = -391.0
+margin_top = -247.0
+margin_right = -50.0
+margin_bottom = 275.0
 edit_alpha = false
 
 [node name="Ok" type="Button" parent="."]
