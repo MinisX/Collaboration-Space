@@ -24,6 +24,7 @@ var participant_data: Dictionary = {
 		Pants = Color(1.0, 1.0, 1.0, 1.0),
 		Shoe = Color(1.0, 1.0, 1.0, 1.0)
 	},
+	Sprite = "female",
 	Role = "Participant"
 }
 
@@ -192,9 +193,13 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 		var ch = get_node("/root/Default/Office")
 		get_node("/root/Default").remove_child(ch)
 		
-		# is this necessary?
+		# is this necessary? 
+		# E 0:00:10.874   rpcp: Condition "!is_inside_tree()" is true.
+		# <C++ Source>  scene/main/node.cpp:748 @ rpcp()
+		# <Stack Trace> Meeting.gd:197 @ preconfigure_meeting()
 		if not get_tree().is_network_server():
-			ch.rpc_id(1, "remove_me")
+#			ch.rpc_id(1, "remove_me")
+			pass
 	elif selected_space == "Office":
 		print("Meeting: ", selected_space, " deleted (Library)")
 		# get Library node and remove from Default scene
@@ -203,7 +208,8 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 		
 		# is this necessary?
 		if not get_tree().is_network_server():
-			ch.rpc_id(1, "remove_me")
+#			ch.rpc_id(1, "remove_me")
+			pass
 	else:
 		# TODO THU space
 		pass
