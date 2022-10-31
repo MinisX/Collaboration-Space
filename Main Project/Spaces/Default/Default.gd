@@ -14,7 +14,7 @@ func _ready() -> void:
 	# Disable auto accept of quiting by cross
 	# It's handeled in _notification method
 	#get_tree().set_auto_accept_quit(false)
-	
+
 	chat_button.connect("pressed", self, "_on_chat_button_pressed")
 	participants_button.connect("pressed", self, "_on_participants_button_pressed")
 	menu_button.connect("pressed", self, "_on_menu_button_pressed")

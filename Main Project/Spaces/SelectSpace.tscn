@@ -69,7 +69,7 @@ margin_bottom = 18.0
 text = "THU"
 align = 1
 
-[node name="THU" type="TextureButton" parent="VBoxContainer/HBoxContainer/THU"]
+[node name="University" type="TextureButton" parent="VBoxContainer/HBoxContainer/THU"]
 margin_top = 26.0
 margin_right = 214.0
 margin_bottom = 152.0

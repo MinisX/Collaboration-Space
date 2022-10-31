@@ -186,6 +186,7 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 	# hide all spaces and show the selected one
 	get_node("/root/Default/Library").hide()
 	get_node("/root/Default/Office").hide()
+	get_node("/root/Default/University").hide()
 	get_node("/root/Default/"+selected_space).show()
 	
 	# remove unneeded nodes (they cause collision issues)
@@ -194,8 +195,10 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 		# get Office node and remove from Default scene
 		var ch = get_node("/root/Default/Office")
 		get_node("/root/Default").remove_child(ch)
+		ch = get_node("/root/Default/University")
+		get_node("/root/Default").remove_child(ch)
 		
-		# is this necessary? 
+		# is this necessary?
 		# E 0:00:10.874   rpcp: Condition "!is_inside_tree()" is true.
 		# <C++ Source>  scene/main/node.cpp:748 @ rpcp()
 		# <Stack Trace> Meeting.gd:197 @ preconfigure_meeting()
@@ -207,14 +210,18 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 		# get Library node and remove from Default scene
 		var ch = get_node("/root/Default/Library")
 		get_node("/root/Default").remove_child(ch)
+		ch = get_node("/root/Default/University")
+		get_node("/root/Default").remove_child(ch)
 		
 		# is this necessary?
 		if not get_tree().is_network_server():
 #			ch.rpc_id(1, "remove_me")
 			pass
-	else:
-		# TODO THU space
-		pass
+	elif selected_space == "University":
+		var ch = get_node("/root/Default/Library")
+		get_node("/root/Default").remove_child(ch)
+		ch = get_node("/root/Default/Office")
+		get_node("/root/Default").remove_child(ch)
 
 	# Hide lobby scene
 	get_node("/root/Lobby").hide()

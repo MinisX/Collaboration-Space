@@ -11,7 +11,8 @@ onready var join_button: Button = $VBoxContainer/CenterContainer/JoinButton
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	button_group = $VBoxContainer/HBoxContainer/THU/THU.group
+	
+	button_group = $VBoxContainer/HBoxContainer/THU/University.group
 	button_group.connect("pressed", self, "_on_map_selected")
 	join_button.connect("pressed", self, "_on_join_pressed")
 
