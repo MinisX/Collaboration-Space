@@ -33,13 +33,15 @@ func _process(delta: float) -> void:
 
 
 func _on_interaction_range_entered(area: Area2D) -> void: 
-	if area.get_parent().get("speed") != null:
+	if (area.get_parent().get("speed") != null and 
+		str(get_tree().get_network_unique_id()) == area.get_parent().name):
 		interaction_active = true
 		
 
 
 func _on_interaction_range_exited(area: Area2D) -> void:
-	if area.get_parent().get("speed") != null:
+	if (area.get_parent().get("speed") != null and 
+		str(get_tree().get_network_unique_id()) == area.get_parent().name):
 		interaction_active = false
 
 
