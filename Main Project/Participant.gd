@@ -20,8 +20,8 @@ func _ready() -> void:
 	print("Participant: _ready()")
 	$BodyArea.connect("area_entered", self, "_display_location")
 
-
 func _process(_delta: float) -> void:
+#	self.find_participant()
 	# TODO 
 	# Not sure what is happening here, ask Fatma and Yufus
 	if is_network_master():

@@ -10,10 +10,11 @@ onready var menu_button:Button = $CanvasLayer/MenuButton
 var menu_visibility: bool = false
 var participants_UI_visibility: bool = false
 
+
 func _ready() -> void:
 	# Disable auto accept of quiting by cross
 	# It's handeled in _notification method
-	#get_tree().set_auto_accept_quit(false)
+	# get_tree().set_auto_accept_quit(false)
 
 	chat_button.connect("pressed", self, "_on_chat_button_pressed")
 	participants_button.connect("pressed", self, "_on_participants_button_pressed")
@@ -55,6 +56,7 @@ func _on_menu_button_pressed() -> void:
 			menu_UI.show()
 			menu_visibility = true
 			participants_button.hide()
+
 
 """
 # Here we receive notification that user has pressed X to quit the game

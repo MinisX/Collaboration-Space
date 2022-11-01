@@ -3077,6 +3077,7 @@ tile_data = PoolIntArray( -917499, 1, 0, -917497, 6, 0, -917489, 6, 0, -786427, 
 position = Vector2( 171, 240 )
 
 [node name="University" type="Node2D" parent="."]
+visible = false
 
 [node name="Background" type="Sprite" parent="University"]
 texture = ExtResource( 13 )
@@ -3170,6 +3171,11 @@ position = Vector2( 1888, -1760 )
 rotation = 3.14159
 
 [node name="Rooms" type="Node2D" parent="University"]
+
+[node name="Room" parent="University/Rooms" instance=ExtResource( 24 )]
+position = Vector2( 1988, -576 )
+scale = Vector2( 31.36, 18.92 )
+room_name = "test room"
 
 [node name="SpawnPoint" type="Position2D" parent="University"]
 position = Vector2( 1152, -536 )

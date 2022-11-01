@@ -181,9 +181,6 @@ func _on_avatar_type_selected(selected: Button) -> void:
 		set_selected_color()
 
 func set_selected_color() -> void:
-	if true:
-		pass
-	
 	sprites.get_node(active_sprite+"/Skin").modulate = Meeting.participant_data["Color"]["Skin"]
 	sprites.get_node(active_sprite+"/Eyes").modulate = Meeting.participant_data["Color"]["Eyes"]
 	sprites.get_node(active_sprite+"/Hair").modulate = Meeting.participant_data["Color"]["Hair"]
