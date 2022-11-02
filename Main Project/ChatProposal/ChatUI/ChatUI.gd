@@ -34,7 +34,8 @@ func _on_send() -> void:
 	# You MUST always use get_peer(1).put_packet to send data to server,
 	# and not put_packet directly when not using the MultiplayerAPI.
 	#parse_json()Meeting.participant_data["Name"]
-	Client._client.get_peer(1).put_packet(_line_edit.text.to_utf8())
+	var to_send = "{\"type\": \"message\", " + "\"msg\": \"" + _line_edit.text + "\"}"
+	Client._client.get_peer(1).put_packet(to_send.to_utf8())
 	# Add text to text of the chat
 	_chat_text.append_bbcode("[color=blue]" + Meeting.participant_data["Name"] + "[/color]: " +_line_edit.text)
 	_chat_text.newline()

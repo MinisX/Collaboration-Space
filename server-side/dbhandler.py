@@ -16,16 +16,15 @@ def open_collection(collection):
 # Store message in DB
 def store_in_db(msg, room, id, receivers):
     try:
-        if (not jsonhelper.is_json(msg)):
-            collection = open_collection(room)
-            message = {
-                "sender_id": id,
-                "receivers_id": receivers, 
-                "message": msg, 
-                "date": datetime.datetime.utcnow()
-                }
-            message_id = collection.insert_one(message).inserted_id
-            print("Successfully inserted message into DB.", message_id)     # Debugger statement
+        collection = open_collection(room)
+        message = {
+            "sender_id": id,
+            "receivers_id": receivers, 
+            "message": msg, 
+            "date": datetime.datetime.utcnow()
+            }
+        message_id = collection.insert_one(message).inserted_id
+        print("Successfully inserted message into DB.", message_id)     # Debugger statement
     except Exception as e:
         traceback.print_exc()
 

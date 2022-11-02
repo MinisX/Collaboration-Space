@@ -5,7 +5,7 @@ library = dict()
 rooms = {"room_1": room1, "room_2": room2, "Library": library}
 
 def manage_user_in_rooms(websocket, data):
-    if data is not None:
+    if "user_id" in data and "state" in data:
             print("user_id: ", data["user_id"])
             print("websocket.id: ", websocket.id)
             # If data is JSON then manage user add/del in room

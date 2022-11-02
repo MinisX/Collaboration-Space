@@ -15,46 +15,47 @@ ROOMS = dict()
 # process messages
 async def process_message(websocket):
     msg = await websocket.recv()
-    data = jsonhelper.is_json(msg)
+    data = jsonhelper.parse_json(msg)
     print("data for register_id: ", data)
     # Register user id when they first log in
-    if data is not None:
+    if data is not None and data["type"] == "register":
         register_user(websocket, data)
     async for msg in websocket:
         print("Message is: ", msg)
-        data = jsonhelper.is_json(msg)
+        data = jsonhelper.parse_json(msg)
         print("Message after JSON parse: ", data)
         # Manage rooms of users
-        if data is not None:
+        if data is not None and data["type"] == "assign_room":
             roomsets.manage_user_in_rooms(websocket, data)
         # Else send to users in the same room
-        else:
-            await send_store_msg(websocket, msg)
+        elif data is not None and data["type"] == "message":
+            await send_store_msg(websocket, data)
 
 # Send message to other clients
-async def send_store_msg(websocket, msg):
-    new_msg = "{\"name\": \"" + NAMES[websocket.id] + "\", \"msg\": \"" + msg + "\"}"
-    receivers = list()
-    room_name = None
-    for room in roomsets.rooms:
-        if websocket.id in roomsets.rooms[room]:
-            room_name = room
-            for client in roomsets.rooms[room]:
-                if websocket.id != client:
-                    # Add all users in the same room as receivers
-                    receivers.append(client)
-                    await CONNECTIONS[client].send(new_msg)
-    dbhandler.store_in_db(msg, room_name, websocket.id, receivers)
+async def send_store_msg(websocket, data):
+    if websocket.id in NAMES and "msg" in data:
+        new_msg = "{\"name\": \"" + NAMES[websocket.id] + "\", \"msg\": \"" + data["msg"] + "\"}"
+        receivers = list()
+        room_name = None
+        for room in roomsets.rooms:
+            if websocket.id in roomsets.rooms[room]:
+                room_name = room
+                for client in roomsets.rooms[room]:
+                    if websocket.id != client:
+                        # Add all users in the same room as receivers
+                        receivers.append(client)
+                        await CONNECTIONS[client].send(new_msg)
+        dbhandler.store_in_db(data["msg"], room_name, websocket.id, receivers)
 
 def register_user(websocket, data):
-    if "register_id" in data:
+    if "user_id" in data and "name" in data:
         websocket.id = data["user_id"]
         CONNECTIONS[websocket.id] = websocket
         NAMES[websocket.id] = data["name"]
         print("CONNECTIONS: ", CONNECTIONS)
 
 # Pull message from Db in case if client reconnects
-async def pull_message():
+def pull_message():
     collection = dbhandler.open_collection()
     result = collection.find({
         "date" : { "$gte" : datetime.datetime.utcnow() - datetime.timedelta(days=1)}
