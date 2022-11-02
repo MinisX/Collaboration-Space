@@ -18,10 +18,9 @@ var meeting_is_running = false
 var join_running_game_pressed = false
 var meeting_area_running = null
 
-var user1_id = 1996063228
-var user2_id = 0
-var user1_position = Vector2(341, 23)
-var user2_position = Vector2(30, 30)
+var user1_id = 2017544769
+var user1_position = Vector2(317, 272)
+var user2_position = Vector2(30,30)
 var user1_data: Dictionary = {
 			Name = "user1",
 			Color = {
@@ -34,7 +33,7 @@ var user1_data: Dictionary = {
 			},
 			Role = "Host"
 		}
-		
+
 var user2_data: Dictionary = {
 			Name = "user2",
 			Color = {
@@ -47,7 +46,6 @@ var user2_data: Dictionary = {
 			},
 			Role = "Participant"
 		}
-
 #-----------------------------
 # End of some data for testing
 
@@ -173,6 +171,103 @@ func _connected_fail() -> void:
 	# Meeting sends signal "meeting_error " to Lobby, which triggers _on_connection_failed() method in Lobby
 	emit_signal("connection_failed")
 	
+# TESTING METHODS START
+# ---------------------
+
+func user2_adds_user1() -> void:
+	print("/n user2_adds_user1() /n")
+	# Get access to participant scene
+	var participant_scene = load("res://Participant.tscn")
+
+	var participant = participant_scene.instance()
+
+	# TODO ask Yufus and Fatma why is name set as p_id, which is spawn location
+	participant.set_name(str(user1_id))
+	# Set spawn locations for the participants
+	participant.position = Vector2(user2_position)
+			
+	# This means each other connected peer has authority over their own player.
+	participant.set_network_master(user1_id)
+
+	participant.set_participant_camera(false)
+	# set data (name and colors) to participant
+	participant.set_data(user1_data)
+
+	# Adds participant to participant list in Default scene
+	meeting_area_running.get_node("Participants").add_child(participant)
+
+func user1_adds_user2(user2_id : int) -> void:
+	print("/n user1_adds_user2 /n")	
+		
+	# Get access to participant scene
+	var participant_scene = load("res://Participant.tscn")
+
+	var participant = participant_scene.instance()
+
+	# TODO ask Yufus and Fatma why is name set as p_id, which is spawn location
+	participant.set_name(str(user2_id))
+	# Set spawn locations for the participants
+	participant.position = Vector2(user2_position)
+			
+	# This means each other connected peer has authority over their own player.
+	participant.set_network_master(user2_id)
+
+	participant.set_participant_camera(false)
+	# set data (name and colors) to participant
+	participant.set_data(user2_data)
+
+	# Adds participant to participant list in Default scene
+	get_tree().get_root().get_node("Default").get_node("Participants").add_child(participant)
+	
+func user2_adds_user2() -> void:
+	print("/n user2_adds_user2 /n")	
+	
+	# Get access to participant scene
+	var participant_scene = load("res://Participant.tscn")
+
+	var participant = participant_scene.instance()
+
+	# TODO ask Yufus and Fatma why is name set as p_id, which is spawn location
+	participant.set_name(str(get_tree().get_network_unique_id()))
+	# Set spawn locations for the participants
+	participant.position = Vector2(user2_position)
+			
+	# This means each other connected peer has authority over their own player.
+	participant.set_network_master(get_tree().get_network_unique_id())
+
+	participant.set_participant_camera(true)
+	# set data (name and colors) to participant
+	participant.set_data(user2_data)
+
+	# Adds participant to participant list in Default scene
+	meeting_area_running.get_node("Participants").add_child(participant)
+	
+	
+func server_adds_user1(user2_id : int) -> void:
+	# Get access to participant scene
+	var participant_scene = load("res://Participant.tscn")
+
+	var participant = participant_scene.instance()
+
+	# TODO ask Yufus and Fatma why is name set as p_id, which is spawn location
+	participant.set_name(str(user2_id))
+	# Set spawn locations for the participants
+	participant.position = Vector2(user2_position)
+			
+	# This means each other connected peer has authority over their own player.
+	participant.set_network_master(user2_id)
+
+	participant.set_participant_camera(false)
+	# set data (name and colors) to participant
+	participant.set_data(user2_data)
+
+	# Adds participant to participant list in Default scene
+	get_tree().get_root().get_node("Default").get_node("Participants").add_child(participant)
+	
+
+#----------------------
+# TESTING METHODS END
+	
 # This method is triggered from rpc_id call from _participant_connected() method in Meeting ( this script )	
 # Remote keyword allows a function to be called by a remote procedure call (RPC).
 # The remote keyword can be called by any peer, including the server and all clients. 
@@ -185,80 +280,19 @@ remote func register_participant(new_participant_data: Dictionary) -> void:
 	print("Meeting: register_participant: ", id)
 	print("Participant data: %s" % new_participant_data)
 		
-	# If statement to add user2 for user1
+	# If statement for server to add user2
+	if get_tree().get_network_unique_id() == 1 && meeting_is_running:
+		server_adds_user1(id)
+	
+	# If statement for user1 to add user2
 	if meeting_is_running == true && get_tree().get_network_unique_id() != 1 && join_running_game_pressed == false:
 		print("In if statement for user 1, adding user2")
+		user1_adds_user2(id)
 		
-		user2_id = id
-		
-		# Get access to participant scene
-		var participant_scene = load("res://Participant.tscn")
-
-		var participant = participant_scene.instance()
-
-		# TODO ask Yufus and Fatma why is name set as p_id, which is spawn location
-		participant.set_name(str(user2_id))
-		# Set spawn locations for the participants
-		participant.position = Vector2(user2_position)
-			
-		# This means each other connected peer has authority over their own player.
-		participant.set_network_master(user2_id)
-
-		participant.set_participant_camera(false)
-		# set data (name and colors) to participant
-		participant.set_data(user2_data)
-
-		# Adds participant to participant list in Default scene
-		#print("Meeting: preconfigure_meeting: adding child: %s" % participant)
-		meeting_area_running.get_node("Participants").add_child(participant)
-		
-	# If statement for user2 adding user1 and user2
+	# If statement for user2 to add user1
 	if join_running_game_pressed == true && id == 1:
 		print("In if statement for user2, adding user 1 ")
-		
-		# Get access to participant scene
-		var participant_scene = load("res://Participant.tscn")
-
-		var participant = participant_scene.instance()
-
-		# TODO ask Yufus and Fatma why is name set as p_id, which is spawn location
-		participant.set_name(str(user1_id))
-		# Set spawn locations for the participants
-		participant.position = Vector2(user1_position)
-			
-		# This means each other connected peer has authority over their own player.
-		participant.set_network_master(user1_id)
-
-		participant.set_participant_camera(false)
-		# set data (name and colors) to participant
-		participant.set_data(user1_data)
-
-		# Adds participant to participant list in Default scene
-		#print("Meeting: preconfigure_meeting: adding child: %s" % participant)
-		meeting_area_running.get_node("Participants").add_child(participant)
-		
-		print("In if statement for user2, adding user 2 ( myself )")
-		
-		# Get access to participant scene
-		var participant_scene_2 = load("res://Participant.tscn")
-
-		var participant_2 = participant_scene_2.instance()
-
-		# TODO ask Yufus and Fatma why is name set as p_id, which is spawn location
-		participant.set_name(str(get_tree().get_network_unique_id()))
-		# Set spawn locations for the participants
-		participant.position = Vector2(user2_position)
-			
-		# This means each other connected peer has authority over their own player.
-		participant.set_network_master(get_tree().get_network_unique_id())
-
-		participant.set_participant_camera(true)
-		# set data (name and colors) to participant
-		participant.set_data(user2_data)
-
-		# Adds participant to participant list in Default scene
-		#print("Meeting: preconfigure_meeting: adding child: %s" % participant)
-		meeting_area_running.get_node("Participants").add_child(participant_2)
+		user2_adds_user1()
 	
 	participants[id] = new_participant_data
 	
@@ -322,11 +356,7 @@ remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 				participant.set_data(participants[p_id])
 
 			# Adds participant to participant list in Default scene
-			#print("Meeting: preconfigure_meeting: adding child: %s" % participant)
 			meeting_area.get_node("Participants").add_child(participant)
-			#print("Meeting: preconfigure_meeting: accessing child from node: %s" % meeting_area.get_node("Participants").get_children()[0])
-			#var default = get_tree().get_root().get_node("Default").get_node("Participants").get_children()[0]
-			#print("Accessing differentely: %s" % default)
 
 	# If the current user is not server, we inform the server that the current user is ready
 	# for the meeting to start
@@ -373,6 +403,11 @@ func host_meeting() -> void:
 func join_meeting(ip: String) -> void:
 	print("Meeting: join_meeting")
 	
+	# Initializing as a client, connecting to a given IP and port:
+	peer = NetworkedMultiplayerENet.new()
+	peer.create_client(ip, DEFAULT_PORT)
+	get_tree().set_network_peer(peer)
+	
 	# If meeting is running, add default scene to the user who is trying to join
 	# while game is already running. So that all users have the same tree
 	if meeting_is_running:
@@ -382,11 +417,9 @@ func join_meeting(ip: String) -> void:
 		get_tree().get_root().add_child(meeting_area_running)
 		# Hide lobby scene
 		get_tree().get_root().get_node("Lobby").hide()
-	
-	# Initializing as a client, connecting to a given IP and port:
-	peer = NetworkedMultiplayerENet.new()
-	peer.create_client(ip, DEFAULT_PORT)
-	get_tree().set_network_peer(peer)
+		
+		# Add yourself to the scene
+		user2_adds_user2()
 	
 # Get the list of participants
 func get_participant_list() -> Array:
