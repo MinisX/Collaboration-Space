@@ -90,6 +90,9 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 func _on_ok_pressed() -> void:
 	Meeting.participant_data["Name"] = name_input.text
 	
+	if name_input.text.length() == 0:
+		$Error.show()
+		return
 	# Pushing data to Firestore
 	convert_data_for_firebase()
 	match new_profile:
