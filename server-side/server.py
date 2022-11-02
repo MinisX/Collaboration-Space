@@ -1,71 +1,65 @@
 #!/usr/bin/env python
 
 import asyncio
+import datetime
 import signal
 import websockets
-import pymongo
 import dbhandler
-import roomhandler
+import roomsets
 import jsonhelper
 
-participant_data = None
-user_dict = dict()
+CONNECTIONS = dict()
+NAMES = dict()
+ROOMS = dict()
 
 # process messages
 async def process_message(websocket):
-    async for message in websocket: 
-        await send_message_to_room(websocket, message)
+    msg = await websocket.recv()
+    data = jsonhelper.is_json(msg)
+    print("data for register_id: ", data)
+    # Register user id when they first log in
+    if data is not None:
+        register_user(websocket, data)
+    async for msg in websocket:
+        print("Message is: ", msg)
+        data = jsonhelper.is_json(msg)
+        print("Message after JSON parse: ", data)
+        # Manage rooms of users
+        if data is not None:
+            roomsets.manage_user_in_rooms(websocket, data)
+        # Else send to users in the same room
+        else:
+            await send_store_msg(websocket, msg)
 
 # Send message to other clients
-async def send_message_to_room(ws, msg):
-    # See if user has changed rooms
-    print(msg)      # Debugger statement
-    print(type(msg))        # Debugger statement
-    if (jsonhelper.is_json(msg)):
-        print("it's json!")     # Debugger statement
-        global participant_data
-        participant_data = jsonhelper.parse_json(msg)
-        store_user_room(participant_data)
-        roomhandler.add_user_to_room(ws, participant_data)
-        # Broadcast a message to users in the same room
-        print(roomhandler.room1, roomhandler.room2, roomhandler.room3)      # Debugger statement
-    elif ws in roomhandler.room1:
-        for user in roomhandler.room1:
-            # if (ws != user):
-                print("inside room_1")      # Debugger statement
-                await user.send(msg)
-                await ws.send("room1 USEEEEER!")        # Debugger statement
-                dbhandler.update_db(msg, participant_data)
-    elif ws in roomhandler.room2:
-        for user in roomhandler.room2:
-            # if (ws != user):
-                print("inside room_2")      # Debugger statement
-                await user.send(msg)
-                await ws.send("room2 USEEEEER!")        # Debugger statement
-                dbhandler.update_db(msg, participant_data)
-    elif ws in roomhandler.room3:
-        for user in roomhandler.room3:
-            # if (ws != user):
-                print("inside room_3")      # Debugger statement
-                await user.send(msg)
-                await ws.send("room3 USEEEEER!")        # Debugger statement
-                dbhandler.update_db(msg, participant_data)
-    else:
-        await ws.send("Error: user doesn't belong to a room!")      # Debugger statement
+async def send_store_msg(websocket, msg):
+    new_msg = "{\"name\": \"" + NAMES[websocket.id] + "\", \"msg\": \"" + msg + "\"}"
+    receivers = list()
+    for room in roomsets.rooms:
+        if websocket.id in roomsets.rooms[room]:
+            for client in roomsets.rooms[room]:
+                if websocket.id != client:
+                    # Add all users in the same room as receivers
+                    receivers.append(client)
+                    await CONNECTIONS[client].send(new_msg)
+    dbhandler.store_in_db(msg, room, websocket.id, receivers)
 
-def store_user_room(data):
-    global user_dict
-    user_dict = {data["user_id"], data["room"]}
-    print(user_dict)        # Debugger statement
+def register_user(websocket, data):
+    if "register_id" in data:
+        websocket.id = data["user_id"]
+        CONNECTIONS[websocket.id] = websocket
+        NAMES[websocket.id] = data["name"]
+        print("CONNECTIONS: ", CONNECTIONS)
 
-""" # Pull message from Db in case if client reconnects
+# Pull message from Db in case if client reconnects
 async def pull_message():
-    collection = open_collection()
+    collection = dbhandler.open_collection()
     result = collection.find({
-        "date" : { "$lte" : datetime.datetime.utcnow() - datetime.datetime.day}
+        "date" : { "$gte" : datetime.datetime.utcnow() - datetime.timedelta(days=1)}
     })
+    return result
 
-# handle the client
+""" # handle the client
 async def handler(websocket):
     consumer_task = asyncio.create_task(process_message(websocket))
     producer_task = asyncio.create_task(send_message_to_room(websocket))

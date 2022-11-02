@@ -2,6 +2,7 @@ import pymongo
 import traceback
 import datetime
 import jsonhelper
+import server
 
 # Get MongoDB Client and open DB connection
 def get_database():
@@ -11,22 +12,21 @@ def get_database():
 
 # Open suitable DB collection
 def open_collection(collection):
-    return client.chat_godot[collection]
+    return get_database().chat_godot[collection]
 
 # Store message in DB
-def update_db(msg, participant_data):
+def store_in_db(msg, room, id, receivers):
     try:
-        if participant_data is not None:
-            collection_name = participant_data["room"]
-            if (not jsonhelper.is_json(msg)):
-                collection = open_collection(collection_name)
-                message = {
-                    "sender_id": participant_data["user_id"], 
-                    "message": msg, 
-                    "date": datetime.datetime.utcnow()
-                    }
-                message_id = collection.insert_one(message).inserted_id
-                print("Successfully inserted message into DB.")     # Debugger statement
+        if (not jsonhelper.is_json(msg)):
+            collection = open_collection(room)
+            message = {
+                "sender_id": id,
+                "receivers_id": receivers, 
+                "message": msg, 
+                "date": datetime.datetime.utcnow()
+                }
+            message_id = collection.insert_one(message).inserted_id
+            print("Successfully inserted message into DB.", message_id)     # Debugger statement
     except Exception as e:
         traceback.print_exc()
 
