@@ -48,6 +48,6 @@ func send_to_server(id, room, state):
 	print(to_send)
 	
 func send_user_id():
-	var to_send = "{\"register_id\": \"true\", " + "\"user_id\": \"" + Firebase.user_info.id + "\"}"
+	var to_send = "{\"register_id\": \"true\", " + "\"user_id\": \"" + Firebase.user_info.id + "\", \"name\": \""+ Meeting.participant_data["Name"] + "\"}"
 	_client.get_peer(1).put_packet(to_send.to_utf8())
 	print("Client: send_user_id")
