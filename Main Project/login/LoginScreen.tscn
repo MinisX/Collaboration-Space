@@ -1,33 +1,56 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://login/LoginScreen.gd" type="Script" id=1]
 [ext_resource path="res://Assets/UI/CustomThemes/custom_theme.tres" type="Theme" id=2]
-[ext_resource path="res://Assets/UI/panel_rect.png" type="Texture" id=3]
+[ext_resource path="res://Assets/UI/color_space.svg" type="Texture" id=4]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.0352941, 0.12549, 0.278431, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="Login" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 2 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.172549, 0.32549, 0.580392, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color( 0.0352941, 0.12549, 0.278431, 1 )
+[node name="CollaborationSpace" type="TextureRect" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -227.0
-margin_top = -189.0
-margin_right = 227.0
-margin_bottom = 189.0
-texture = ExtResource( 3 )
+margin_left = -386.5
+margin_top = -208.5
+margin_right = 386.5
+margin_bottom = -143.5
+texture = ExtResource( 4 )
+
+[node name="Panel" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -175.0
+margin_top = -110.0
+margin_right = 175.0
+margin_bottom = 190.0
+custom_styles/panel = SubResource( 1 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_left = 0.5
@@ -35,9 +58,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -150.0
-margin_top = -100.0
+margin_top = -60.0
 margin_right = 150.0
-margin_bottom = 100.0
+margin_bottom = 140.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 margin_right = 300.0

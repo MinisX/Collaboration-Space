@@ -7,10 +7,15 @@ var participants_inside: Array = []
 # {Name = "room name", ListOfParticipants = participants_inside}
 var room_info: Dictionary = {}
 
+var disabled: bool = true
+
 func _ready():
 	connect("body_entered", self, "_on_body_entered")
 	connect("body_exited", self, "_on_body_exited")
 
+remotesync func remove_me() -> void:
+	print("------------------- Room: remove_me")
+	self.queue_free()
 
 func _process(delta) -> void:
 	# print participants_inside array when "ui_accept" pressed

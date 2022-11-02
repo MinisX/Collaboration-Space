@@ -3,6 +3,7 @@ extends Control
 onready var sprites: Control = $Sprites
 onready var animation: AnimationPlayer = $Animation
 onready var button_group: ButtonGroup = null
+onready var f_m_button_group: ButtonGroup = null
 onready var color_picker: ColorPicker = $ColorPicker
 onready var turn_avatar_slider: HSlider = $MarginContainer/VBoxContainer/TurnAvatarSlider
 onready var ok_button: Button = $Ok
@@ -28,10 +29,13 @@ var profile : = {
 
 var active_part: String = "Skin"
 var active_color: Color = Color(1.0, 1.0, 1.0, 1.0)
+var active_sprite: String = "SpritesM"
 
 func _ready() -> void:
 	button_group = $MarginContainer/VBoxContainer/Hair.group
+	f_m_button_group = $MarginContainer/VBoxContainer/HBoxContainer/female.group
 	button_group.connect("pressed", self, "_on_avatar_part_selected")
+	f_m_button_group.connect("pressed", self, "_on_avatar_type_selected")
 	color_picker.connect("color_changed", self, "_on_color_value_changed")
 	turn_avatar_slider.connect("value_changed", self, "_on_avatar_turned")
 	ok_button.connect("pressed", self, "_on_ok_pressed")
@@ -52,10 +56,8 @@ func _process(_delta):
 		convert_data_for_firebase()
 		match new_profile:
 			true:
-				print("true")
 				Firebase.save_document("users?documentId=%s" % Firebase.user_info.id, profile, http)
 			false: 
-				print("false")
 				Firebase.update_document("users/%s" % Firebase.user_info.id, profile, http)
 				
 		information_sent = true
@@ -71,16 +73,26 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			return
 		# If response code is 200 it means that the document exists in the DB, so we saved it succesfully
 		200:
+			self.profile = result_body.fields
+			
 			if information_sent:
 				print("HTTP Response: Code 200 -> Information saved")
 				#notification.text = ""
 				information_sent = false
 				get_tree().change_scene("res://Spaces/Default/Lobby.tscn")
-			self.profile = result_body.fields
+			# This is entered when user is already registered and wants to modify the existing avatar
+			else:
+				print("HTTP Response: Code 200 -> Information changed")
+				convert_data_from_firebase()
+				set_selected_color()
+			
 
 func _on_ok_pressed() -> void:
 	Meeting.participant_data["Name"] = name_input.text
 	
+	if name_input.text.length() == 0:
+		$Error.show()
+		return
 	# Pushing data to Firestore
 	convert_data_for_firebase()
 	match new_profile:
@@ -95,6 +107,24 @@ func _on_ok_pressed() -> void:
 	
 	#get_tree().change_scene("res://Spaces/Default/Default.tscn")
 
+# This method converts the user data from Firestore to Meeting.participant_data
+func convert_data_from_firebase() -> void:
+	
+	#name
+	Meeting.participant_data["Name"] = profile.name["stringValue"]
+	name_input.text = Meeting.participant_data["Name"]
+			
+	Meeting.participant_data["Color"]["Hair"] = Color(profile.hair["stringValue"])
+	Meeting.participant_data["Color"]["Eyes"] = Color(profile.eyes["stringValue"])
+	Meeting.participant_data["Color"]["Pants"] = Color(profile.legs["stringValue"])
+	Meeting.participant_data["Color"]["Shoe"] = Color(profile.feet["stringValue"])
+	# skin
+	Meeting.participant_data["Color"]["Skin"] = Color(profile.hands["stringValue"])
+	Meeting.participant_data["Color"]["Skin"] = Color(profile.head["stringValue"])
+	# shirt
+	Meeting.participant_data["Color"]["Shirt"] = Color(profile.torso["stringValue"])
+	Meeting.participant_data["Color"]["Shirt"] = Color(profile.arms["stringValue"])
+	
 # This method converts the user data to the format we need for Firestore
 func convert_data_for_firebase() -> void:
 	profile.name = { "stringValue": Meeting.participant_data["Name"]}
@@ -139,19 +169,27 @@ func _on_avatar_turned(value: int) -> void:
 func _on_avatar_part_selected(selected: Button) -> void:
 	active_part = selected.name
 
+func _on_avatar_type_selected(selected: Button) -> void:
+	if selected.name == "female":
+		active_sprite = "SpritesF"
+		sprites.get_node("SpritesF").show()
+		sprites.get_node("SpritesM").hide()
+		Meeting.participant_data["Sprite"] = "female"
+		set_selected_color()
+	elif selected.name == "male":
+		active_sprite = "SpritesM"
+		sprites.get_node("SpritesM").show()
+		sprites.get_node("SpritesF").hide()
+		Meeting.participant_data["Sprite"] = "male"
+		set_selected_color()
 
 func set_selected_color() -> void:
-	sprites.get_node("Hair").modulate = Meeting.participant_data["Color"]["Hair"]
-	sprites.get_node("Eyes").modulate = Meeting.participant_data["Color"]["Eyes"]
-	sprites.get_node("Legs").modulate = Meeting.participant_data["Color"]["Pants"]
-	sprites.get_node("Feet").modulate = Meeting.participant_data["Color"]["Shoe"]
-	# skin
-	sprites.get_node("Hands").modulate = Meeting.participant_data["Color"]["Skin"]
-	sprites.get_node("Head").modulate = Meeting.participant_data["Color"]["Skin"]
-	# shirt
-	sprites.get_node("Torso").modulate = Meeting.participant_data["Color"]["Shirt"]
-	sprites.get_node("Arms").modulate = Meeting.participant_data["Color"]["Shirt"]
-	
+	sprites.get_node(active_sprite+"/Skin").modulate = Meeting.participant_data["Color"]["Skin"]
+	sprites.get_node(active_sprite+"/Eyes").modulate = Meeting.participant_data["Color"]["Eyes"]
+	sprites.get_node(active_sprite+"/Hair").modulate = Meeting.participant_data["Color"]["Hair"]
+	sprites.get_node(active_sprite+"/Pants").modulate = Meeting.participant_data["Color"]["Pants"]
+	sprites.get_node(active_sprite+"/Shirt").modulate = Meeting.participant_data["Color"]["Shirt"]
+	sprites.get_node(active_sprite+"/Shoe").modulate = Meeting.participant_data["Color"]["Shoe"]
 
 func _on_color_selected() -> void:
 	pass

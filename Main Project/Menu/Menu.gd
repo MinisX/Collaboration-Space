@@ -34,16 +34,13 @@ func _on_exit_pressed() -> void:
 		Firebase.delete_document("users/%s" % Firebase.user_info.id, http)
 	else: 
 		redirect_to_login()
-	# TODO Safely remove the participant from the meeting
-	# error 1: create_server: Couldn't create an ENet multiplayer server.
-	# error 2: set_network_peer: Supplied NetworkedMultiplayerPeer must be connecting or connected.
 	
 # Helper method to redirect to login screen after logout
 func redirect_to_login() -> void:
 	Firebase.user_info = {}
-	self.hide()
-	get_parent().get_parent().queue_free()
-	get_tree().change_scene("res://login/LoginScreen.tscn")
+	
+	OS.execute(OS.get_executable_path(), [], false)
+	get_tree().quit()
 	
 # HTTP request to delete account for anon user when pressed "exit meeting"
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
@@ -57,7 +54,6 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		else:
 			print("\nHTTP Response: %s -> User data was not deleted" % response_code)
 			
-
 	if http_responses_count == 2:
 		if response_code == 200:
 			print("\nHTTP Response: Code 200 -> User account was deleted")

@@ -9,6 +9,8 @@ onready var JoinButton: Button = $MarginContainer/VBoxContainer/HBoxContainer/Jo
 onready var http : HTTPRequest = $HTTPRequest
 onready var Notification : Label = $MarginContainer/VBoxContainer/Notification
 
+var anonLogin = false
+
 func _ready() -> void:
 	# Connect buttons to suitable callbacks
 	JoinButton.connect("pressed", self, "_on_join_pressed")
@@ -31,9 +33,8 @@ func _on_LoginButton_pressed():
 	
 # Called when join button is pressed
 func _on_join_pressed() -> void:
-	get_tree().change_scene("res://Customization/Avatar.tscn")
-#	Meeting.participant_data["name"] = Username.text
-#	get_tree().change_scene("res://EnteringScene.tscn")
+	Firebase.anon_login(http)
+	anonLogin = true
 
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):

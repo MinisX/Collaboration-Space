@@ -1,7 +1,6 @@
 extends Control
 
 onready var connection_panel: ColorRect = $ConnectionPanel
-#onready var name_input = GlobalData.participant_data["Name"]
 onready var name_input = Meeting.participant_data["Name"]
 onready var participants_panel: ColorRect = $ParticipantsPanel
 onready var participants_list_view: ItemList = $ParticipantsPanel/ParticipantList
@@ -19,6 +18,9 @@ onready var http_responses_count = 0
 
 func _ready() -> void:
 	print("Lobby: _ready")
+	# Disable auto accept of quiting by cross
+	# It's handeled in _notification method
+	get_tree().set_auto_accept_quit(false)
 	
 	# fetch if not --server
 	# command line args example:
@@ -27,6 +29,11 @@ func _ready() -> void:
 		print("Lobby: --server")
 	else:
 		fetch_user_data_fromDB()
+	
+	# get ip address from argv
+	var arguments: Dictionary = Meeting.get_cmd_args()
+	if arguments.has("ip") and arguments["ip"].is_valid_ip_address():
+		ip = arguments["ip"] as String
 	
 	# The signals are emitted ( sent ) from Meeting to Lobby
 	# E.g connection_succeeded is sent from Meeting _connected_ok() method
@@ -43,10 +50,6 @@ func _ready() -> void:
 	
 	# start meeting automaticaly after waiting 20 seconds if --server passed
 	if "--server" in OS.get_cmdline_args():
-#		var delay: float = 15.0
-		# check if there is another arguement (defines the amount of delay)
-#		if OS.get_cmdline_args().size() == 3 and OS.get_cmdline_args()[2].is_valid_float():
-#			delay = OS.get_cmdline_args()[2] as float
 		Meeting.host_meeting()
 	else:
 		print("Main: client")
@@ -58,7 +61,6 @@ func _on_host_pressed() -> void:
 		Meeting.participant_data["Role"] = "Participant"
 	elif Meeting.participant_data["Role"] == "Participant":
 		Meeting.participant_data["Role"] = "Host"
-
 
 
 # This method is triggered from Meeting.gd in _connected_ok() method
@@ -118,9 +120,13 @@ func _on_start_pressed():
 	print("Lobby: _on_start_pressed()")
 	if Meeting.participant_data["Role"] == "Host":
 		refresh_lobby()
-		# call start_meeting
+		# use id 1 to call only on server
+		# call set_selected_space on server to inform server about selected space 
+		Meeting.rpc_id(1, "set_selected_space", Meeting.selected_space)
 		# use id 1 to call only on server  
+		# tell server to start meeting
 		Meeting.rpc_id(1, "start_meeting")
+#		Meeting.rset("selected_space", Meeting.selected_space)
 
 func fetch_user_data_fromDB():
 	print("Lobby: fetch_user_data_fromDB()")
@@ -129,7 +135,6 @@ func fetch_user_data_fromDB():
 	# Hide change password if user is not registered
 	if !Firebase.user_info.is_registered:
 		changePassword_button.hide()
-		
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	http_responses_count += 1
@@ -190,3 +195,21 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 
 func _on_ChangePassword_pressed():
 	get_tree().change_scene("res://ChangePassword/ChangePassword.tscn")
+
+func _on_JoinRunningGame_pressed():
+	pass # Replace with function body.
+
+func _on_Customize_avatar_pressed():
+	get_tree().change_scene("res://Customization/Avatar.tscn")
+
+# Here we receive notification that user has pressed X to quit the game
+func _notification(what):
+	if (what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST):
+		print("Lobby.gd: Nofitication in first if")
+		if !Firebase.user_info.is_registered:
+			print("Lobby.gd: Nofitication in second if")
+			get_tree().change_scene("res://Exit_Meeting/Exit_Meeting.tscn")
+		else: 
+			print("Lobby.gd: Nofitication in else")
+			Firebase.user_info = {}
+			get_tree().quit()
