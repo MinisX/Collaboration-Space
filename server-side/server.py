@@ -35,14 +35,16 @@ async def process_message(websocket):
 async def send_store_msg(websocket, msg):
     new_msg = "{\"name\": \"" + NAMES[websocket.id] + "\", \"msg\": \"" + msg + "\"}"
     receivers = list()
+    room_name = None
     for room in roomsets.rooms:
         if websocket.id in roomsets.rooms[room]:
+            room_name = room
             for client in roomsets.rooms[room]:
                 if websocket.id != client:
                     # Add all users in the same room as receivers
                     receivers.append(client)
                     await CONNECTIONS[client].send(new_msg)
-    dbhandler.store_in_db(msg, room, websocket.id, receivers)
+    dbhandler.store_in_db(msg, room_name, websocket.id, receivers)
 
 def register_user(websocket, data):
     if "register_id" in data:

@@ -2,7 +2,6 @@ import pymongo
 import traceback
 import datetime
 import jsonhelper
-import server
 
 # Get MongoDB Client and open DB connection
 def get_database():
