@@ -5,7 +5,7 @@ export (float) var speed: float = 200.0
 
 onready var animation_player: AnimationPlayer = $AnimationPlayer
 onready var interaction_area: Area2D = $InteractionArea
-onready var location: Label = $Location
+onready var location: Label = $CanvasLayer/Location
 
 var velocity: Vector2 = Vector2(0.0, 0.0)
 var direction: Vector2 = Vector2(0.0, 1.0)
