@@ -260,7 +260,7 @@ func unregister_participant(id: int) -> void:
 #remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 # METHOD OK
 func preconfigure_meeting_server() -> void:
-	print("Meeting: preconfigure_meeting")
+	print("Meeting: preconfigure_meeting_server")
 	
 	# Get access to Default scene
 	var meeting_area = load("res://Spaces/Default/Default.tscn").instance()

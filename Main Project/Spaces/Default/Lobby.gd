@@ -77,8 +77,6 @@ func _on_meeting_error(error) -> void:
 # METHD OK
 func _on_online_pressed():
 	print("Lobby: _on_online_pressed()")
-	Meeting.join_running_game_pressed = true
-	Meeting.meeting_is_running = true
 	Meeting.join_meeting(ip)
 
 # METHOD OK
