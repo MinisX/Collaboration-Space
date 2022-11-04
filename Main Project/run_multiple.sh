@@ -3,6 +3,9 @@
 # this script runs the app in server mode with multiple instances
 # use first ($1) argument to define the ip
 
+# todo
+# call shut down script before this
+
 echo "run multiple instance"
 echo "ip address = $1"
 
