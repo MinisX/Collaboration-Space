@@ -44,14 +44,6 @@ margin_right = 184.0
 margin_bottom = 41.0
 custom_constants/separation = 16
 
-[node name="Offline" type="Button" parent="ConnectionPanel/VBoxContainer/Row3"]
-visible = false
-margin_right = 84.0
-margin_bottom = 41.0
-size_flags_horizontal = 3
-size_flags_vertical = 2
-text = "Offline"
-
 [node name="Online" type="Button" parent="ConnectionPanel/VBoxContainer/Row3"]
 margin_right = 90.0
 margin_bottom = 41.0
@@ -83,57 +75,9 @@ margin_right = 184.0
 margin_bottom = 131.0
 text = "Customize avatar"
 
-[node name="JoinRunningGame" type="Button" parent="ConnectionPanel/VBoxContainer"]
-margin_top = 135.0
-margin_right = 184.0
-margin_bottom = 176.0
-text = "JoinRunningGame"
-
-[node name="ParticipantsPanel" type="ColorRect" parent="."]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -150.0
-margin_top = -200.0
-margin_right = 150.0
-margin_bottom = 200.0
-color = Color( 0.227451, 0.282353, 0.368627, 1 )
-
-[node name="Title" type="Label" parent="ParticipantsPanel"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -74.0
-margin_top = 20.0
-margin_right = 74.0
-margin_bottom = 34.0
-text = "Waiting for Participants"
-
-[node name="ParticipantList" type="ItemList" parent="ParticipantsPanel"]
-margin_left = 49.0
-margin_top = 59.5
-margin_right = 253.0
-margin_bottom = 318.5
-size_flags_horizontal = 2
-size_flags_vertical = 2
-
-[node name="Start" type="Button" parent="ParticipantsPanel"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -34.5
-margin_top = -60.0
-margin_right = 34.5
-margin_bottom = -19.0
-text = "Start"
-
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
-[connection signal="pressed" from="ConnectionPanel/VBoxContainer/Row3/Offline" to="." method="_on_offline_pressed"]
 [connection signal="pressed" from="ConnectionPanel/VBoxContainer/Row3/Online" to="." method="_on_online_pressed"]
 [connection signal="pressed" from="ConnectionPanel/VBoxContainer/ChangePassword" to="." method="_on_ChangePassword_pressed"]
 [connection signal="pressed" from="ConnectionPanel/VBoxContainer/Customize avatar" to="." method="_on_Customize_avatar_pressed"]
-[connection signal="pressed" from="ConnectionPanel/VBoxContainer/JoinRunningGame" to="." method="_on_JoinRunningGame_pressed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
