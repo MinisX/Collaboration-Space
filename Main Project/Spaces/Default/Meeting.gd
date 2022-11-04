@@ -169,7 +169,7 @@ func _connected_fail() -> void:
 
 # METHOD OK
 remote func new_user_adds_ingame_participants(participants_list_from_server : Array) -> void:
-	print("new_user_adds_ingame_participants()")
+	print("Meeting: new_user_adds_ingame_participants()")
 	
 	for p in participants_list_from_server:
 		# Get access to participant scene
@@ -220,7 +220,8 @@ func in_game_add_new_user(new_participant_data : Dictionary) -> void:
 # This method is called from user who has joined running game
 # The call is done to server
 # He sends his list of participants to the new user
-remote func server_participants_array () -> void:
+remote func server_participants_array() -> void:
+	print("Meeting: server_participants_array()")
 	var rpc_sender: int = get_tree().get_rpc_sender_id()
 	var participants_list_from_server: Array = get_participant_list()
 	rpc_id(rpc_sender, "new_user_adds_ingame_participants", participants_list_from_server )
@@ -232,7 +233,7 @@ remote func server_participants_array () -> void:
 # master to any network puppet. The master keyword means a call can be made from any network puppet to the network master.
 # METHOD OK
 remote func register_participant(new_participant_data: Dictionary) -> void:	
-	
+	print("Meeting: register:participant")
 	# Here we get the rpc ID of the user that called register_participant
 	var id: int = get_tree().get_rpc_sender_id()
 	
