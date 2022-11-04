@@ -294,7 +294,7 @@ remote func ready_to_start(id: int) -> void:
 # This method creates the hosting on the game by server
 func host_meeting() -> void:
 	print("Meeting: host_meeting")
-	
+	print("Meeting: default port: ", DEFAULT_PORT)
 	# Initializing as a server, listening on the given port, with a given maximum number of peers
 	peer = NetworkedMultiplayerENet.new()
 	peer.create_server(DEFAULT_PORT, MAX_PARTICIPANT)
