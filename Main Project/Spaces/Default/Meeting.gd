@@ -250,7 +250,7 @@ remote func request_server_for_rpc_register(new_participant_data: Dictionary) ->
 	in_game_add_new_user(new_participant_data)
 	participants[id] = new_participant_data
 	
-	rpc("register_participant", Meeting.participant_data)
+	rpc("register_participant", new_participant_data)
 	
 # Unregister participant
 # METHOD OK
