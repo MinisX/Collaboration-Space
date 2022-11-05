@@ -16,9 +16,9 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Client="*res://ChatProposal/ChatUI/Client.gd"
 Firebase="*res://static/Firebase.gd"
 Meeting="*res://Spaces/Default/Meeting.gd"
+Client="*res://ChatProposal/ChatUI/Client.gd"
 
 [gui]
 
