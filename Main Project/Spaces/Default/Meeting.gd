@@ -113,7 +113,7 @@ func _participant_disconnected(id: int) -> void:
 # After we are succesfully connected to server, we add ourselves do the scene
 # METHOD OK 		
 func _connected_ok() -> void:
-	print("Meeting: _connected_ok")
+	print("Meeting: _connected_ok, my ID is: %s" % get_tree().get_network_unique_id())
 	
 	# Add user id to particiant_data
 	Meeting.participant_data["NetworkID"] = get_tree().get_network_unique_id()
@@ -172,6 +172,7 @@ remote func new_user_adds_ingame_participants(participants_list_from_server : Ar
 	print("Meeting: new_user_adds_ingame_participants()")
 	
 	for p in participants_list_from_server:
+		print("Meeting: new_user_adds_ingame_participants(): adding user: %s " % p["NetworkID"])
 		# Get access to participant scene
 		var participant_scene = load("res://Participant.tscn")
 
@@ -194,7 +195,7 @@ remote func new_user_adds_ingame_participants(participants_list_from_server : Ar
 	
 # Server and participants that are already in game add new user	
 func in_game_add_new_user(new_participant_data : Dictionary) -> void:
-	print("Meeting: in_game_add_new_user()")
+	print("Meeting: in_game_add_new_user(), adding user: %s" % new_participant_data["NetworkID"])
 	# Get access to participant scene
 	var participant_scene = load("res://Participant.tscn")
 
@@ -233,17 +234,18 @@ remote func server_participants_array() -> void:
 # master to any network puppet. The master keyword means a call can be made from any network puppet to the network master.
 # METHOD OK
 remote func register_participant(new_participant_data: Dictionary) -> void:	
-	print("Meeting: register_participant()")
-	# Here we get the rpc ID of the user that called register_participant
 	var id : int = new_participant_data["NetworkID"]
-	
+	print("Meeting: register_participant(), user %s" % id)
+	# Here we get the rpc ID of the user that called register_participant
+
 	if id != get_tree().get_network_unique_id():
+		print("Meeting: register_participant(), inside if")
 		in_game_add_new_user(new_participant_data)
 		participants[id] = new_participant_data
 
 # This request is only sent to the server	
 remote func request_server_for_rpc_register(new_participant_data: Dictionary) -> void:
-	print("Meeting: request_server_for_rpc_register()")
+	print("Meeting: request_server_for_rpc_register(), user %s" % new_participant_data["NetworkID"])
 	var id: int = get_tree().get_rpc_sender_id()
 	in_game_add_new_user(new_participant_data)
 	participants[id] = new_participant_data
