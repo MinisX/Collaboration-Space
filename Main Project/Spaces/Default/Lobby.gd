@@ -58,7 +58,6 @@ func _on_connection_success() -> void:
 	connection_panel.hide()
 	Meeting.rpc_id(1,"server_participants_array")
 	Meeting.rpc_id(1, "request_server_for_rpc_register", Meeting.participant_data)
-	#Meeting.rpc("register_participant", Meeting.participant_data)
 	
 
 # METHOD OK
