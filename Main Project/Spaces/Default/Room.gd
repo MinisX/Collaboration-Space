@@ -44,3 +44,4 @@ func _on_body_exited(body: KinematicBody2D) -> void:
 		if body.name == Meeting.get_current_user_network_id():
 			print("Room: ", "participant: " + Firebase.user_info.id + " exited from the room ", room_name)
 			Client.send_to_server(Firebase.user_info.id, room_name, "depart")
+			get_tree().get_root().get_node("Default/CanvasLayer/ChatUI/ChatContainer/VBoxContainer/ChatText").clear()

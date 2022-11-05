@@ -54,7 +54,7 @@ text = "<"
 
 [node name="ChatText" type="RichTextLabel" parent="ChatContainer/VBoxContainer"]
 margin_top = 45.0
-margin_right = 220.0
+margin_right = 267.0
 margin_bottom = 525.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -65,7 +65,7 @@ margin_right = 267.0
 margin_bottom = 570.0
 
 [node name="ChatEnter" type="LineEdit" parent="ChatContainer/VBoxContainer/Chat"]
-margin_right = 153.0
+margin_right = 200.0
 margin_bottom = 41.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )

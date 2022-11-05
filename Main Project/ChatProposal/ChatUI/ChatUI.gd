@@ -1,5 +1,6 @@
 extends Control
 
+
 onready var hide_button: Button = $ChatContainer/VBoxContainer/HBoxContainer/HideButton
 onready var _chat_text: RichTextLabel = $ChatContainer/VBoxContainer/ChatText
 onready var _line_edit: LineEdit = $ChatContainer/VBoxContainer/Chat/ChatEnter
@@ -21,8 +22,20 @@ func _on_data():
 	# get_packet to receive data from server, and not get_packet directly when 
 	# not using the MultiplayerAPI.
 	var received_data = JSON.parse(Client._client.get_peer(1).get_packet().get_string_from_utf8())
-	_chat_text.append_bbcode("[color=blue]" + received_data.result["name"] + "[/color]: " + received_data.result["msg"])
-	_chat_text.newline()
+	print("Received data: ", received_data.result)
+	if received_data.result != null:	
+		if received_data.result["type"] == "retrieve_message":
+			var json_messages = JSON.parse(received_data.result["result"].replace("'", "\""))
+			print(json_messages.result)
+			if typeof(json_messages.result) == TYPE_ARRAY:
+				for document in json_messages.result:
+					if "sender_name" in document and "message" in document:
+						print("document: " ,document)
+						_chat_text.append_bbcode("[color=blue]" + document["sender_name"] + "[/color]: " + document["message"])
+						_chat_text.newline()
+		elif received_data.result["type"] == "message":
+			_chat_text.append_bbcode("[color=blue]" + received_data.result["name"] + "[/color]: " + received_data.result["msg"])
+			_chat_text.newline()
 	print("ChatUI: inside _on_data")
 	print(Client._client.get_peer(1).get_packet().get_string_from_utf8())
 	
