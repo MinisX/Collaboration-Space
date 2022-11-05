@@ -233,16 +233,23 @@ remote func server_participants_array() -> void:
 # master to any network puppet. The master keyword means a call can be made from any network puppet to the network master.
 # METHOD OK
 remote func register_participant(new_participant_data: Dictionary) -> void:	
-	print("Meeting: register:participant")
+	print("Meeting: register_participant()")
 	# Here we get the rpc ID of the user that called register_participant
-	var id: int = get_tree().get_rpc_sender_id()
+	var id : int = new_participant_data["NetworkID"]
 	
-	if id != 1 && id != get_tree().get_network_unique_id():
+	if id != get_tree().get_network_unique_id():
 		in_game_add_new_user(new_participant_data)
-			
+		participants[id] = new_participant_data
+
+# This request is only sent to the server	
+remote func request_server_for_rpc_register(new_participant_data: Dictionary) -> void:
+	print("Meeting: request_server_for_rpc_register()")
+	var id: int = get_tree().get_rpc_sender_id()
+	in_game_add_new_user(new_participant_data)
 	participants[id] = new_participant_data
 	
-
+	rpc("register_participant", Meeting.participant_data)
+	
 # Unregister participant
 # METHOD OK
 func unregister_participant(id: int) -> void:
