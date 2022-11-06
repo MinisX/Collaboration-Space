@@ -1,0 +1,35 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/furniture.jpg4B58425E-8647-4F16-804C-EC9AD888D205Large1__1_-removebg-preview.png-77a2dedf4c16f08a763c348a52b63913.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://Spaces/Office/Tiles/furniture.jpg4B58425E-8647-4F16-804C-EC9AD888D205Large1__1_-removebg-preview.png"
+dest_files=[ "res://.import/furniture.jpg4B58425E-8647-4F16-804C-EC9AD888D205Large1__1_-removebg-preview.png-77a2dedf4c16f08a763c348a52b63913.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+process/normal_map_invert_y=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0
