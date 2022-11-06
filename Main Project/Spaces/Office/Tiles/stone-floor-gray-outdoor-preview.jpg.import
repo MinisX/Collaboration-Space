@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/officeTexture.png-4807662bf729bdc805f2841a3213a396.stex"
+path="res://.import/stone-floor-gray-outdoor-preview.jpg-79dc78503f9be87f84774ada0e12bf6c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Spaces/Office/Tiles/officeTexture.png"
-dest_files=[ "res://.import/officeTexture.png-4807662bf729bdc805f2841a3213a396.stex" ]
+source_file="res://Spaces/Office/Tiles/stone-floor-gray-outdoor-preview.jpg"
+dest_files=[ "res://.import/stone-floor-gray-outdoor-preview.jpg-79dc78503f9be87f84774ada0e12bf6c.stex" ]
 
 [params]
 
