@@ -41,7 +41,7 @@ async def send_store_msg(websocket, data):
                         # Add all users in the same room as receivers
                         receivers.append(client)
                         await CONNECTIONS[client].send(new_msg)
-        await dbhandler.store_in_db(data["msg"], room_name, NAMES[websocket.id], websocket.id, receivers)
+        await dbhandler.store_in_db(data["msg"], room_name.replace(" ", "_"), NAMES[websocket.id], websocket.id, receivers)
 
 def register_user(websocket, data):
     if "user_id" in data and "name" in data:

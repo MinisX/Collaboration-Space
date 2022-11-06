@@ -317,8 +317,8 @@ func unregister_participant(id: int) -> void:
 remote func preconfigure_meeting_server() -> void:
 	print("Meeting: preconfigure_meeting, selected space: %s" % selected_space_server)
 	
-	# I think this has to be removed
-	Client.send_user_id()
+	if not "--server" in OS.get_cmdline_args():
+		Client.send_user_id()
 	# Get access to Default scene
 	var meeting_area = load("res://Spaces/Default/Default.tscn").instance()
 	# Add Default.tscn as child of current screen
