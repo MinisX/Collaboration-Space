@@ -28,12 +28,13 @@ var participant_data: Dictionary = {
 	},
 	Sprite = "male",
 	NetworkID = 0,
-	selected_space = "Library"
+	selected_space = "Library",
+	spawn_point = Vector2(0,0)
 }
 
 # participant datas for remote participants in id:participant_data format.
 var participants: Dictionary = {}
-var selected_space_server = "Library"
+var selected_space_server = "abc"
 # Signals to Lobby UI
 # The signals are names that trigger function.
 # E.g for participants_list_changed the function refresh_lobby in Lobby is triggered
@@ -64,6 +65,12 @@ func _ready() -> void:
 		var port: int = arguments["port"] as int
 		if port <= 65535:
 			DEFAULT_PORT = arguments["port"] as int
+			if DEFAULT_PORT == 1235:
+				selected_space_server = "University"
+			elif DEFAULT_PORT == 1236:
+				selected_space_server = "Library"
+			elif DEFAULT_PORT == 1237:
+				selected_space_server = "Office"
 			
 	print(DEFAULT_PORT)
 
@@ -117,7 +124,9 @@ func _connected_ok() -> void:
 	get_tree().get_root().add_child(meeting_area)
 	
 	# Get the spawn point for current user ( defined per scene ), at the beginning it (0,0)
-	spawn_point = get_node("/root/Default/"+selected_space+"/SpawnPoint").position
+	# Initiate spawn point in participant data dictionary
+	participant_data["spawn_point"] = get_node("/root/Default/"+selected_space+"/SpawnPoint").position
+	spawn_point = participant_data["spawn_point"]
 	
 	# hide all spaces and show the selected one
 	get_node("/root/Default/Library").hide()
@@ -209,13 +218,12 @@ func _connected_fail() -> void:
 remote func new_user_adds_ingame_participants(participants_list_from_server : Array) -> void:
 	print("Meeting: new_user_adds_ingame_participants()")
 	var selected_space = participant_data["selected_space"]
-	# Get the spawn point for current user ( defined per scene ), at the beginning it (0,0)
-	var spawn_point = get_node("/root/Default/"+selected_space+"/SpawnPoint").position
 	
 	var participant_scene = load("res://Participant.tscn")
 	
 	for p in participants_list_from_server:
 		print("Meeting: new_user_adds_ingame_participants(): adding user: %s " % p["NetworkID"])
+		var spawn_point = p["spawn_point"]
 		# Get access to participant scene
 
 		var participant = participant_scene.instance()
@@ -240,7 +248,7 @@ func in_game_add_new_user(new_participant_data : Dictionary) -> void:
 	print("Meeting: in_game_add_new_user(), adding user: %s" % new_participant_data["NetworkID"])
 	var selected_space = participant_data["selected_space"]
 	# Get the spawn point for current user ( defined per scene ), at the beginning it (0,0)
-	var spawn_point = get_node("/root/Default/"+selected_space+"/SpawnPoint").position
+	var spawn_point = new_participant_data["spawn_point"]
 	# Get access to participant scene
 	var participant_scene = load("res://Participant.tscn")
 
@@ -307,7 +315,7 @@ func unregister_participant(id: int) -> void:
 # Remote keyword allows a function to be called by a remote procedure call (RPC).
 # The remote keyword can be called by any peer, including the server and all clients. 
 remote func preconfigure_meeting_server() -> void:
-	print("Meeting: preconfigure_meeting")
+	print("Meeting: preconfigure_meeting, selected space: %s" % selected_space_server)
 	
 	# I think this has to be removed
 	Client.send_user_id()

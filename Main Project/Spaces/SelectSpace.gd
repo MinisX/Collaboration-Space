@@ -7,8 +7,6 @@ onready var office_online_p: Label = $VBoxContainer/HBoxContainer/Office/OnlineP
 onready var button_group: ButtonGroup = null
 onready var join_button: Button = $VBoxContainer/CenterContainer/JoinButton
 
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
@@ -16,17 +14,13 @@ func _ready() -> void:
 	button_group.connect("pressed", self, "_on_map_selected")
 	join_button.connect("pressed", self, "_on_join_pressed")
 
-
 func set_port(selected_space_name: String) -> void:
 	if selected_space_name == "University":
 		Meeting.DEFAULT_PORT = 1235
-		Meeting.selected_space_server = "University"
 	elif selected_space_name == "Library":
 		Meeting.DEFAULT_PORT = 1236
-		Meeting.selected_space_server = "Library"
 	elif selected_space_name == "Office":
 		Meeting.DEFAULT_PORT = 1237
-		Meeting.selected_space_server = "Office"
 
 # Called when a button in a button group is selected
 func _on_map_selected(selected: TextureButton) -> void:
