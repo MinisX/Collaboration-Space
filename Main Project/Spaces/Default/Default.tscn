@@ -24,7 +24,7 @@
 [ext_resource path="res://Spaces/Default/Tiles/wall_right.png" type="Texture" id=22]
 [ext_resource path="res://Spaces/Default/Default.gd" type="Script" id=23]
 [ext_resource path="res://Spaces/Default/Room.tscn" type="PackedScene" id=24]
-[ext_resource path="res://Spaces/Office/Tiles/White-Paper-Texture-Background-scaled-600x849.png" type="Texture" id=25]
+[ext_resource path="res://Spaces/Office/Tiles/stone-floor-gray-outdoor-preview.jpg" type="Texture" id=25]
 [ext_resource path="res://Spaces/Office/Tiles/bottom-wall.png" type="Texture" id=26]
 [ext_resource path="res://Spaces/Office/Tiles/bla__1_-removebg-preview.png" type="Texture" id=27]
 [ext_resource path="res://Spaces/Office/Tiles/meeting table (1).png" type="Texture" id=28]
@@ -3457,12 +3457,12 @@ position = Vector2( 510, 647 )
 [node name="Office" type="Node2D" parent="."]
 
 [node name="Background" type="Sprite" parent="Office"]
-position = Vector2( 159, 219 )
+position = Vector2( 158, 219 )
 rotation = 3.14159
 scale = Vector2( 1, -1 )
 texture = ExtResource( 25 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 5000, 5000 )
+region_rect = Rect2( 2.75664, 4.76733, 4322.84, 2249.05 )
 
 [node name="floor" type="TileMap" parent="Office/Background"]
 position = Vector2( 164, -172 )
@@ -3481,25 +3481,68 @@ tile_data = PoolIntArray( -983054, 16, 0, -983051, 16, 0, -983045, 16, 0, -98304
 
 [node name="Rooms" type="Node2D" parent="Office"]
 
-[node name="Room" parent="Office/Rooms" instance=ExtResource( 24 )]
-position = Vector2( -668, -153 )
-scale = Vector2( 21.16, 18.36 )
+[node name="Shared Office Room" parent="Office/Rooms" instance=ExtResource( 24 )]
+position = Vector2( -657, -351 )
+scale = Vector2( -49.4281, 38.8006 )
 z_index = 99
-room_name = "room_1"
+room_name = "shared_office_room"
 
-[node name="Room2" parent="Office/Rooms" instance=ExtResource( 24 )]
-position = Vector2( -932, 1050 )
-scale = Vector2( 20.88, 13.28 )
+[node name="Personal Office 1" parent="Office/Rooms" instance=ExtResource( 24 )]
+position = Vector2( -973, 1017 )
+scale = Vector2( 17.0926, 16.5979 )
 z_index = 99
-room_name = "room_2"
+room_name = "personal_office_1"
 
-[node name="Room3" parent="Office/Rooms" instance=ExtResource( 24 )]
-position = Vector2( 569, 438 )
-scale = Vector2( 70.7688, 53.1187 )
-room_name = "Library"
+[node name="Personal Office 2" parent="Office/Rooms" instance=ExtResource( 24 )]
+position = Vector2( -973, 670 )
+scale = Vector2( 17.0926, 17.8344 )
+z_index = 99
+room_name = "personal_office_2"
+
+[node name="Personal Office 3" parent="Office/Rooms" instance=ExtResource( 24 )]
+position = Vector2( -977, 342 )
+scale = Vector2( 16.6291, 14.1501 )
+z_index = 99
+room_name = "personal_office_3"
+
+[node name="Meeting Room" parent="Office/Rooms" instance=ExtResource( 24 )]
+position = Vector2( 855, 623 )
+scale = Vector2( 41.9392, 34.3386 )
+room_name = "meeting_room"
+
+[node name="Reception" parent="Office/Rooms" instance=ExtResource( 24 )]
+position = Vector2( 419, -171 )
+scale = Vector2( 57.1413, -21.345 )
+room_name = "reception"
+
+[node name="Corridor 1" parent="Office/Rooms" instance=ExtResource( 24 )]
+position = Vector2( -186, 513 )
+scale = Vector2( 61.1294, -46.4795 )
+room_name = "corridor_1"
+
+[node name="Corridor 2" parent="Office/Rooms" instance=ExtResource( 24 )]
+position = Vector2( 850, 157 )
+scale = Vector2( 42.3467, -11.0183 )
+room_name = "corridor_2"
+
+[node name="Corridor 3" parent="Office/Rooms" instance=ExtResource( 24 )]
+position = Vector2( 1139, -22 )
+scale = Vector2( 14.1041, -6.80262 )
+room_name = "corridor_3"
+
+[node name="Corridor 4" parent="Office/Rooms" instance=ExtResource( 24 )]
+position = Vector2( -623, 1081 )
+scale = Vector2( 17.6436, -10.1099 )
+room_name = "corridor_4"
+
+[node name="Corridor 5" parent="Office/Rooms" instance=ExtResource( 24 )]
+position = Vector2( -899, 119 )
+scale = Vector2( 10.1661, -7.25384 )
+room_name = "corridor_5"
 
 [node name="SpawnPoint" type="Position2D" parent="Office"]
-position = Vector2( 171, 240 )
+position = Vector2( 608, -262 )
+scale = Vector2( -1.03794, -12.3358 )
 
 [node name="University" type="Node2D" parent="."]
 visible = false
