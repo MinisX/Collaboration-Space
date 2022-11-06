@@ -42,7 +42,7 @@ func _exit_tree():
 	_client.disconnect_from_host(1001)
 
 # This has to be removed for server pck
-
+"""
 func send_to_server(id, room, state):
 	var to_send = "{\"type\": \"assign_room\", \"user_id\": \"" + id + "\", \"room\": \"" + room + "\", \"state\": \"" + state + "\"}"
 	_client.get_peer(1).put_packet(to_send.to_utf8())
@@ -53,4 +53,4 @@ func send_user_id():
 	var to_send = "{\"type\": \"register\", " + "\"user_id\": \"" + Firebase.user_info.id + "\", \"name\": \""+ Meeting.participant_data["Name"] + "\"}"
 	_client.get_peer(1).put_packet(to_send.to_utf8())
 	print("Client: send_user_id")
-
+"""
