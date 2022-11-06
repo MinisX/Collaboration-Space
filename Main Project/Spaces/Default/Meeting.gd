@@ -302,8 +302,6 @@ func unregister_participant(id: int) -> void:
 		get_tree().get_root().get_node("Default").get_node("Participants").remove_child(childNode)
 	
 	participants.erase(id)
-	# Send signal to Lobby.gd, which triggers resfresh_lobby() method in Lobby
-	emit_signal("participants_list_changed")
 	
 # This method is triggered from rpc_id call from start_meeting() method in Meeting ( this cript )
 # Remote keyword allows a function to be called by a remote procedure call (RPC).
