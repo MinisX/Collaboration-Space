@@ -3103,7 +3103,6 @@ text = "Menu"
 [node name="Participants" type="YSort" parent="."]
 
 [node name="Library" type="Node2D" parent="."]
-visible = false
 
 [node name="Background" type="Sprite" parent="Library"]
 texture = ExtResource( 13 )
@@ -3214,6 +3213,7 @@ tile_data = PoolIntArray( -917499, 1, 0, -917497, 6, 0, -917489, 6, 0, -786427, 
 position = Vector2( 171, 240 )
 
 [node name="University" type="Node2D" parent="."]
+visible = false
 
 [node name="Background" type="Sprite" parent="University"]
 texture = ExtResource( 13 )

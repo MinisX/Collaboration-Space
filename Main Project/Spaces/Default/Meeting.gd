@@ -10,7 +10,7 @@ const MAX_PARTICIPANT: int = 30
 # Create new NetworkedMultiplayerENet object. 
 # It containts useful methods for serializing, sending and receiving data. On top of that, it adds methods to set a peer, 
 # transfer mode, etc. It also includes signals that will let you know when peers connect or disconnect.
-var peer: NetworkedMultiplayerENet = null	
+var peer: NetworkedMultiplayerENet = null
 
 
 # Dictionary to store particpant name and custom colors
@@ -178,9 +178,7 @@ func unregister_participant(id: int) -> void:
 # The remote keyword can be called by any peer, including the server and all clients. 
 remote func preconfigure_meeting(spawn_locations: Dictionary) -> void:
 	print("Meeting: preconfigure_meeting")
-	
 	Client.send_user_id()
-	
 	# Get access to Default scene
 	var meeting_area = load("res://Spaces/Default/Default.tscn").instance()
 	# Add Default.tscn as child of current screen
@@ -297,7 +295,6 @@ remote func ready_to_start(id: int) -> void:
 # This method creates the hosting on the game by server
 func host_meeting() -> void:
 	print("Meeting: host_meeting")
-	
 	# Initializing as a server, listening on the given port, with a given maximum number of peers
 	peer = NetworkedMultiplayerENet.new()
 	peer.create_server(DEFAULT_PORT, MAX_PARTICIPANT)

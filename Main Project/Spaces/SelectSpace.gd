@@ -16,12 +16,22 @@ func _ready() -> void:
 	button_group.connect("pressed", self, "_on_map_selected")
 	join_button.connect("pressed", self, "_on_join_pressed")
 
+
+func set_port(selected_space_name: String) -> void:
+	if selected_space_name == "University":
+		Meeting.DEFAULT_PORT = 1235
+	elif selected_space_name == "Library":
+		Meeting.DEFAULT_PORT = 1236
+	elif selected_space_name == "Office":
+		Meeting.DEFAULT_PORT = 1237
 	
+
+
 # Called when a button in a button group is selected
 func _on_map_selected(selected: TextureButton) -> void:
 	print("SelectSpace: selected space: ", selected.name)
 	Meeting.selected_space = selected.name
-
+	set_port(selected.name)
 
 # Called when join button is pressed
 func _on_join_pressed() -> void:
