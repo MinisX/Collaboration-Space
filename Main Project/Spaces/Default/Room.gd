@@ -6,6 +6,7 @@ var participants_inside: Array = []
 
 # {Name = "room name", ListOfParticipants = participants_inside}
 var room_info: Dictionary = {}
+var user_id = 0
 
 func _ready():
 	# get argc to a dictionary
@@ -37,8 +38,9 @@ func _on_body_entered(body: KinematicBody2D) -> void:
 		print(body.name)
 		print(Meeting.get_current_user_network_id())
 		if body.name == Meeting.get_current_user_network_id():
-			print("Room: ", "participant: " + Firebase.user_info.id + " entered to the room ", room_name)
-			Client.send_to_server(Firebase.user_info.id, room_name, "join")
+			user_id = Firebase.user_info.id
+			print("Room: ", "participant: " + user_id + " entered to the room ", room_name)
+			Client.send_to_server(user_id, room_name, "join")
 
 # remove id of a participant from "participants_inside" array
 func _on_body_exited(body: KinematicBody2D) -> void:
@@ -46,6 +48,7 @@ func _on_body_exited(body: KinematicBody2D) -> void:
 		print(body.name)
 		print(Meeting.get_current_user_network_id())
 		if body.name == Meeting.get_current_user_network_id():
-			print("Room: ", "participant: " + Firebase.user_info.id + " exited from the room ", room_name)
-			Client.send_to_server(Firebase.user_info.id, room_name, "depart")
+			print("Room: ", "participant: " + user_id + " exited from the room ", room_name)
+			Client.send_to_server(user_id, room_name, "depart")
 			get_tree().get_root().get_node("Default/CanvasLayer/ChatUI/ChatContainer/VBoxContainer/ChatText").clear()
+			user_id = 0
