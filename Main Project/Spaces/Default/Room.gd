@@ -8,8 +8,12 @@ var participants_inside: Array = []
 var room_info: Dictionary = {}
 
 func _ready():
-	connect("body_entered", self, "_on_body_entered")
-	connect("body_exited", self, "_on_body_exited")
+	# get argc to a dictionary
+	var arguments: Dictionary = Meeting.get_cmd_args()
+	# change the default port if argv has port and it 
+	if not arguments.has("server"):
+		connect("body_entered", self, "_on_body_entered")
+		connect("body_exited", self, "_on_body_exited")
 
 remotesync func remove_me() -> void:
 	print("------------------- Room: remove_me")
