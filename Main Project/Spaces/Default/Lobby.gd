@@ -2,12 +2,7 @@ extends Control
 
 onready var connection_panel: ColorRect = $ConnectionPanel
 onready var name_input = Meeting.participant_data["Name"]
-onready var participants_panel: ColorRect = $ParticipantsPanel
-onready var participants_list_view: ItemList = $ParticipantsPanel/ParticipantList
-onready var offline_button: Button = $ConnectionPanel/VBoxContainer/Row3/Offline
 onready var online_button: Button = $ConnectionPanel/VBoxContainer/Row3/Online
-onready var host_toggle: Button = $ConnectionPanel/VBoxContainer/Row3/Host
-onready var start_button: Button = $ParticipantsPanel/Start
 onready var changePassword_button: Button = $ConnectionPanel/VBoxContainer/ChangePassword
 onready var ip: String = "34.159.28.32"
 
@@ -37,31 +32,16 @@ func _ready() -> void:
 	
 	# The signals are emitted ( sent ) from Meeting to Lobby
 	# E.g connection_succeeded is sent from Meeting _connected_ok() method
-	Meeting.connect("connection_failed", self, "_on_connection_failed")
 	Meeting.connect("connection_succeeded", self, "_on_connection_success")
-	Meeting.connect("participants_list_changed", self, "refresh_lobby")
 	Meeting.connect("meeting_ended", self, "_on_meeting_ended")
 	Meeting.connect("meeting_error", self, "_on_meeting_error")
-	
-	
-	# button connections
-	host_toggle.connect("pressed", self, "_on_host_pressed")
-	start_button.connect("pressed", self, "_on_start_pressed")
 	
 	# start meeting automaticaly after waiting 20 seconds if --server passed
 	if "--server" in OS.get_cmdline_args():
 		Meeting.host_meeting()
+		Meeting.start_meeting()
 	else:
 		print("Main: client")
-
-# set role(host or cl) of the participant
-func _on_host_pressed() -> void:
-	print("Lobby: _on_host_pressed()")
-	if Meeting.participant_data["Role"] == "Host":
-		Meeting.participant_data["Role"] = "Participant"
-	elif Meeting.participant_data["Role"] == "Participant":
-		Meeting.participant_data["Role"] = "Host"
-
 
 # This method is triggered from Meeting.gd in _connected_ok() method
 func _on_connection_success() -> void:
@@ -69,21 +49,17 @@ func _on_connection_success() -> void:
 	
 	# Hide the connection panel and show participants panel
 	connection_panel.hide()
-	participants_panel.show()
-
-# This method is triggered from Meeting.gd in _connected_fail() method
-func _on_connection_failed() -> void:
-	print("Lobby: _on_connection_failed")
+	# New joined user sends server ( id 1 ) 2 rpc packets
+	# This packet asks for all the users already in the game
+	Meeting.rpc_id(1,"server_participants_array")
+	# This packet asks server to send all other users the new user info
+	Meeting.rpc_id(1, "request_server_for_rpc_register", Meeting.participant_data)
 
 func _on_meeting_ended() -> void:
 	print("Lobby: _on_meeting_ended")
 	
-	if !Firebase.user_info.is_registered:
-		Firebase.delete_document("users/%s" % Firebase.user_info.id, http)
-	else: 
-		self.show()
-		connection_panel.show()
-		participants_panel.hide()
+	self.show()
+	connection_panel.show()
 	
 # This method is triggered from Meeting.gd in _server_disconnected() and _participant_disconnected() methods	
 func _on_meeting_error(error) -> void:
@@ -91,42 +67,10 @@ func _on_meeting_error(error) -> void:
 	
 	# We just print the error, the ending of the meeting is happening in Meeting.gd
 	print(error)
-	
-# This method is called triggered via signal " participants_list_changed " from Meeting in method register_participant()
-func refresh_lobby() -> void:
-	print("Lobby: refresh_lobby")
-	
-	var participants: Array = Meeting.get_participant_list()
-	participants.sort()
-	participants_list_view.clear()
-	participants_list_view.add_item(Meeting.get_participant_name() + " (You)")
-	for p in participants:
-		participants_list_view.add_item(p["Name"])
-	
-func _on_offline_pressed():
-	print("Lobby: _on_offline_pressed()")
-	Meeting.host_meeting()
-	refresh_lobby()
-	Meeting.start_meeting()
 
 func _on_online_pressed():
 	print("Lobby: _on_online_pressed()")
 	Meeting.join_meeting(ip)
-	if Meeting.participant_data["Role"] == "Participant":
-		start_button.hide()
-
-
-func _on_start_pressed():
-	print("Lobby: _on_start_pressed()")
-	if Meeting.participant_data["Role"] == "Host":
-		refresh_lobby()
-		# use id 1 to call only on server
-		# call set_selected_space on server to inform server about selected space 
-		Meeting.rpc_id(1, "set_selected_space", Meeting.selected_space)
-		# use id 1 to call only on server  
-		# tell server to start meeting
-		Meeting.rpc_id(1, "start_meeting")
-#		Meeting.rset("selected_space", Meeting.selected_space)
 
 func fetch_user_data_fromDB():
 	print("Lobby: fetch_user_data_fromDB()")
@@ -189,15 +133,11 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			print("\nHTTP Response: Code 200 -> User account was deleted")
 			self.show()
 			connection_panel.show()
-			participants_panel.hide()
 		else:
 			print("\nHTTP Response: %s -> User account not deleted" % response_code)
 
 func _on_ChangePassword_pressed():
 	get_tree().change_scene("res://ChangePassword/ChangePassword.tscn")
-
-func _on_JoinRunningGame_pressed():
-	pass # Replace with function body.
 
 func _on_Customize_avatar_pressed():
 	get_tree().change_scene("res://Customization/Avatar.tscn")

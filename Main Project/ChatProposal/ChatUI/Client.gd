@@ -43,6 +43,7 @@ func _exit_tree():
 
 # This has to be removed for server pck
 
+
 func send_to_server(id, room, state):
 	var to_send = "{\"type\": \"assign_room\", \"user_id\": \"" + id + "\", \"room\": \"" + room + "\", \"state\": \"" + state + "\"}"
 	_client.get_peer(1).put_packet(to_send.to_utf8())
