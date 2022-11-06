@@ -9,7 +9,7 @@ onready var online_button: Button = $ConnectionPanel/VBoxContainer/Row3/Online
 onready var host_toggle: Button = $ConnectionPanel/VBoxContainer/Row3/Host
 onready var start_button: Button = $ParticipantsPanel/Start
 onready var changePassword_button: Button = $ConnectionPanel/VBoxContainer/ChangePassword
-onready var ip: String = "127.0.0.1"
+onready var ip: String = "34.159.28.32"
 
 # Access HTTPRequest instance
 onready var http : HTTPRequest = $HTTPRequest
