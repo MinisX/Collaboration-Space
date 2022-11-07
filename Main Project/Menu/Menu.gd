@@ -30,10 +30,15 @@ func _on_hot_keys_pressed() -> void:
 
 
 func _on_exit_pressed() -> void:
+	#print("CHILDREN")
+	#print(get_tree().get_root().get_children())
+	Meeting.exit_meeting() 
+	"""
 	if !Firebase.user_info.is_registered:
 		Firebase.delete_document("users/%s" % Firebase.user_info.id, http)
 	else: 
 		redirect_to_login()
+	"""
 	
 # Helper method to redirect to login screen after logout
 func redirect_to_login() -> void:

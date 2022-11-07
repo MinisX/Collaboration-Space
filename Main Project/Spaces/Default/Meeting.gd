@@ -437,3 +437,14 @@ func end_meeting() -> void:
 
 func get_current_user_network_id() -> String:
 	return str(get_tree().get_network_unique_id())
+	
+func exit_meeting() -> void:
+	participants = {}
+	
+	var id = get_tree().get_network_unique_id()
+	var childNode = get_tree().get_root().get_node("Default").get_node("Participants").get_node(str(id))
+	get_tree().get_root().get_node("Default").get_node("Participants").remove_child(childNode)
+	
+	peer.close_connection()
+	get_node("/root/Default").queue_free()
+	emit_signal("meeting_ended")
