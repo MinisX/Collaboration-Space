@@ -11,6 +11,10 @@ onready var http : HTTPRequest = $HTTPRequest
 # This variable counts the amount of HTTP responses/requests
 onready var http_responses_count = 0
 
+onready var spaces : = {
+	"players_online": {},
+} setget set_spaces
+
 func _ready() -> void:
 	print("Lobby: _ready")
 	# Disable auto accept of quiting by cross
@@ -35,11 +39,20 @@ func _ready() -> void:
 	Meeting.connect("connection_succeeded", self, "_on_connection_success")
 	Meeting.connect("meeting_ended", self, "_on_meeting_ended")
 	Meeting.connect("meeting_error", self, "_on_meeting_error")
+	Meeting.connect("update_online", self, "_server_update_online")
 	
 	# start meeting automaticaly after waiting 20 seconds if --server passed
 	if "--server" in OS.get_cmdline_args():
 		Meeting.host_meeting()
-		Meeting.start_meeting()
+		
+		if Meeting.selected_space_server == "University":
+			Firebase.login("university@gmail.com", "university", http)
+		elif Meeting.selected_space_server == "Library":
+			Firebase.login("library@gmail.com", "library", http)
+		elif Meeting.selected_space_server == "Office": 	
+			Firebase.login("office@gmail.com", "office", http)
+			
+		#Meeting.start_meeting()
 	else:
 		print("Main: client")
 
@@ -80,61 +93,84 @@ func fetch_user_data_fromDB():
 	if !Firebase.user_info.is_registered:
 		changePassword_button.hide()
 
+func _server_update_online():
+	print("Lobby: _server_update_online()")
+	spaces.players_online = { "stringValue": str(Meeting.get_participant_list().size())}
+	Firebase.update_document("spaces/%s" % Meeting.selected_space_server, spaces, http)
+
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	http_responses_count += 1
 	
-	if http_responses_count == 1:
-		var profile : = {
-		"name": {},
-		"hair": {},
-		"eyes": {},
-		"legs": {},
-		"feet": {},
-		"hands": {},
-		"head": {},
-		"torso": {},
-		"arms": {}
-		}
-		
-		var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
-		
-		if response_code == 200:
-			print("HTTP Response: Code 200 -> Information fetched")
-			profile = result_body.fields
+	# If server is logged in
+	if Meeting.selected_space_server != "NA":
+		if http_responses_count == 1:
+			# If server has loggeed in succesfully to Firebase, we start the meeting
+			if response_code == 200:
+				print("Lobby: Server %s has logged in Firebase" % Meeting.selected_space_server)
+				Meeting.start_meeting()
+			else:
+				print("Lobby: Server %s has NOT logged in Firebase" % Meeting.selected_space_server)
+		# If http_responses_count > 1, then this means we are now updating list of users
+		else:
+			if response_code == 200:
+				print("Lobby: Online updated succesfully")
+			else:
+				print("Online was not updated")
+					
+	# If user is logged in
+	else:
+		if http_responses_count == 1:
+			var profile : = {
+			"name": {},
+			"hair": {},
+			"eyes": {},
+			"legs": {},
+			"feet": {},
+			"hands": {},
+			"head": {},
+			"torso": {},
+			"arms": {}
+			}
 			
-			name_input = profile.name
-			# new
-			Meeting.participant_data["Name"] = profile.name["stringValue"]
+			var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
 			
-			Meeting.participant_data["Color"]["Hair"] = Color(profile.hair["stringValue"])
-			Meeting.participant_data["Color"]["Eyes"] = Color(profile.eyes["stringValue"])
-			Meeting.participant_data["Color"]["Pants"] = Color(profile.legs["stringValue"])
-			Meeting.participant_data["Color"]["Shoe"] = Color(profile.feet["stringValue"])
-			# skin
-			Meeting.participant_data["Color"]["Skin"] = Color(profile.hands["stringValue"])
-			Meeting.participant_data["Color"]["Skin"] = Color(profile.head["stringValue"])
-			# shirt
-			Meeting.participant_data["Color"]["Shirt"] = Color(profile.torso["stringValue"])
-			Meeting.participant_data["Color"]["Shirt"] = Color(profile.arms["stringValue"])
+			if response_code == 200:
+				print("HTTP Response: Code 200 -> Information fetched")
+				profile = result_body.fields
+				
+				name_input = profile.name
+				# new
+				Meeting.participant_data["Name"] = profile.name["stringValue"]
+				
+				Meeting.participant_data["Color"]["Hair"] = Color(profile.hair["stringValue"])
+				Meeting.participant_data["Color"]["Eyes"] = Color(profile.eyes["stringValue"])
+				Meeting.participant_data["Color"]["Pants"] = Color(profile.legs["stringValue"])
+				Meeting.participant_data["Color"]["Shoe"] = Color(profile.feet["stringValue"])
+				# skin
+				Meeting.participant_data["Color"]["Skin"] = Color(profile.hands["stringValue"])
+				Meeting.participant_data["Color"]["Skin"] = Color(profile.head["stringValue"])
+				# shirt
+				Meeting.participant_data["Color"]["Shirt"] = Color(profile.torso["stringValue"])
+				Meeting.participant_data["Color"]["Shirt"] = Color(profile.arms["stringValue"])
 
-		else:
-			print("HTTP Response: Not 200 -> Information not fetched")
-			
-	if http_responses_count == 2:
-		if response_code == 200:
-			print("\nHTTP Response: Code 200 -> User data deleted from DB, requesting delete of user account")
-			Firebase.delete_account(http)
-		else:
-			print("\nHTTP Response: %s -> User data was not deleted" % response_code)
-			
+			else:
+				print("HTTP Response: Not 200 -> Information not fetched")
+				
+		if http_responses_count == 2:
+			if response_code == 200:
+				print("\nHTTP Response: Code 200 -> User data deleted from DB, requesting delete of user account")
+				Firebase.delete_account(http)
+			else:
+				print("\nHTTP Response: %s -> User data was not deleted" % response_code)
+				
 
-	if http_responses_count == 3:
-		if response_code == 200:
-			print("\nHTTP Response: Code 200 -> User account was deleted")
-			self.show()
-			connection_panel.show()
-		else:
-			print("\nHTTP Response: %s -> User account not deleted" % response_code)
+		if http_responses_count == 3:
+			if response_code == 200:
+				print("\nHTTP Response: Code 200 -> User account was deleted")
+				self.show()
+				connection_panel.show()
+			else:
+				print("\nHTTP Response: %s -> User account not deleted" % response_code)
 
 func _on_ChangePassword_pressed():
 	get_tree().change_scene("res://ChangePassword/ChangePassword.tscn")
@@ -153,3 +189,7 @@ func _notification(what):
 			print("Lobby.gd: Nofitication in else")
 			Firebase.user_info = {}
 			get_tree().quit()
+
+# This is setter and getter function for our spaces dictionary	
+func set_spaces(value: Dictionary) -> void:
+	spaces = value

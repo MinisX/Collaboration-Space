@@ -42,7 +42,6 @@ func _exit_tree():
 	_client.disconnect_from_host(1001)
 	
 # This has to be removed for server pck (This Error shouldn't cause game to crash)
-
 func send_to_server(id, room, state):
 	var to_send = "{\"type\": \"assign_room\", \"user_id\": \"" + id + "\", \"room\": \"" + room + "\", \"state\": \"" + state + "\"}"
 	_client.get_peer(1).put_packet(to_send.to_utf8())

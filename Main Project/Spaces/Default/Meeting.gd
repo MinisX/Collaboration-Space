@@ -34,7 +34,7 @@ var participant_data: Dictionary = {
 
 # participant datas for remote participants in id:participant_data format.
 var participants: Dictionary = {}
-var selected_space_server = "abc"
+var selected_space_server = "NA"
 
 var is_chat_focused = false
 
@@ -45,6 +45,7 @@ signal connection_failed()
 signal connection_succeeded()
 signal meeting_ended()
 signal meeting_error(what)
+signal update_online()
 
 # ---------------------------
 # NETWORK RELATED STUFF END
@@ -276,6 +277,11 @@ func in_game_add_new_user(new_participant_data : Dictionary) -> void:
 
 	# Adds participant to participant list in Default scene
 	get_tree().get_root().get_node("Default").get_node("Participants").add_child(participant)
+	
+	# If server, then send request to update how many users are online
+	if get_tree().get_network_unique_id() == 1:
+		print("Meeting: sending signal from server to update online")
+		emit_signal("update_online")
 
 # This method is called from user who has joined running game
 # The call is done to server
@@ -319,6 +325,11 @@ func unregister_participant(id: int) -> void:
 		get_tree().get_root().get_node("Default").get_node("Participants").remove_child(childNode)
 	
 	participants.erase(id)
+	
+	# If server, then send request to update how many users are online
+	if get_tree().get_network_unique_id() == 1:
+		print("Meeting: sending signal from server to update online")
+		emit_signal("update_online")
 	
 # This method is triggered from rpc_id call from start_meeting() method in Meeting ( this cript )
 # Remote keyword allows a function to be called by a remote procedure call (RPC).
