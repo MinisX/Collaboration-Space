@@ -3329,7 +3329,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 script = ExtResource( 23 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="ChatButton" type="Button" parent="CanvasLayer"]
 anchor_top = 1.0
@@ -3375,7 +3374,6 @@ margin_bottom = 41.0
 text = "Menu"
 
 [node name="Participants" type="YSort" parent="."]
-visible = false
 
 [node name="Library" type="Node2D" parent="."]
 
