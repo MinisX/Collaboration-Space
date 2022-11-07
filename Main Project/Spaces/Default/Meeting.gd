@@ -242,6 +242,9 @@ remote func new_user_adds_ingame_participants(participants_list_from_server : Ar
 		participant.set_participant_camera(false)
 		# set data (name and colors) to participant
 		participant.set_data(p)
+		
+		# Add participants to the list which is needed to see who's online
+		participants[p["NetworkID"]] = p
 
 		# Adds participant to participant list in Default scene
 		get_tree().get_root().get_node("Default").get_node("Participants").add_child(participant)
@@ -267,6 +270,9 @@ func in_game_add_new_user(new_participant_data : Dictionary) -> void:
 	participant.set_participant_camera(false)
 	# set data (name and colors) to participant
 	participant.set_data(new_participant_data)
+	
+	# Add participants to the list which is needed to see who's online
+	participants[new_participant_data["NetworkID"]] = new_participant_data
 
 	# Adds participant to participant list in Default scene
 	get_tree().get_root().get_node("Default").get_node("Participants").add_child(participant)

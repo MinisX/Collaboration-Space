@@ -13,19 +13,24 @@ ROOMS = dict()
 
 # process messages
 async def process_message(websocket):
-    msg = await websocket.recv()
-    data = jsonhelper.parse_json(msg)
-    # Register user id when they first log in
-    if data is not None and data["type"] == "register":
-        register_user(websocket, data)
-    async for msg in websocket:
+    try:
+        msg = await websocket.recv()
         data = jsonhelper.parse_json(msg)
-        # Manage rooms of users
-        if data is not None and data["type"] == "assign_room":
-            await roomsets.manage_user_in_rooms(websocket, data)
-        # Else send to users in the same room
-        elif data is not None and data["type"] == "message":
-            await send_store_msg(websocket, data)
+        # Register user id when they first log in
+        if data is not None and data["type"] == "register":
+            register_user(websocket, data)
+        async for msg in websocket:
+            data = jsonhelper.parse_json(msg)
+            # Manage rooms of users
+            if data is not None and data["type"] == "assign_room":
+                await roomsets.manage_user_in_rooms(websocket, data)
+            # Else send to users in the same room
+            elif data is not None and data["type"] == "message":
+                await send_store_msg(websocket, data)
+    finally:
+        if websocket.id in CONNECTIONS:
+            CONNECTIONS.pop(websocket.id)
+            print("CONNECTIONS: ", CONNECTIONS)
 
 # Send message to other clients
 async def send_store_msg(websocket, data):
