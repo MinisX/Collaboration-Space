@@ -5,11 +5,11 @@ onready var hot_keys_button: Button = $VBoxContainer/HotKeysButton
 onready var exit_button: Button = $VBoxContainer/ExitButton
 onready var hot_keys_scene = $HotKeys
 onready var menu_button = $"../MenuButton"
-onready var participants_button:Button = $"../ParticipantsButton"
+#onready var participants_button:Button = $CanvasLayer/ParticipantsButton
 
 # Access HTTPRequest instance
 onready var http : HTTPRequest = $HTTPRequest
-# This variable counts the amount of HTTP responses/requests
+# This variable counts the amount of HTTP responses/reuests
 onready var http_responses_count = 0
 
 # Called when the node enters the scene tree for the first time.
@@ -23,7 +23,7 @@ func _on_continue_pressed() -> void:
 	self.hide()
 	self.get_parent().get_parent().menu_visibility = false
 	menu_button.show()
-	participants_button.show()
+	#participants_button.show()
 
 func _on_hot_keys_pressed() -> void:
 	hot_keys_scene.show()
