@@ -152,3 +152,7 @@ margin_right = 377.0
 margin_bottom = 41.0
 rect_min_size = Vector2( 80, 0 )
 text = "Join"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
