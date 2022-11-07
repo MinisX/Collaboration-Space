@@ -3454,6 +3454,7 @@ room_name = "Library"
 position = Vector2( 510, 647 )
 
 [node name="Office" type="Node2D" parent="."]
+visible = false
 
 [node name="Background" type="Sprite" parent="Office"]
 position = Vector2( 158, 219 )

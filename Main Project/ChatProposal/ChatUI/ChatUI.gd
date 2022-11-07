@@ -1,6 +1,5 @@
 extends Control
 
-
 onready var hide_button: Button = $ChatContainer/VBoxContainer/HBoxContainer/HideButton
 onready var _chat_text: RichTextLabel = $ChatContainer/VBoxContainer/ChatText
 onready var _line_edit: LineEdit = $ChatContainer/VBoxContainer/Chat/ChatEnter
@@ -14,6 +13,10 @@ func _ready():
 	Client._client.connect("data_received", self, "_on_data")
 	_chat_text.scroll_following = true
 	_chat_text.bbcode_enabled = true
+	hide_button.focus_mode = Control.FOCUS_NONE
+#	message_container.focus_mode = Control.FOCUS_NONE
+#	chat_text.focus_mode = Control.FOCUS_NONE
+	send_button.focus_mode = Control.FOCUS_NONE
 	print("ChatUI: inside _ready called")
 
 	

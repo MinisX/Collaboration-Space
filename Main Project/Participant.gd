@@ -73,6 +73,9 @@ func set_selected_color(new_data: Dictionary) -> void:
 
 
 func get_input() -> void:
+	if Meeting.is_chat_focused:
+		return
+	
 	if (Input.is_action_pressed("ui_right") or
 		Input.is_action_pressed("ui_left") or
 		Input.is_action_pressed("ui_down") or

@@ -35,6 +35,9 @@ var participant_data: Dictionary = {
 # participant datas for remote participants in id:participant_data format.
 var participants: Dictionary = {}
 var selected_space_server = "abc"
+
+var is_chat_focused = false
+
 # Signals to Lobby UI
 # The signals are names that trigger function.
 # E.g for participants_list_changed the function refresh_lobby in Lobby is triggered

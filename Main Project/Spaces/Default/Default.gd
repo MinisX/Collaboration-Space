@@ -6,6 +6,8 @@ onready var chat_UI = $CanvasLayer/ChatUI
 onready var menu_UI = $CanvasLayer/MenuUI
 onready var participants_button:Button = $CanvasLayer/ParticipantsButton
 onready var menu_button:Button = $CanvasLayer/MenuButton
+onready var chat_input: LineEdit  = $CanvasLayer/ChatUI/ChatContainer/VBoxContainer/Chat/ChatEnter
+
 
 var menu_visibility: bool = false
 var participants_UI_visibility: bool = false
@@ -19,6 +21,9 @@ func _ready() -> void:
 	chat_button.connect("pressed", self, "_on_chat_button_pressed")
 	participants_button.connect("pressed", self, "_on_participants_button_pressed")
 	menu_button.connect("pressed", self, "_on_menu_button_pressed")
+	chat_input.connect("focus_entered", self, "_on_chat_focused")
+	chat_input.connect("focus_exited", self, "_on_chat_unfocused")	
+
 		
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -33,6 +38,11 @@ func _process(_delta):
 			menu_UI.show()
 			menu_visibility = true
 
+func _on_chat_focused() -> void:
+	Meeting.is_chat_focused = true
+
+func _on_chat_unfocused() -> void:
+	Meeting.is_chat_focused = false
 
 func _on_chat_button_pressed() -> void:
 	chat_UI.show()
