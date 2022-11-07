@@ -3378,7 +3378,6 @@ text = "Menu"
 visible = false
 
 [node name="Library" type="Node2D" parent="."]
-visible = false
 
 [node name="Background" type="Sprite" parent="Library"]
 texture = ExtResource( 13 )
@@ -3548,6 +3547,7 @@ position = Vector2( 608, -262 )
 scale = Vector2( -1.03794, -12.3358 )
 
 [node name="University" type="Node2D" parent="."]
+visible = false
 
 [node name="Background" type="Sprite" parent="University"]
 texture = ExtResource( 13 )
@@ -3647,6 +3647,20 @@ __meta__ = {
 [node name="B Outside 2" parent="University/Doors" instance=ExtResource( 1 )]
 position = Vector2( 1248, -744 )
 rotation = 1.5708
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="B Outside 3" parent="University/Doors" instance=ExtResource( 1 )]
+position = Vector2( 864, -1248 )
+rotation = -1.5708
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="B Outside 4" parent="University/Doors" instance=ExtResource( 1 )]
+position = Vector2( 1248, -1248 )
+rotation = -1.5708
 __meta__ = {
 "_edit_lock_": true
 }
