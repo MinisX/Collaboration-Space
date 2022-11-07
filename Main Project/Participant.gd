@@ -10,15 +10,21 @@ onready var location: Label = $CanvasLayer/Location
 var velocity: Vector2 = Vector2(0.0, 0.0)
 var direction: Vector2 = Vector2(0.0, 1.0)
 var current_animation: String = "idle_s"
+var current_location: String
 
 # The puppet keyword means a call can be made from the network master to any network puppet.
 puppet var puppet_pos: Vector2 = Vector2()
 puppet var puppet_motion: Vector2 = Vector2()
 puppet var puppet_current_animation: String = "idle_s"
+puppet var puppet_current_location: String
 
 func _ready() -> void:
 	print("Participant: _ready()")
-	$BodyArea.connect("area_entered", self, "_display_location")
+	$BodyArea.connect("area_entered", self, "_get_location")
+	
+	if not is_network_master():
+		location.hide()
+#		$CanvasLayer/ParticipantUI.hide()
 
 func _process(_delta: float) -> void:
 #	self.find_participant()
@@ -39,13 +45,23 @@ func _process(_delta: float) -> void:
 	
 	decide_animation()
 	animation_player.play(current_animation)
+	
+	display_location()
+
+func display_location() -> void:
+	if is_network_master():
+#		current_location = area.room_name
+		rset("puppet_current_location", current_location)
+	else:
+		current_location = puppet_current_location
+	location.text = current_location
 
 # TODO Display location UI in other place
 # Set room name to participant's location label
-func _display_location(area: Area2D) -> void:
+func _get_location(area: Area2D) -> void:
 	if area.get("room_name") != null:
-		location.text = area.room_name
-		print("Participant: ", area.room_name)
+		if is_network_master():
+			current_location = area.room_name
 
 
 func set_data(new_data: Dictionary) -> void:
