@@ -24,7 +24,8 @@ var profile : = {
 	"hands": {},
 	"head": {},
 	"torso": {},
-	"arms": {}
+	"arms": {},
+	"sprite": {}
 } setget set_profile
 
 var active_part: String = "Skin"
@@ -110,6 +111,8 @@ func _on_ok_pressed() -> void:
 # This method converts the user data from Firestore to Meeting.participant_data
 func convert_data_from_firebase() -> void:
 	
+	# avatar gender
+	Meeting.participant_data["Sprite"] = profile.sprite["stringValue"]
 	#name
 	Meeting.participant_data["Name"] = profile.name["stringValue"]
 	name_input.text = Meeting.participant_data["Name"]
@@ -127,6 +130,7 @@ func convert_data_from_firebase() -> void:
 	
 # This method converts the user data to the format we need for Firestore
 func convert_data_for_firebase() -> void:
+	profile.sprite = { "stringValue": Meeting.participant_data["Sprite"]}
 	profile.name = { "stringValue": Meeting.participant_data["Name"]}
 	profile.hair = { "stringValue": Meeting.participant_data["Color"]["Hair"].to_html()}
 	profile.eyes = { "stringValue": Meeting.participant_data["Color"]["Eyes"].to_html()}
