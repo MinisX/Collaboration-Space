@@ -30,6 +30,7 @@ async def process_message(websocket):
     finally:
         if websocket.id in CONNECTIONS:
             CONNECTIONS.pop(websocket.id)
+            print("CONNECTIONS: ", CONNECTIONS)
 
 # Send message to other clients
 async def send_store_msg(websocket, data):
