@@ -8,7 +8,10 @@ onready var participants_button:Button = $CanvasLayer/ParticipantsButton
 onready var menu_button:Button = $CanvasLayer/MenuButton
 onready var chat_input: LineEdit  = $CanvasLayer/ChatUI/ChatContainer/VBoxContainer/Chat/ChatEnter
 
+
 var menu_visibility: bool = false
+var participants_UI_visibility: bool = false
+
 
 func _ready() -> void:
 	# Disable auto accept of quiting by cross
@@ -45,8 +48,12 @@ func _on_chat_button_pressed() -> void:
 	chat_UI.show()
 
 func _on_participants_button_pressed() -> void:
-	if !$CanvasLayer/ParticipantsUI.visible:
+	if participants_UI_visibility ==false:
 		$CanvasLayer/ParticipantsUI.show()
+		participants_UI_visibility =true
+	else:
+		$CanvasLayer/ParticipantsUI.hide()
+		participants_UI_visibility =false
 		
 func _on_menu_button_pressed() -> void:
 		if menu_visibility == true:
