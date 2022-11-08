@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=2]
+
+[sub_resource type="NoiseTexture" id=1]
+
+[resource]
+flags = 7
+atlas = SubResource( 1 )
+region = Rect2( 68.25, 8.25, 8, 0 )
+margin = Rect2( 0, 0, 1, 0 )

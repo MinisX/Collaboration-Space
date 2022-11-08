@@ -181,4 +181,7 @@ func decide_animation() -> void:
 		current_animation = puppet_current_animation
 
 
-
+func _on_Timer_timeout():
+	print("timer is started")
+	$CanvasLayer/TextureRect.hide()
+	#emit_signal("emoji_signal")
