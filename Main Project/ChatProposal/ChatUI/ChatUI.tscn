@@ -19,7 +19,7 @@ anchor_bottom = 1.0
 margin_right = 49.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.227451, 0.317647, 0.572549, 1 )
+color = Color( 0.0352941, 0.12549, 0.278431, 1 )
 
 [node name="ChatContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
