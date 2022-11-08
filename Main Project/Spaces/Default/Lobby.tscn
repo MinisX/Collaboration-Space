@@ -69,6 +69,12 @@ margin_right = 184.0
 margin_bottom = 131.0
 text = "Customize avatar"
 
+[node name="Back" type="Button" parent="ConnectionPanel/VBoxContainer"]
+margin_top = 135.0
+margin_right = 184.0
+margin_bottom = 176.0
+text = "Back"
+
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [node name="SelectSpace" parent="." instance=ExtResource( 2 )]
