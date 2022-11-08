@@ -17,7 +17,12 @@ onready var spaces : = {
 	"Office": {},
 	"University": {},
 } setget set_spaces
+# bool variable to check if online was fetched on server side
 onready var online_fetched = false
+
+# This timer is needed to keep Firebase session alive, as it closes after 30/60min
+onready var session_timer = Timer.new()
+onready var session_key_refreshed = false
 
 func _ready() -> void:
 	print("Lobby: _ready")
@@ -45,6 +50,8 @@ func _ready() -> void:
 	Meeting.connect("meeting_error", self, "_on_meeting_error")
 	Meeting.connect("update_online", self, "_server_update_online")
 	back_button.connect("pressed", self, "_on_back")
+	session_timer.connect("timeout",self,"_on_timer_timeout")
+	add_child(session_timer)
 	
 	# start meeting automaticaly after waiting 20 seconds if --server passed
 	if "--server" in OS.get_cmdline_args():
@@ -61,6 +68,17 @@ func _ready() -> void:
 	else:
 		print("Main: client")
 
+# We need timer to refresh Firebase token
+func set_timer() -> void:
+	print("Lobby: set_timer()")
+	# Session token has to be refreshsed every 60min, we do 65min
+	session_timer.start(60*55)
+	
+func _on_timer_timeout() -> void:
+	print("\nLobby: _on_timer_timeout(), refreshing session token\n")
+	session_key_refreshed = true
+	Firebase.refresh_session_token(http)
+	
 func _on_back() -> void:
 	$SelectSpace.show()
 
@@ -92,6 +110,8 @@ func _on_meeting_error(error) -> void:
 func _on_online_pressed():
 	print("Lobby: _on_online_pressed()")
 	Meeting.join_meeting(ip)
+	# Set timer to refresh Firebase session token
+	set_timer()
 
 func fetch_user_data_fromDB():
 	print("Lobby: fetch_user_data_fromDB()")
@@ -108,100 +128,105 @@ func _server_update_online():
 	online_fetched = true
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
-	http_responses_count += 1
-	
-	# If server is logged in
-	# ----------------------
-	if Meeting.selected_space_server != "NA":
-		if http_responses_count == 1:
-			# If server has loggeed in succesfully to Firebase, we start the meeting
-			if response_code == 200:
-				print("Lobby: Server %s has logged in Firebase" % Meeting.selected_space_server)
-				Meeting.start_meeting()
-			else:
-				print("Lobby: Server %s has NOT logged in Firebase" % Meeting.selected_space_server)
-		# If http_responses_count > 1, then this means we are now updating list of users
-		else:
-			if response_code == 200:
-				if online_fetched:
-					print("Lobby: Server %s online fetched succesfully" % Meeting.selected_space_server)
-					var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
-					self.spaces = result_body.fields
-					
-					var people_online = str(Meeting.get_participant_list().size())
-					
-					# Update online only for current space, the rest is kept as it is in Firestore
-					if Meeting.selected_space_server == "Library":
-						spaces.Library = { "stringValue": people_online}
-					elif Meeting.selected_space_server == "Office":
-						spaces.Office = { "stringValue": people_online}	
-					elif Meeting.selected_space_server == "University":
-						spaces.University = { "stringValue": people_online}	
-							
-					online_fetched = false
-					Firebase.update_document("spaces/online", spaces, http)
+	if session_key_refreshed:
+		session_key_refreshed = false
+	else:	
+		http_responses_count += 1
+		
+		# If server is logged in
+		# ----------------------
+		if Meeting.selected_space_server != "NA":
+			if http_responses_count == 1:
+				# If server has loggeed in succesfully to Firebase, we start the meeting
+				if response_code == 200:
+					print("Lobby: Server %s has logged in Firebase" % Meeting.selected_space_server)
+					Meeting.start_meeting()
+					# Set timer to refresh Firebase session token
+					set_timer()
 				else:
-					print("Lobby: Server %s online updated succesfully" % Meeting.selected_space_server)
+					print("Lobby: Server %s has NOT logged in Firebase" % Meeting.selected_space_server)
+			# If http_responses_count > 1, then this means we are now updating list of users
 			else:
-				print("Lobby: Server %s online was not fetched/updated" % Meeting.selected_space_server)
-	# ----------------------
+				if response_code == 200:
+					if online_fetched:
+						print("Lobby: Server %s online fetched succesfully" % Meeting.selected_space_server)
+						var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
+						self.spaces = result_body.fields
+						
+						var people_online = str(Meeting.get_participant_list().size())
+						
+						# Update online only for current space, the rest is kept as it is in Firestore
+						if Meeting.selected_space_server == "Library":
+							spaces.Library = { "stringValue": people_online}
+						elif Meeting.selected_space_server == "Office":
+							spaces.Office = { "stringValue": people_online}	
+						elif Meeting.selected_space_server == "University":
+							spaces.University = { "stringValue": people_online}	
+								
+						online_fetched = false
+						Firebase.update_document("spaces/online", spaces, http)
+					else:
+						print("Lobby: Server %s online updated succesfully" % Meeting.selected_space_server)
+				else:
+					print("Lobby: Server %s online was not fetched/updated" % Meeting.selected_space_server)
+		# ----------------------
+						
+		# If user is logged in
+		# ----------------------
+		else:
+			if http_responses_count == 1:
+				var profile : = {
+				"name": {},
+				"hair": {},
+				"eyes": {},
+				"legs": {},
+				"feet": {},
+				"hands": {},
+				"head": {},
+				"torso": {},
+				"arms": {}
+				}
+				
+				var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
+				
+				if response_code == 200:
+					print("HTTP Response: Code 200 -> Information fetched")
+					profile = result_body.fields
 					
-	# If user is logged in
-	# ----------------------
-	else:
-		if http_responses_count == 1:
-			var profile : = {
-			"name": {},
-			"hair": {},
-			"eyes": {},
-			"legs": {},
-			"feet": {},
-			"hands": {},
-			"head": {},
-			"torso": {},
-			"arms": {}
-			}
-			
-			var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
-			
-			if response_code == 200:
-				print("HTTP Response: Code 200 -> Information fetched")
-				profile = result_body.fields
-				
-				name_input = profile.name
-				# new
-				Meeting.participant_data["Name"] = profile.name["stringValue"]
-				
-				Meeting.participant_data["Color"]["Hair"] = Color(profile.hair["stringValue"])
-				Meeting.participant_data["Color"]["Eyes"] = Color(profile.eyes["stringValue"])
-				Meeting.participant_data["Color"]["Pants"] = Color(profile.legs["stringValue"])
-				Meeting.participant_data["Color"]["Shoe"] = Color(profile.feet["stringValue"])
-				# skin
-				Meeting.participant_data["Color"]["Skin"] = Color(profile.hands["stringValue"])
-				Meeting.participant_data["Color"]["Skin"] = Color(profile.head["stringValue"])
-				# shirt
-				Meeting.participant_data["Color"]["Shirt"] = Color(profile.torso["stringValue"])
-				Meeting.participant_data["Color"]["Shirt"] = Color(profile.arms["stringValue"])
+					name_input = profile.name
+					# new
+					Meeting.participant_data["Name"] = profile.name["stringValue"]
+					
+					Meeting.participant_data["Color"]["Hair"] = Color(profile.hair["stringValue"])
+					Meeting.participant_data["Color"]["Eyes"] = Color(profile.eyes["stringValue"])
+					Meeting.participant_data["Color"]["Pants"] = Color(profile.legs["stringValue"])
+					Meeting.participant_data["Color"]["Shoe"] = Color(profile.feet["stringValue"])
+					# skin
+					Meeting.participant_data["Color"]["Skin"] = Color(profile.hands["stringValue"])
+					Meeting.participant_data["Color"]["Skin"] = Color(profile.head["stringValue"])
+					# shirt
+					Meeting.participant_data["Color"]["Shirt"] = Color(profile.torso["stringValue"])
+					Meeting.participant_data["Color"]["Shirt"] = Color(profile.arms["stringValue"])
 
-			else:
-				print("HTTP Response: Not 200 -> Information not fetched")
-				
-		if http_responses_count == 2:
-			if response_code == 200:
-				print("\nHTTP Response: Code 200 -> User data deleted from DB, requesting delete of user account")
-				Firebase.delete_account(http)
-			else:
-				print("\nHTTP Response: %s -> User data was not deleted" % response_code)
-				
+				else:
+					print("HTTP Response: Not 200 -> Information not fetched")
+					
+			if http_responses_count == 2:
+				if response_code == 200:
+					print("\nHTTP Response: Code 200 -> User data deleted from DB, requesting delete of user account")
+					Firebase.delete_account(http)
+				else:
+					print("\nHTTP Response: %s -> User data was not deleted" % response_code)
+					
 
-		if http_responses_count == 3:
-			if response_code == 200:
-				print("\nHTTP Response: Code 200 -> User account was deleted")
-				self.show()
-				connection_panel.show()
-			else:
-				print("\nHTTP Response: %s -> User account not deleted" % response_code)
-	# ----------------------
+			if http_responses_count == 3:
+				if response_code == 200:
+					print("\nHTTP Response: Code 200 -> User account was deleted")
+					self.show()
+					connection_panel.show()
+				else:
+					print("\nHTTP Response: %s -> User account not deleted" % response_code)
+		# ----------------------
 		
 func _on_ChangePassword_pressed():
 	get_tree().change_scene("res://ChangePassword/ChangePassword.tscn")

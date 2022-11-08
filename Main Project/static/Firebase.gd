@@ -10,6 +10,7 @@ const ANON_LOGIN_URL:= "https://identitytoolkit.googleapis.com/v1/accounts:signU
 const FIRESTORE_URL := "https://firestore.googleapis.com/v1/projects/%s/databases/(default)/documents/" % PROJECT_ID
 const CHANGE_PASSWORD_URL:= "https://identitytoolkit.googleapis.com/v1/accounts:update?key=%s" % API_KEY
 const DELETE_ACCOUNT_URL:= "https://identitytoolkit.googleapis.com/v1/accounts:delete?key=%s" % API_KEY
+const REFRESH_SESSION_URL:= "https://securetoken.googleapis.com/v1/token?key=%s" % API_KEY
 
 # In user_info dictionary we store user token and user id
 # The token tells us that the user has been logged in. Later we will 
@@ -25,6 +26,7 @@ func _get_user_info(result: Array, is_registered: bool) -> Dictionary:
 	return {
 		"token": result_body.idToken,
 		"id": result_body.localId,
+		"refresh_token": result_body.refreshToken,
 		"is_registered": is_registered
 	}
 
@@ -55,7 +57,21 @@ func register(email: String, password: String, http: HTTPRequest) -> void:
 	# If our response is OK ( 200 ), we store user information
 	if result[1] == 200:
 		user_info = _get_user_info(result, true)
+		
+func refresh_session_token(http: HTTPRequest) -> void:
+	var body := {
+		"grant_type": "refresh_token",
+		"refresh_token": user_info.refresh_token
+	}
 	
+	http.request(REFRESH_SESSION_URL, [], false, HTTPClient.METHOD_POST, to_json(body))
+	
+	var result := yield(http, "request_completed") as Array
+	# If our response is OK ( 200 ), we store user information
+	if result[1] == 200:
+		var result_body := JSON.parse(result[3].get_string_from_ascii()).result as Dictionary
+		user_info.token = result_body.id_token
+		
 func anon_login(http: HTTPRequest) -> void:
 	print("anon_login_start")
 	var body := {
