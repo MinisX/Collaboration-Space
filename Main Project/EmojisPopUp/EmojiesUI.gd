@@ -2,9 +2,10 @@ extends Node
 
 onready var grinningEmoji_button:TextureButton = $Panel/grinningEmoji
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+
+export (String) var current_emoji : String = "SomeEmojiName"
+signal emoji_sent()
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -17,8 +18,6 @@ func _ready():
 #	pass
 
 func _on_grinningEmoji_button_pressed() -> void:
-	print("Emoji button is pressed")
 	$"../TextureRect".show()
-	#$"../TextureRect/Timer".start()
-	#_on_Timer_timeout()
-
+	print("Emoji button is pressed")
+	emit_signal("current_emoji")

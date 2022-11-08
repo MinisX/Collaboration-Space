@@ -13,6 +13,7 @@ var direction: Vector2 = Vector2(0.0, 1.0)
 var current_animation: String = "idle_s"
 var current_location: String
 var participants_UI_visibility: bool = false
+var current_emoji: String
 
 
 # The puppet keyword means a call can be made from the network master to any network puppet.
@@ -20,12 +21,14 @@ puppet var puppet_pos: Vector2 = Vector2()
 puppet var puppet_motion: Vector2 = Vector2()
 puppet var puppet_current_animation: String = "idle_s"
 puppet var puppet_current_location: String
+puppet var puppet_emoji: String
 
 
 func _ready() -> void:
 	print("Participant: _ready()")
 	$BodyArea.connect("area_entered", self, "_get_location")
 	participants_button.connect("pressed", self, "_on_participants_button_pressed")
+	$BodyArea.connect("emoji_sent", self, "_get_emoji")
 	
 	# hide participant ui if not master 
 	if not is_network_master():
@@ -53,7 +56,9 @@ func _process(_delta: float) -> void:
 	animation_player.play(current_animation)
 	
 	display_location()
-
+	display_emoji()
+	
+	
 func _on_participants_button_pressed() -> void:
 	if participants_UI_visibility ==false:
 		$CanvasLayer/ParticipantsButton.hide()
@@ -71,7 +76,20 @@ func display_location() -> void:
 	else:
 		current_location = puppet_current_location
 	location.text = current_location
-	
+
+# Updates the puppet variable and the network master variables
+func display_emoji() -> void:
+	if is_network_master():
+		rset("puppet_emoji", current_emoji)
+	else:
+		current_emoji = puppet_emoji
+
+# In order to get the current emoji
+func _get_emoji(partcipant: KinematicBody2D) -> void:
+	if partcipant.get("current_emoji") != null:
+		if is_network_master():
+			current_emoji = partcipant.current_emoji
+			
 
 # TODO Display location UI in other place
 # Set room name to participant's location label
@@ -79,6 +97,7 @@ func _get_location(area: Area2D) -> void:
 	if area.get("room_name") != null:
 		if is_network_master():
 			current_location = area.room_name
+			print("Emoji Received")
 
 
 func set_data(new_data: Dictionary) -> void:

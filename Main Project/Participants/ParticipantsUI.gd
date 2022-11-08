@@ -6,6 +6,8 @@ puppet var puppet_current_location: String
 var current_location: String
 var is_open: bool = true
 
+
+
 func _ready():
 	participants_ok_button.connect("pressed", self, "_on_participants_ok_button_pressed")
 	update()
