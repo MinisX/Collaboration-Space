@@ -8,14 +8,14 @@ onready var button_group: ButtonGroup = null
 onready var join_button: Button = $VBoxContainer/CenterContainer/JoinButton
 
 onready var spaces : = {
-	"players_online": {},
+	"Library": {},
+	"Office": {},
+	"University": {},
 }
 
 # Access HTTPRequest instance
 onready var http : HTTPRequest = $HTTPRequest
 
-# This variable counts the amount of HTTP responses/requests
-onready var http_responses_count = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -24,10 +24,11 @@ func _ready() -> void:
 	button_group.connect("pressed", self, "_on_map_selected")
 	join_button.connect("pressed", self, "_on_join_pressed")
 	
-	set_online()
+	if !Meeting.is_server:
+		set_online()
 
 func set_online() -> void:
-	Firebase.get_document("spaces/Library", http)
+	Firebase.get_document("spaces/online", http)
 
 func set_port(selected_space_name: String) -> void:
 	if selected_space_name == "University":
@@ -48,24 +49,18 @@ func _on_join_pressed() -> void:
 	self.hide()
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
-	http_responses_count += 1
-	
 	var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
 	
 	if response_code == 200:
 		print("SelectSpace.gd: online fetched succesfully")
 		self.spaces = result_body.fields
 		
-		if http_responses_count == 1:
-			var library_online = spaces.players_online["stringValue"]
-			library_online_p.set_text(library_online + " online")
-			Firebase.get_document("spaces/Office", http)
-		elif http_responses_count == 2:
-			var office_online = spaces.players_online["stringValue"]
-			office_online_p.set_text(office_online + " online")
-			Firebase.get_document("spaces/University", http)
-		elif http_responses_count == 3:
-			var university_online = spaces.players_online["stringValue"]
-			thu_online_p.set_text(university_online + " online") 
+		var library_online = spaces.Library["stringValue"]
+		var office_online = spaces.Office["stringValue"]
+		var university_online = spaces.University["stringValue"]
+		
+		library_online_p.set_text(library_online + " online")
+		office_online_p.set_text(office_online + " online")
+		thu_online_p.set_text(university_online + " online") 
 	else:
 		print("SelectSpace.gd: online NOT fetched")

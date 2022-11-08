@@ -82,7 +82,7 @@ texture_pressed = ExtResource( 7 )
 margin_top = 160.0
 margin_right = 214.0
 margin_bottom = 178.0
-text = "38 online"
+text = "0 online"
 align = 1
 
 [node name="Library" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
@@ -110,7 +110,7 @@ texture_pressed = ExtResource( 3 )
 margin_top = 160.0
 margin_right = 214.0
 margin_bottom = 178.0
-text = "24 online"
+text = "0 online"
 align = 1
 
 [node name="Office" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
@@ -138,7 +138,7 @@ texture_pressed = ExtResource( 5 )
 margin_top = 160.0
 margin_right = 214.0
 margin_bottom = 178.0
-text = "10 online"
+text = "0 online"
 align = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]

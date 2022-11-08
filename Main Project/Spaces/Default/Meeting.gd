@@ -11,6 +11,7 @@ const MAX_PARTICIPANT: int = 30
 # It containts useful methods for serializing, sending and receiving data. On top of that, it adds methods to set a peer, 
 # transfer mode, etc. It also includes signals that will let you know when peers connect or disconnect.
 var peer: NetworkedMultiplayerENet = null
+var is_server : bool = false
 
 # This is a spawn_point of a user, which is defined per scene
 var spawn_point : Vector2 = Vector2(0,0)

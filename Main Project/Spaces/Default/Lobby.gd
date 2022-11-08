@@ -12,8 +12,11 @@ onready var http : HTTPRequest = $HTTPRequest
 onready var http_responses_count = 0
 
 onready var spaces : = {
-	"players_online": {},
+	"Library": {},
+	"Office": {},
+	"University": {},
 } setget set_spaces
+onready var online_fetched = false
 
 func _ready() -> void:
 	print("Lobby: _ready")
@@ -95,13 +98,15 @@ func fetch_user_data_fromDB():
 
 func _server_update_online():
 	print("Lobby: _server_update_online()")
-	spaces.players_online = { "stringValue": str(Meeting.get_participant_list().size())}
-	Firebase.update_document("spaces/%s" % Meeting.selected_space_server, spaces, http)
+	# First we get current online for all spaces
+	Firebase.get_document("spaces/online", http)
+	online_fetched = true
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	http_responses_count += 1
 	
 	# If server is logged in
+	# ----------------------
 	if Meeting.selected_space_server != "NA":
 		if http_responses_count == 1:
 			# If server has loggeed in succesfully to Firebase, we start the meeting
@@ -113,11 +118,31 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		# If http_responses_count > 1, then this means we are now updating list of users
 		else:
 			if response_code == 200:
-				print("Lobby: Online updated succesfully")
+				if online_fetched:
+					print("Lobby: Server %s online fetched succesfully" % Meeting.selected_space_server)
+					var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
+					self.spaces = result_body.fields
+					
+					var people_online = str(Meeting.get_participant_list().size())
+					
+					# Update online only for current space, the rest is kept as it is in Firestore
+					if Meeting.selected_space_server == "Library":
+						spaces.Library = { "stringValue": people_online}
+					elif Meeting.selected_space_server == "Office":
+						spaces.Office = { "stringValue": people_online}	
+					elif Meeting.selected_space_server == "University":
+						spaces.University = { "stringValue": people_online}	
+							
+					online_fetched = false
+					Firebase.update_document("spaces/online", spaces, http)
+				else:
+					print("Lobby: Server %s online updated succesfully" % Meeting.selected_space_server)
 			else:
-				print("Online was not updated")
+				print("Lobby: Server %s online was not fetched/updated" % Meeting.selected_space_server)
+	# ----------------------
 					
 	# If user is logged in
+	# ----------------------
 	else:
 		if http_responses_count == 1:
 			var profile : = {
@@ -171,7 +196,8 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 				connection_panel.show()
 			else:
 				print("\nHTTP Response: %s -> User account not deleted" % response_code)
-
+	# ----------------------
+		
 func _on_ChangePassword_pressed():
 	get_tree().change_scene("res://ChangePassword/ChangePassword.tscn")
 
