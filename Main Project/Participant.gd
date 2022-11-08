@@ -30,7 +30,7 @@ func _ready() -> void:
 	# hide participant ui if not master 
 	if not is_network_master():
 		$CanvasLayer/ParticipantUI.hide()
-
+		$CanvasLayer/Location.hide()
 
 func _process(_delta: float) -> void:
 #	self.find_participant()
