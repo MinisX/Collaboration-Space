@@ -4,6 +4,7 @@ onready var connection_panel: ColorRect = $ConnectionPanel
 onready var name_input = Meeting.participant_data["Name"]
 onready var online_button: Button = $ConnectionPanel/VBoxContainer/Row3/Online
 onready var changePassword_button: Button = $ConnectionPanel/VBoxContainer/ChangePassword
+onready var back_button: Button = $ConnectionPanel/VBoxContainer/Back
 onready var ip: String = "34.159.28.32"
 
 # Access HTTPRequest instance
@@ -43,6 +44,7 @@ func _ready() -> void:
 	Meeting.connect("meeting_ended", self, "_on_meeting_ended")
 	Meeting.connect("meeting_error", self, "_on_meeting_error")
 	Meeting.connect("update_online", self, "_server_update_online")
+	back_button.connect("pressed", self, "_on_back")
 	
 	# start meeting automaticaly after waiting 20 seconds if --server passed
 	if "--server" in OS.get_cmdline_args():
@@ -58,6 +60,9 @@ func _ready() -> void:
 		#Meeting.start_meeting()
 	else:
 		print("Main: client")
+
+func _on_back() -> void:
+	$SelectSpace.show()
 
 # This method is triggered from Meeting.gd in _connected_ok() method
 func _on_connection_success() -> void:
@@ -219,3 +224,4 @@ func _notification(what):
 # This is setter and getter function for our spaces dictionary	
 func set_spaces(value: Dictionary) -> void:
 	spaces = value
+
