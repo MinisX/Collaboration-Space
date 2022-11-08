@@ -23,7 +23,8 @@ func _ready() -> void:
 	button_group = $VBoxContainer/HBoxContainer/THU/University.group
 	button_group.connect("pressed", self, "_on_map_selected")
 	join_button.connect("pressed", self, "_on_join_pressed")
-	
+		
+func _draw() -> void:
 	if !Meeting.is_server:
 		set_online()
 
