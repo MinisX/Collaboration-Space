@@ -78,10 +78,14 @@ text = "Back"
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [node name="SelectSpace" parent="." instance=ExtResource( 2 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 1024.0
-margin_bottom = 600.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -512.0
+margin_top = -300.0
+margin_right = 512.0
+margin_bottom = 300.0
 
 [connection signal="pressed" from="ConnectionPanel/VBoxContainer/Row3/Online" to="." method="_on_online_pressed"]
 [connection signal="pressed" from="ConnectionPanel/VBoxContainer/ChangePassword" to="." method="_on_ChangePassword_pressed"]
