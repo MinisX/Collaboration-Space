@@ -8,6 +8,7 @@ onready var interaction_area: Area2D = $InteractionArea
 onready var location: Label = $CanvasLayer/Location
 onready var participants_button:Button = $CanvasLayer/ParticipantsButton
 
+
 var velocity: Vector2 = Vector2(0.0, 0.0)
 var direction: Vector2 = Vector2(0.0, 1.0)
 var current_animation: String = "idle_s"
@@ -24,11 +25,12 @@ puppet var puppet_current_location: String
 puppet var puppet_emoji: String
 
 
+
 func _ready() -> void:
 	print("Participant: _ready()")
 	$BodyArea.connect("area_entered", self, "_get_location")
 	participants_button.connect("pressed", self, "_on_participants_button_pressed")
-	$BodyArea.connect("emoji_sent", self, "_get_emoji")
+	$CanvasLayer/ParticipantUI.connect("emoji_sent", self, "_get_emoji")
 	
 	# hide participant ui if not master 
 	if not is_network_master():
@@ -85,10 +87,11 @@ func display_emoji() -> void:
 		current_emoji = puppet_emoji
 
 # In order to get the current emoji
-func _get_emoji(partcipant: KinematicBody2D) -> void:
-	if partcipant.get("current_emoji") != null:
+func _get_emoji(EmojiNode : Node) -> void:
+	print("Emoji Received")
+	if EmojiNode.get("current_emoji") != null:
 		if is_network_master():
-			current_emoji = partcipant.current_emoji
+			current_emoji = EmojiNode.current_emoji
 			
 
 # TODO Display location UI in other place
@@ -97,7 +100,7 @@ func _get_location(area: Area2D) -> void:
 	if area.get("room_name") != null:
 		if is_network_master():
 			current_location = area.room_name
-			print("Emoji Received")
+			
 
 
 func set_data(new_data: Dictionary) -> void:
@@ -203,4 +206,5 @@ func decide_animation() -> void:
 func _on_Timer_timeout():
 	print("timer is started")
 	$CanvasLayer/TextureRect.hide()
+	$CanvasLayer/TextureRect/Timer.stop()
 	#emit_signal("emoji_signal")
