@@ -13,7 +13,7 @@ var interaction_active: bool = false
 
 
 func update_state() -> void:
-	if is_network_master():
+	if Meeting.is_network_master():
 		rset("puppet_open", open)
 	else:
 		open = puppet_open
