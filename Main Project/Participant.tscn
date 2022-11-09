@@ -2602,5 +2602,20 @@ texture = ExtResource( 11 )
 wait_time = 5.0
 autostart = true
 
+[node name="Emojis" type="Node2D" parent="."]
+
+[node name="One" type="Sprite" parent="Emojis"]
+visible = false
+
+[node name="Two" type="Sprite" parent="Emojis"]
+visible = false
+
+[node name="Three" type="Sprite" parent="Emojis"]
+visible = false
+
+[node name="Timer" type="Timer" parent="Emojis"]
+wait_time = 3.0
+autostart = true
+
 [connection signal="timeout" from="CanvasLayer/TextureRect/Timer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="CanvasLayer/TextureRect/Timer" to="CanvasLayer/TextureRect" method="_on_Timer_timeout"]

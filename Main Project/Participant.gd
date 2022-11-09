@@ -30,11 +30,43 @@ func _ready() -> void:
 	print("Participant: _ready()")
 	$BodyArea.connect("area_entered", self, "_get_location")
 	participants_button.connect("pressed", self, "_on_participants_button_pressed")
-	$CanvasLayer/ParticipantUI.connect("emoji_sent", self, "_get_emoji")
+	#$CanvasLayer/ParticipantUI.connect("emoji_sent", self, "_get_emoji")
+	
+	$CanvasLayer/EmojiesUI.connect("emoji_pressed", self, "_get_emoji")
+	$Emojis/Timer.connect("timeout", self, "_on_emoji_timeout")
 	
 	# hide participant ui if not master 
 	if not is_network_master():
 		$CanvasLayer/ParticipantUI.hide()
+		$CanvasLayer/EmojiesUI.hide()
+
+
+
+
+
+# Updates the puppet variable and the network master variables
+func display_emoji() -> void:
+	if is_network_master():
+		rset("puppet_emoji", current_emoji)
+	else:
+		current_emoji = puppet_emoji
+
+# In order to get the current emoji
+func _get_emoji(which) -> void:
+	print("on emoji pressed: ", which)
+	$Emojis.get_node(which).show()
+	$Emojis/Timer.start()
+	
+	if is_network_master():
+		current_emoji = which
+
+func _on_emoji_timeout():
+	print("time out")
+	$Emojis.get_node("Two").hide()
+
+
+
+
 
 
 func _process(_delta: float) -> void:
@@ -79,20 +111,6 @@ func display_location() -> void:
 		current_location = puppet_current_location
 	location.text = current_location
 
-# Updates the puppet variable and the network master variables
-func display_emoji() -> void:
-	if is_network_master():
-		rset("puppet_emoji", current_emoji)
-	else:
-		current_emoji = puppet_emoji
-
-# In order to get the current emoji
-func _get_emoji(EmojiNode : Node) -> void:
-	print("Emoji Received")
-	if EmojiNode.get("current_emoji") != null:
-		if is_network_master():
-			current_emoji = EmojiNode.current_emoji
-			
 
 # TODO Display location UI in other place
 # Set room name to participant's location label
@@ -208,3 +226,6 @@ func _on_Timer_timeout():
 	$CanvasLayer/TextureRect.hide()
 	$CanvasLayer/TextureRect/Timer.stop()
 	#emit_signal("emoji_signal")
+
+
+

@@ -26,27 +26,6 @@ anchor_bottom = 1.0
 margin_top = -184.0
 margin_right = 184.0
 
-[node name="grinningEmoji" type="TextureButton" parent="Panel"]
-margin_left = 3.0
-margin_top = 3.0
-margin_right = 43.0
-margin_bottom = 44.0
-texture_normal = ExtResource( 7 )
-
-[node name="Button2" type="TextureButton" parent="Panel"]
-margin_left = 46.0
-margin_top = 3.0
-margin_right = 86.0
-margin_bottom = 44.0
-texture_normal = ExtResource( 4 )
-
-[node name="Button3" type="TextureButton" parent="Panel"]
-margin_left = 89.0
-margin_top = 3.0
-margin_right = 129.0
-margin_bottom = 44.0
-texture_normal = ExtResource( 8 )
-
 [node name="Button4" type="TextureButton" parent="Panel"]
 margin_left = 132.0
 margin_top = 3.0
@@ -137,3 +116,25 @@ margin_top = 135.0
 margin_right = 172.0
 margin_bottom = 176.0
 texture_normal = ExtResource( 10 )
+
+[node name="One" type="TextureButton" parent="."]
+margin_left = 3.0
+margin_top = 419.0
+margin_right = 51.0
+margin_bottom = 467.0
+toggle_mode = true
+texture_normal = ExtResource( 7 )
+
+[node name="Two" type="TextureButton" parent="."]
+margin_left = 46.0
+margin_top = 419.0
+margin_right = 94.0
+margin_bottom = 467.0
+texture_normal = ExtResource( 4 )
+
+[node name="Three" type="TextureButton" parent="."]
+margin_left = 89.0
+margin_top = 419.0
+margin_right = 137.0
+margin_bottom = 467.0
+texture_normal = ExtResource( 8 )
