@@ -30,12 +30,21 @@ func _ready() -> void:
 	print("Participant: _ready()")
 	$BodyArea.connect("area_entered", self, "_get_location")
 	participants_button.connect("pressed", self, "_on_participants_button_pressed")
-	$CanvasLayer/ParticipantUI.connect("emoji_sent", self, "_get_emoji")
-	
+	$CanvasLayer/EmojiesUI.connect("emoji_pressed", self, "_on_emoji_pressed")
+	$Emojis/Timer.connect("timeout", self, "_on_emoji_timeout")
 	# hide participant ui if not master 
 	if not is_network_master():
 		$CanvasLayer/ParticipantUI.hide()
+		$CanvasLayer/EmojiesUI.hide()
 
+func _on_emoji_pressed(which) -> void:
+	print("on emoji pressed: ", which)
+	$Emojis.get_node(which).show()
+	$Emojis/Timer.start()
+
+func _on_emoji_timeout() -> void:
+	print("time out")
+	$Emojis.get_node("Two").hide()
 
 func _process(_delta: float) -> void:
 #	self.find_participant()

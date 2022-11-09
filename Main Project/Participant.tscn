@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Assets/UI/Fonts/SztyletBold-aOKK.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Participant.gd" type="Script" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://Participants/ParticipantsUI.tscn" type="PackedScene" id=9]
 [ext_resource path="res://EmojisPopUp/EmojiesUI.tscn" type="PackedScene" id=10]
 [ext_resource path="res://EmojisPopUp/48x48 pngs/icons8-grinning-face-with-smiling-eyes-48.png" type="Texture" id=11]
+[ext_resource path="res://EmojisPopUp/48x48 pngs/icons8-grinning-squinting-face-48.png" type="Texture" id=12]
+[ext_resource path="res://EmojisPopUp/48x48 pngs/icons8-relieved-face-48.png" type="Texture" id=13]
 [ext_resource path="res://Assets/Sprites/Combined/m/shoe.png" type="Texture" id=18]
 [ext_resource path="res://Assets/Sprites/Combined/m/hair.png" type="Texture" id=19]
 [ext_resource path="res://Assets/Sprites/Combined/m/shirt.png" type="Texture" id=20]
@@ -2585,6 +2587,8 @@ margin_top = -41.0
 text = "Participants"
 
 [node name="EmojiesUI" parent="CanvasLayer" instance=ExtResource( 10 )]
+anchor_top = 1.0
+anchor_bottom = 1.0
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
 visible = false
@@ -2598,9 +2602,23 @@ margin_right = 28.0
 margin_bottom = -72.0
 texture = ExtResource( 11 )
 
-[node name="Timer" type="Timer" parent="CanvasLayer/TextureRect"]
-wait_time = 5.0
-autostart = true
+[node name="Emojis" type="Node2D" parent="."]
 
-[connection signal="timeout" from="CanvasLayer/TextureRect/Timer" to="." method="_on_Timer_timeout"]
-[connection signal="timeout" from="CanvasLayer/TextureRect/Timer" to="CanvasLayer/TextureRect" method="_on_Timer_timeout"]
+[node name="One" type="Sprite" parent="Emojis"]
+visible = false
+position = Vector2( 0, -72 )
+texture = ExtResource( 11 )
+
+[node name="Two" type="Sprite" parent="Emojis"]
+visible = false
+position = Vector2( 0, -72 )
+texture = ExtResource( 12 )
+
+[node name="Three" type="Sprite" parent="Emojis"]
+visible = false
+position = Vector2( 0, -72 )
+texture = ExtResource( 13 )
+
+[node name="Timer" type="Timer" parent="Emojis"]
+wait_time = 3.0
+one_shot = true

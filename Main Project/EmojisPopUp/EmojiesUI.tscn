@@ -1,23 +1,12 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://EmojisPopUp/EmojiesUI.gd" type="Script" id=1]
-[ext_resource path="res://EmojisPopUp/48x48 pngs/icons8-thinking-face-48.png" type="Texture" id=2]
-[ext_resource path="res://EmojisPopUp/48x48 pngs/icons8-zany-face-48.png" type="Texture" id=3]
+[ext_resource path="res://Assets/UI/EmojiButtonGroup.tres" type="ButtonGroup" id=2]
 [ext_resource path="res://EmojisPopUp/48x48 pngs/icons8-grinning-squinting-face-48.png" type="Texture" id=4]
-[ext_resource path="res://EmojisPopUp/48x48 pngs/icons8-hugging-face-48.png" type="Texture" id=5]
-[ext_resource path="res://EmojisPopUp/48x48 pngs/icons8-smiling-face-with-sunglasses-48.png" type="Texture" id=6]
 [ext_resource path="res://EmojisPopUp/48x48 pngs/icons8-grinning-face-with-smiling-eyes-48.png" type="Texture" id=7]
 [ext_resource path="res://EmojisPopUp/48x48 pngs/icons8-relieved-face-48.png" type="Texture" id=8]
-[ext_resource path="res://EmojisPopUp/48x48 pngs/icons8-thumbs-up-48.png" type="Texture" id=9]
-[ext_resource path="res://EmojisPopUp/48x48 pngs/icons8-thumbs-down-48.png" type="Texture" id=10]
-[ext_resource path="res://EmojisPopUp/48x48 pngs/icons8-clapping-hands-48.png" type="Texture" id=11]
-[ext_resource path="res://EmojisPopUp/48x48 pngs/icons8-tired-face-48.png" type="Texture" id=12]
-[ext_resource path="res://EmojisPopUp/48x48 pngs/icons8-smiling-face-with-hearts-48.png" type="Texture" id=13]
-[ext_resource path="res://EmojisPopUp/48x48 pngs/icons8-neutral-face-48.png" type="Texture" id=14]
 
 [node name="Control" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
 script = ExtResource( 1 )
 
 [node name="Panel" type="Panel" parent="."]
@@ -26,114 +15,29 @@ anchor_bottom = 1.0
 margin_top = -184.0
 margin_right = 184.0
 
-[node name="grinningEmoji" type="TextureButton" parent="Panel"]
+[node name="One" type="TextureButton" parent="."]
 margin_left = 3.0
-margin_top = 3.0
-margin_right = 43.0
-margin_bottom = 44.0
+margin_top = -181.0
+margin_right = 51.0
+margin_bottom = -133.0
+toggle_mode = true
+group = ExtResource( 2 )
 texture_normal = ExtResource( 7 )
 
-[node name="Button2" type="TextureButton" parent="Panel"]
+[node name="Two" type="TextureButton" parent="."]
 margin_left = 46.0
-margin_top = 3.0
-margin_right = 86.0
-margin_bottom = 44.0
+margin_top = -181.0
+margin_right = 94.0
+margin_bottom = -133.0
+toggle_mode = true
+group = ExtResource( 2 )
 texture_normal = ExtResource( 4 )
 
-[node name="Button3" type="TextureButton" parent="Panel"]
+[node name="Three" type="TextureButton" parent="."]
 margin_left = 89.0
-margin_top = 3.0
-margin_right = 129.0
-margin_bottom = 44.0
+margin_top = -181.0
+margin_right = 137.0
+margin_bottom = -133.0
+toggle_mode = true
+group = ExtResource( 2 )
 texture_normal = ExtResource( 8 )
-
-[node name="Button4" type="TextureButton" parent="Panel"]
-margin_left = 132.0
-margin_top = 3.0
-margin_right = 172.0
-margin_bottom = 44.0
-texture_normal = ExtResource( 6 )
-
-[node name="Button5" type="TextureButton" parent="Panel"]
-margin_left = 3.0
-margin_top = 47.0
-margin_right = 43.0
-margin_bottom = 88.0
-texture_normal = ExtResource( 5 )
-
-[node name="Button6" type="TextureButton" parent="Panel"]
-margin_left = 46.0
-margin_top = 47.0
-margin_right = 86.0
-margin_bottom = 88.0
-texture_normal = ExtResource( 14 )
-
-[node name="Button7" type="TextureButton" parent="Panel"]
-margin_left = 89.0
-margin_top = 47.0
-margin_right = 129.0
-margin_bottom = 88.0
-texture_normal = ExtResource( 8 )
-
-[node name="Button8" type="TextureButton" parent="Panel"]
-margin_left = 132.0
-margin_top = 47.0
-margin_right = 172.0
-margin_bottom = 88.0
-texture_normal = ExtResource( 13 )
-
-[node name="Button9" type="TextureButton" parent="Panel"]
-margin_left = 3.0
-margin_top = 91.0
-margin_right = 43.0
-margin_bottom = 132.0
-texture_normal = ExtResource( 6 )
-
-[node name="Button10" type="TextureButton" parent="Panel"]
-margin_left = 46.0
-margin_top = 91.0
-margin_right = 86.0
-margin_bottom = 132.0
-texture_normal = ExtResource( 10 )
-
-[node name="Button11" type="TextureButton" parent="Panel"]
-margin_left = 89.0
-margin_top = 91.0
-margin_right = 129.0
-margin_bottom = 132.0
-texture_normal = ExtResource( 2 )
-
-[node name="Button12" type="TextureButton" parent="Panel"]
-margin_left = 132.0
-margin_top = 91.0
-margin_right = 172.0
-margin_bottom = 132.0
-texture_normal = ExtResource( 12 )
-
-[node name="Button13" type="TextureButton" parent="Panel"]
-margin_left = 3.0
-margin_top = 135.0
-margin_right = 43.0
-margin_bottom = 176.0
-texture_normal = ExtResource( 3 )
-
-[node name="Button14" type="TextureButton" parent="Panel"]
-margin_left = 46.0
-margin_top = 135.0
-margin_right = 86.0
-margin_bottom = 176.0
-texture_normal = ExtResource( 11 )
-
-[node name="Button15" type="TextureButton" parent="Panel"]
-margin_left = 89.0
-margin_top = 135.0
-margin_right = 129.0
-margin_bottom = 176.0
-texture_normal = ExtResource( 9 )
-
-[node name="Button16" type="TextureButton" parent="Panel"]
-margin_left = 132.0
-margin_top = 135.0
-margin_right = 172.0
-margin_bottom = 176.0
-texture_normal = ExtResource( 10 )
