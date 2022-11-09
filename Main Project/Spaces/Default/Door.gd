@@ -10,6 +10,7 @@ puppet var puppet_open = false
 var can_interact: bool = false
 var interaction_active: bool = false
 
+var active_rotation = 0
 
 
 func update_state() -> void:
@@ -34,6 +35,7 @@ func _ready() -> void:
 	interactiveArea.connect("area_exited", self, "_on_interaction_range_exited")
 	# todo test if this is needed in this version
 	Meeting.connect("connection_succeeded", self, "update_state")
+	active_rotation = self.rotation_degrees
 
 func _process(delta: float) -> void:  
 	update_state()
@@ -42,11 +44,13 @@ func _process(delta: float) -> void:
 		rpc("interact")
 	
 	if open:
-		self.hide()
-		get_node("CollisionShape2D").disabled = true
+#		self.hide()
+		self.rotation_degrees = active_rotation - 90
+#		get_node("CollisionShape2D").disabled = true
 	else:
-		self.show()
-		get_node("CollisionShape2D").disabled = false
+		self.rotation_degrees = active_rotation
+#		self.show()
+#		get_node("CollisionShape2D").disabled = false
 
 
 func _on_interaction_range_entered(area: Area2D) -> void: 
@@ -59,7 +63,6 @@ func _on_interaction_range_exited(area: Area2D) -> void:
 	if (area.get_parent().get("speed") != null and 
 		str(get_tree().get_network_unique_id()) == area.get_parent().name):
 		interaction_active = false
-
 
 
 
