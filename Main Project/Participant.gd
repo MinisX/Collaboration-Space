@@ -14,7 +14,7 @@ var direction: Vector2 = Vector2(0.0, 1.0)
 var current_animation: String = "idle_s"
 var current_location: String
 var participants_UI_visibility: bool = false
-var current_emoji: String
+var current_emoji: String = "DefaultEmoji"
 
 
 # The puppet keyword means a call can be made from the network master to any network puppet.
@@ -51,6 +51,13 @@ func display_emoji() -> void:
 		rset("puppet_emoji", current_emoji)
 	else:
 		current_emoji = puppet_emoji
+		if current_emoji != "DefaultEmoji":
+			print("Emoji received on display_emoji: ", current_emoji)
+		$Emojis.get_node(current_emoji).show()
+#		for x in 1000000000:
+#			print("test delay")
+#		$Emojis.get_node(current_emoji).hide()
+		$Emojis/Timer.start()
 
 # In order to get the current emoji
 func _get_emoji(which) -> void:
@@ -63,16 +70,51 @@ func _get_emoji(which) -> void:
 
 func _on_emoji_timeout():
 	print("time out")
+	if is_network_master():
+		rset("puppet_emoji", current_emoji)
+		$Emojis.get_node("One").hide()
+		$Emojis.get_node("Two").hide()
+		$Emojis.get_node("Three").hide()
+	else:
+		$Emojis.get_node("One").hide()
+		$Emojis.get_node("Two").hide()
+		$Emojis.get_node("Three").hide()
+	
+	
+	"""
+	$Emojis.get_node("Four").hide()
+	$Emojis.get_node("Five").hide()
+	$Emojis.get_node("Six").hide()
+	$Emojis.get_node("Seven").hide()
+	$Emojis.get_node("Eight").hide()
+	$Emojis.get_node("Nine").hide()
+	$Emojis.get_node("Ten").hide()
+	$Emojis.get_node("Eleven").hide()
+	$Emojis.get_node("Twelve").hide()
+	$Emojis.get_node("Thirteen").hide()
+	$Emojis.get_node("Fourteen").hide()
+	$Emojis.get_node("Fiveteen").hide()
+	$Emojis.get_node("Sixteen").hide()
+	$Emojis.get_node("One").hide()
 	$Emojis.get_node("Two").hide()
-
-
-
-
-
-
-
-
-
+	$Emojis.get_node("Three").hide()
+	$Emojis.get_node("Four").hide()
+	$Emojis.get_node("Five").hide()
+	$Emojis.get_node("Six").hide()
+	$Emojis.get_node("Seven").hide()
+	$Emojis.get_node("Eight").hide()
+	$Emojis.get_node("Nine").hide()
+	$Emojis.get_node("Ten").hide()
+	$Emojis.get_node("Eleven").hide()
+	$Emojis.get_node("Twelve").hide()
+	$Emojis.get_node("Thirteen").hide()
+	$Emojis.get_node("Fourteen").hide()
+	$Emojis.get_node("Fiveteen").hide()
+	$Emojis.get_node("Sixteen").hide()
+"""
+	
+	
+	
 func _process(_delta: float) -> void:
 #	self.find_participant()
 	# TODO 
@@ -224,12 +266,6 @@ func decide_animation() -> void:
 	else:
 		current_animation = puppet_current_animation
 
-
-func _on_Timer_timeout():
-	print("timer is started")
-	$CanvasLayer/TextureRect.hide()
-	$CanvasLayer/TextureRect/Timer.stop()
-	#emit_signal("emoji_signal")
 
 
 
