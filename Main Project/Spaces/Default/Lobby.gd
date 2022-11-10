@@ -5,7 +5,7 @@ onready var name_input = Meeting.participant_data["Name"]
 onready var online_button: Button = $ConnectionPanel/VBoxContainer/Row3/Online
 onready var changePassword_button: Button = $ConnectionPanel/VBoxContainer/ChangePassword
 onready var back_button: Button = $ConnectionPanel/VBoxContainer/Back
-onready var ip: String = "34.159.28.32"
+onready var ip: String = "35.198.74.217"
 
 # Access HTTPRequest instance
 onready var http : HTTPRequest = $HTTPRequest
