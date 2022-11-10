@@ -44,6 +44,7 @@ func _ready() -> void:
 
 
 
+
 # Updates the puppet variable and the network master variables
 func display_emoji() -> void:
 	if is_network_master():
@@ -53,7 +54,7 @@ func display_emoji() -> void:
 
 # In order to get the current emoji
 func _get_emoji(which) -> void:
-	print("on emoji pressed: ", which)
+	print("on emoji pressed signal: ", which)
 	$Emojis.get_node(which).show()
 	$Emojis/Timer.start()
 	
@@ -63,6 +64,9 @@ func _get_emoji(which) -> void:
 func _on_emoji_timeout():
 	print("time out")
 	$Emojis.get_node("Two").hide()
+
+
+
 
 
 

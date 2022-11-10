@@ -2600,12 +2600,13 @@ texture = ExtResource( 11 )
 
 [node name="Timer" type="Timer" parent="CanvasLayer/TextureRect"]
 wait_time = 5.0
-autostart = true
 
 [node name="Emojis" type="Node2D" parent="."]
 
 [node name="One" type="Sprite" parent="Emojis"]
 visible = false
+texture = ExtResource( 11 )
+offset = Vector2( 0, -75 )
 
 [node name="Two" type="Sprite" parent="Emojis"]
 visible = false
