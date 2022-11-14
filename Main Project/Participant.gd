@@ -7,30 +7,165 @@ onready var animation_player: AnimationPlayer = $AnimationPlayer
 onready var interaction_area: Area2D = $InteractionArea
 onready var location: Label = $CanvasLayer/Location
 onready var participants_button:Button = $CanvasLayer/ParticipantsButton
+onready var emojis_button:Button = $CanvasLayer/EmojisButton
 
 var velocity: Vector2 = Vector2(0.0, 0.0)
 var direction: Vector2 = Vector2(0.0, 1.0)
 var current_animation: String = "idle_s"
 var current_location: String
 var participants_UI_visibility: bool = false
-
+var emojis_UI_visibility: bool = false
+var current_emoji: String = "DefaultEmoji"
+#var one_time_hide: bool = true
 
 # The puppet keyword means a call can be made from the network master to any network puppet.
 puppet var puppet_pos: Vector2 = Vector2()
 puppet var puppet_motion: Vector2 = Vector2()
 puppet var puppet_current_animation: String = "idle_s"
 puppet var puppet_current_location: String
-
+puppet var puppet_emoji: String
 
 func _ready() -> void:
 	print("Participant: _ready()")
 	$BodyArea.connect("area_entered", self, "_get_location")
 	participants_button.connect("pressed", self, "_on_participants_button_pressed")
+	emojis_button.connect("pressed", self, "_on_emojis_button_pressed")
+	#$CanvasLayer/ParticipantUI.connect("emoji_sent", self, "_get_emoji")
+	
+	$CanvasLayer/EmojisButton/EmojiesUI.connect("emoji_pressed", self, "_get_emoji", [], 8)
+	$Emojis/Timer.connect("timeout", self, "_on_emoji_timeout", [], 8)
+
 	
 	# hide participant ui if not master 
 	if not is_network_master():
 		$CanvasLayer/ParticipantUI.hide()
 		$CanvasLayer/Location.hide()
+
+
+
+
+
+
+
+
+
+func _on_emojis_button_pressed() -> void:
+	if emojis_UI_visibility == false:
+		$CanvasLayer/EmojisButton/EmojiesUI.show()
+		#$CanvasLayer/EmojisButton.hide()
+		emojis_UI_visibility = true
+		$CanvasLayer/EmojisButton/EmojiesUI.connect("emoji_pressed", self, "_get_emoji", [], 8)
+		$Emojis/Timer.connect("timeout", self, "_on_emoji_timeout", [], 8)
+	else:
+		$CanvasLayer/EmojisButton/EmojiesUI.hide()
+		#$CanvasLayer/EmojisButton.show()
+		emojis_UI_visibility = false
+
+# Updates the puppet variable and the network master variables
+func display_emoji() -> void:
+#	if one_time_hide == true:
+#		$CanvasLayer/EmojiesUI.hide()
+#		one_time_hide = false
+
+	# Needed to reconnect after hiding
+	
+	if is_network_master():
+		rset("puppet_emoji", current_emoji)
+	else:
+		current_emoji = puppet_emoji
+		if current_emoji == "DefaultEmoji":
+			$Emojis.get_node("One").hide()
+			$Emojis.get_node("Two").hide()
+			$Emojis.get_node("Three").hide()
+			$Emojis.get_node("Four").hide()
+			$Emojis.get_node("Five").hide()
+			$Emojis.get_node("Six").hide()
+			$Emojis.get_node("Seven").hide()
+			$Emojis.get_node("Eight").hide()
+			$Emojis.get_node("Nine").hide()
+			$Emojis.get_node("Ten").hide()
+			$Emojis.get_node("Eleven").hide()
+			$Emojis.get_node("Twelve").hide()
+			$Emojis.get_node("Thirteen").hide()
+			$Emojis.get_node("Fourteen").hide()
+			$Emojis.get_node("Fiveteen").hide()
+			$Emojis.get_node("Sixteen").hide()
+			$Emojis.get_node("One").hide()
+			$Emojis.get_node("Two").hide()
+			$Emojis.get_node("Three").hide()
+			$Emojis.get_node("Four").hide()
+			$Emojis.get_node("Five").hide()
+			$Emojis.get_node("Six").hide()
+			$Emojis.get_node("Seven").hide()
+			$Emojis.get_node("Eight").hide()
+			$Emojis.get_node("Nine").hide()
+			$Emojis.get_node("Ten").hide()
+			$Emojis.get_node("Eleven").hide()
+			$Emojis.get_node("Twelve").hide()
+			$Emojis.get_node("Thirteen").hide()
+			$Emojis.get_node("Fourteen").hide()
+			$Emojis.get_node("Fiveteen").hide()
+			$Emojis.get_node("Sixteen").hide()
+		else:
+			print("Emoji received on display_emoji: ", current_emoji)
+			$Emojis.get_node(current_emoji).show()
+#		for x in 1000000000:
+#			print("test delay")
+#		$Emojis.get_node(current_emoji).hide()
+		$Emojis/Timer.start()
+
+# In order to get the current emoji
+func _get_emoji(which) -> void:
+	print("on emoji pressed signal: ", which)
+	$Emojis.get_node(which).show() #Shows emoji for Avatar
+	$Emojis/Timer.start()
+	
+	if is_network_master():
+		current_emoji = which
+
+#Timer for the emoji
+func _on_emoji_timeout():
+	current_emoji = "DefaultEmoji"
+	if is_network_master():
+		rset("puppet_emoji", current_emoji)
+		$Emojis.get_node("One").hide()
+		$Emojis.get_node("Two").hide()
+		$Emojis.get_node("Three").hide()
+		$Emojis.get_node("Four").hide()
+		$Emojis.get_node("Five").hide()
+		$Emojis.get_node("Six").hide()
+		$Emojis.get_node("Seven").hide()
+		$Emojis.get_node("Eight").hide()
+		$Emojis.get_node("Nine").hide()
+		$Emojis.get_node("Ten").hide()
+		$Emojis.get_node("Eleven").hide()
+		$Emojis.get_node("Twelve").hide()
+		$Emojis.get_node("Thirteen").hide()
+		$Emojis.get_node("Fourteen").hide()
+		$Emojis.get_node("Fiveteen").hide()
+		$Emojis.get_node("Sixteen").hide()
+		$Emojis.get_node("One").hide()
+		$Emojis.get_node("Two").hide()
+		$Emojis.get_node("Three").hide()
+		$Emojis.get_node("Four").hide()
+		$Emojis.get_node("Five").hide()
+		$Emojis.get_node("Six").hide()
+		$Emojis.get_node("Seven").hide()
+		$Emojis.get_node("Eight").hide()
+		$Emojis.get_node("Nine").hide()
+		$Emojis.get_node("Ten").hide()
+		$Emojis.get_node("Eleven").hide()
+		$Emojis.get_node("Twelve").hide()
+		$Emojis.get_node("Thirteen").hide()
+		$Emojis.get_node("Fourteen").hide()
+		$Emojis.get_node("Fiveteen").hide()
+		$Emojis.get_node("Sixteen").hide()
+
+
+
+
+
+
 
 func _process(_delta: float) -> void:
 #	self.find_participant()
@@ -53,6 +188,8 @@ func _process(_delta: float) -> void:
 	animation_player.play(current_animation)
 	
 	display_location()
+	display_emoji()
+	
 
 func _on_participants_button_pressed() -> void:
 	if participants_UI_visibility ==false:
