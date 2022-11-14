@@ -40,7 +40,7 @@ func _ready() -> void:
 	if not is_network_master():
 		$CanvasLayer/ParticipantUI.hide()
 		$CanvasLayer/Location.hide()
-
+		$CanvasLayer/EmojisButton/EmojiesUI.hide()
 
 
 
