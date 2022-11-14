@@ -32,7 +32,7 @@ func _ready() -> void:
 	emojis_button.connect("pressed", self, "_on_emojis_button_pressed")
 	#$CanvasLayer/ParticipantUI.connect("emoji_sent", self, "_get_emoji")
 	
-	$CanvasLayer/EmojisButton/EmojiesUI.connect("emoji_pressed", self, "_get_emoji", [], 8)
+	$CanvasLayer/EmojiesUI.connect("emoji_pressed", self, "_get_emoji", [], 8)
 	$Emojis/Timer.connect("timeout", self, "_on_emoji_timeout", [], 8)
 
 	
@@ -40,7 +40,7 @@ func _ready() -> void:
 	if not is_network_master():
 		$CanvasLayer/ParticipantUI.hide()
 		$CanvasLayer/Location.hide()
-		$CanvasLayer/EmojisButton/EmojiesUI.hide()
+		$CanvasLayer/EmojiesUI.hide()
 
 
 
@@ -51,13 +51,17 @@ func _ready() -> void:
 
 func _on_emojis_button_pressed() -> void:
 	if emojis_UI_visibility == false:
-		$CanvasLayer/EmojisButton/EmojiesUI.show()
+		#$CanvasLayer/EmojisButton/EmojiesUI.show()
 		#$CanvasLayer/EmojisButton.hide()
+		$CanvasLayer/EmojiesUI.modulate.a=255
+		$CanvasLayer/EmojisButton.modulate.a=0
 		emojis_UI_visibility = true
-		$CanvasLayer/EmojisButton/EmojiesUI.connect("emoji_pressed", self, "_get_emoji", [], 8)
+		$CanvasLayer/EmojiesUI.connect("emoji_pressed", self, "_get_emoji", [], 8)
 		$Emojis/Timer.connect("timeout", self, "_on_emoji_timeout", [], 8)
 	else:
-		$CanvasLayer/EmojisButton/EmojiesUI.hide()
+		#$CanvasLayer/EmojisButton/EmojiesUI.hide()
+		$CanvasLayer/EmojiesUI.modulate.a=0
+		$CanvasLayer/EmojisButton.modulate.a=255
 		#$CanvasLayer/EmojisButton.show()
 		emojis_UI_visibility = false
 

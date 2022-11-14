@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://Assets/UI/Fonts/SztyletBold-aOKK.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Participant.gd" type="Script" id=2]
@@ -32,6 +32,7 @@
 [ext_resource path="res://EmojiPopUp/48x48 pngs/icons8-thinking-face-48.png" type="Texture" id=30]
 [ext_resource path="res://EmojiPopUp/48x48 pngs/icons8-zany-face-48.png" type="Texture" id=31]
 [ext_resource path="res://EmojiPopUp/48x48 pngs/icons8-tired-face-48.png" type="Texture" id=32]
+[ext_resource path="res://EmojiPopUp/48x48 pngs/icons8-sleeping-face-48.png" type="Texture" id=33]
 
 [sub_resource type="DynamicFont" id=40]
 font_data = ExtResource( 1 )
@@ -2608,7 +2609,7 @@ margin_bottom = 41.0
 custom_fonts/font = ExtResource( 11 )
 text = "Emojis"
 
-[node name="EmojiesUI" parent="CanvasLayer/EmojisButton" instance=ExtResource( 10 )]
+[node name="EmojiesUI" parent="CanvasLayer" instance=ExtResource( 10 )]
 margin_left = 1.0
 margin_right = 1.0
 
@@ -2702,6 +2703,10 @@ offset = Vector2( 0, -75 )
 visible = false
 texture = ExtResource( 29 )
 offset = Vector2( 0, -75 )
+
+[node name="Seventeen" type="Sprite" parent="Emojis"]
+visible = false
+texture = ExtResource( 33 )
 
 [node name="Timer" type="Timer" parent="Emojis"]
 wait_time = 3.0

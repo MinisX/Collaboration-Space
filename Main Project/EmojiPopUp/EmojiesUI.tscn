@@ -200,3 +200,7 @@ margin_right = 181.0
 margin_bottom = 271.0
 custom_fonts/font = ExtResource( 20 )
 text = "OK"
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+margin_right = 40.0
+margin_bottom = 40.0
