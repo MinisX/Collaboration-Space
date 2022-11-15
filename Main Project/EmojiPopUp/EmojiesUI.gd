@@ -5,9 +5,10 @@ extends Node
 
 export (String) var current_emoji : String = "SomeEmojiName"
 var emoji_group: ButtonGroup = null
-onready var emojis_dnd_button:Button = $Panel/doNotDisturbButton
+onready var emojis_dnd_button:Button = $Panel/Seventeen
 
 var emojis_UI_visibility: bool = true
+var dnd_on: bool = false
 
 signal emoji_pressed(which)
 #var emoji_is_shown: bool = false
@@ -33,7 +34,6 @@ func _on_emoji_selected(pressed: TextureButton) -> void:
 	emit_signal("emoji_pressed", pressed.name)
 
 
-func _on_emoji_dnd_button_pressed(pressed: TextureButton):
-	print("Emoji button is pressed")
-	emit_signal("emoji_pressed", pressed.name)
-
+func _on_emoji_dnd_button_pressed():
+	print("do not disturb button is pressed")
+	emit_signal("emoji_pressed", "Seventeen")

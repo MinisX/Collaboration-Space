@@ -2709,5 +2709,6 @@ offset = Vector2( 0, -75 )
 [node name="Seventeen" type="Sprite" parent="Emojis"]
 visible = false
 texture = ExtResource( 33 )
+offset = Vector2( 0, -75 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_emoji_timeout"]

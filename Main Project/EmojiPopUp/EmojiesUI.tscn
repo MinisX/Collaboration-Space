@@ -180,7 +180,7 @@ toggle_mode = true
 group = ExtResource( 15 )
 texture_normal = ExtResource( 11 )
 
-[node name="doNotDisturbButton" type="Button" parent="Panel"]
+[node name="Seventeen" type="Button" parent="Panel"]
 margin_left = 3.0
 margin_top = 186.0
 margin_right = 181.0

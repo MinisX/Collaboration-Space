@@ -17,6 +17,7 @@ var participants_UI_visibility: bool = false
 var emojis_UI_visibility: bool = false
 var current_emoji: String = "DefaultEmoji"
 var emoji_ui_active: bool = false
+var dnd_activated: bool = false
 #var one_time_hide: bool = true
 
 # The puppet keyword means a call can be made from the network master to any network puppet.
@@ -51,6 +52,7 @@ func _ready() -> void:
 
 
 
+
 func _on_emojis_button_pressed() -> void:
 	if emojis_UI_visibility == false:
 #		$CanvasLayer/EmojiesUI.margin_top = 300
@@ -71,7 +73,6 @@ func display_emoji() -> void:
 #		one_time_hide = false
 
 	# Needed to reconnect after hiding
-	
 	if is_network_master():
 		rset("puppet_emoji", current_emoji)
 	else:
@@ -83,25 +84,46 @@ func display_emoji() -> void:
 		else:
 			print("Emoji received on display_emoji: ", current_emoji)
 			$Emojis.get_node(current_emoji).show()
+		#if current_emoji !="Seventeen": 
 		$Timer.start()
 
 # In order to get the current emoji
 func _get_emoji(which) -> void:
 	print("on emoji pressed signal: ", which)
-	$Emojis.get_node(which).show() #Shows emoji for Avatar
-	$Timer.start()
-	
+	if which != "Seventeen" and which != "":
+		$Emojis.get_node(which).show() #Shows emoji for Avatar
+		$Timer.start()
+	elif which == "Seventeen" and dnd_activated ==true:
+		$Emojis.get_node(which).hide()
+		puppet_emoji = "DefaultEmoji"
+		dnd_activated = false
+	elif which == "Seventeen" and dnd_activated == false:
+		$Emojis.get_node(which).show()
+		dnd_activated = true
+		
 	if is_network_master():
-		current_emoji = which
+		if which != "Seventeen":
+			current_emoji = which
+		elif which == "Seventeen" and dnd_activated == false:
+			current_emoji = "DefaultEmoji"
+		elif which == "Seventeen" and dnd_activated == true:
+			current_emoji = "Seventeen"
+
 
 #Timer for the emoji
 func _on_emoji_timeout():
-	current_emoji = "DefaultEmoji"
-	if is_network_master():
-		rset("puppet_emoji", current_emoji)
-		var emojis: Array = $Emojis.get_children()
-		for e in emojis:
-			e.hide()
+	if current_emoji != "Seventeen":
+		current_emoji = "DefaultEmoji"
+		if is_network_master():
+			rset("puppet_emoji", current_emoji)
+			var emojis: Array = $Emojis.get_children()
+			for e in emojis:
+				e.hide()
+
+
+
+
+
 
 func _process(_delta: float) -> void:
 #	self.find_participant()
