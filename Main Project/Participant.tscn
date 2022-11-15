@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://Assets/UI/Fonts/SztyletBold-aOKK.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Participant.gd" type="Script" id=2]
@@ -33,6 +33,7 @@
 [ext_resource path="res://EmojiPopUp/48x48 pngs/icons8-zany-face-48.png" type="Texture" id=31]
 [ext_resource path="res://EmojiPopUp/48x48 pngs/icons8-tired-face-48.png" type="Texture" id=32]
 [ext_resource path="res://EmojiPopUp/48x48 pngs/icons8-sleeping-face-48.png" type="Texture" id=33]
+[ext_resource path="res://EmojiPopUp/48x48 pngs/icons8-thumbs-down-48.png" type="Texture" id=34]
 
 [sub_resource type="DynamicFont" id=40]
 font_data = ExtResource( 1 )
@@ -2698,7 +2699,7 @@ offset = Vector2( 0, -75 )
 
 [node name="Fiveteen" type="Sprite" parent="Emojis"]
 visible = false
-texture = ExtResource( 26 )
+texture = ExtResource( 34 )
 offset = Vector2( 0, -75 )
 
 [node name="Sixteen" type="Sprite" parent="Emojis"]
