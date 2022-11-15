@@ -14,8 +14,6 @@ func _ready():
 	_chat_text.scroll_following = true
 	_chat_text.bbcode_enabled = true
 	hide_button.focus_mode = Control.FOCUS_NONE
-#	message_container.focus_mode = Control.FOCUS_NONE
-#	chat_text.focus_mode = Control.FOCUS_NONE
 	send_button.focus_mode = Control.FOCUS_NONE
 	print("ChatUI: inside _ready called")
 

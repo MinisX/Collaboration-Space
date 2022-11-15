@@ -21,8 +21,6 @@ func _ready() -> void:
 	chat_button.connect("pressed", self, "_on_chat_button_pressed")
 
 	menu_button.connect("pressed", self, "_on_menu_button_pressed")
-	chat_input.connect("focus_entered", self, "_on_chat_focused")
-	chat_input.connect("focus_exited", self, "_on_chat_unfocused")
 
 		
 func _process(_delta):
@@ -37,12 +35,6 @@ func _process(_delta):
 			menu_button.hide()
 			menu_UI.show()
 			menu_visibility = true
-
-func _on_chat_focused() -> void:
-	Meeting.is_chat_focused = true
-
-func _on_chat_unfocused() -> void:
-	Meeting.is_chat_focused = false
 
 func _on_chat_button_pressed() -> void:
 	chat_UI.show()

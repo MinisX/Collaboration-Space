@@ -18,7 +18,7 @@ var emojis_UI_visibility: bool = false
 var current_emoji: String = "DefaultEmoji"
 var emoji_ui_active: bool = false
 var dnd_activated: bool = false
-#var one_time_hide: bool = true
+
 
 # The puppet keyword means a call can be made from the network master to any network puppet.
 puppet var puppet_pos: Vector2 = Vector2()
@@ -32,13 +32,12 @@ func _ready() -> void:
 	$BodyArea.connect("area_entered", self, "_get_location")
 	participants_button.connect("pressed", self, "_on_participants_button_pressed")
 	emojis_button.connect("pressed", self, "_on_emojis_button_pressed")
-	#$CanvasLayer/ParticipantUI.connect("emoji_sent", self, "_get_emoji")
 	
 	$CanvasLayer/EmojiesUI.connect("emoji_pressed", self, "_get_emoji", [], 8)
 	$Timer.connect("timeout", self, "_on_emoji_timeout", [], 8)
 
-#	$CanvasLayer/EmojiesUI.margin_top = -300
 	$CanvasLayer/EmojiesUI.rect_scale = Vector2(0.0, 0.0)
+
 	# hide participant ui if not master 
 	if not is_network_master():
 		$CanvasLayer/ParticipantUI.hide()
@@ -47,31 +46,17 @@ func _ready() -> void:
 		$CanvasLayer/EmojisButton.hide()
 
 
-
-
-
-
-
-
 func _on_emojis_button_pressed() -> void:
 	if emojis_UI_visibility == false:
-#		$CanvasLayer/EmojiesUI.margin_top = 300
 		$CanvasLayer/EmojiesUI.rect_scale = Vector2(1.0, 1.0)
 		emojis_UI_visibility = true
-#		emoji_ui_active = true
-#		$CanvasLayer/EmojiesUI.connect("emoji_pressed", self, "_get_emoji", [], 8)
 		$Timer.connect("timeout", self, "_on_emoji_timeout", [], 8)
 	else:
 		$CanvasLayer/EmojiesUI.rect_scale = Vector2(0.0, 0.0)
-#		$CanvasLayer/EmojiesUI.margin_top = -300
 		emojis_UI_visibility = false
 
 # Updates the puppet variable and the network master variables
 func display_emoji() -> void:
-#	if one_time_hide == true:
-#		$CanvasLayer/EmojiesUI.hide()
-#		one_time_hide = false
-
 	# Needed to reconnect after hiding
 	if is_network_master():
 		rset("puppet_emoji", current_emoji)
@@ -82,9 +67,8 @@ func display_emoji() -> void:
 			for e in emojis:
 				e.hide()
 		else:
-			print("Emoji received on display_emoji: ", current_emoji)
 			$Emojis.get_node(current_emoji).show()
-		#if current_emoji !="Seventeen": 
+		
 		$Timer.start()
 
 # In order to get the current emoji
@@ -126,9 +110,6 @@ func _on_emoji_timeout():
 
 
 func _process(_delta: float) -> void:
-#	self.find_participant()
-	# TODO 
-	# Not sure what is happening here, ask Fatma and Yufus
 	if is_network_master():
 		get_input()
 		rset("puppet_motion", velocity)
@@ -168,7 +149,6 @@ func display_location() -> void:
 	location.text = current_location
 	
 
-# TODO Display location UI in other place
 # Set room name to participant's location label
 func _get_location(area: Area2D) -> void:
 	if area.get("room_name") != null:
@@ -202,17 +182,12 @@ func set_selected_color(new_data: Dictionary) -> void:
 
 func get_input() -> void:
 	
-	if Meeting.is_chat_focused:
-		return
-	
 	if (Input.is_action_pressed("ui_right") or
 		Input.is_action_pressed("ui_left") or
 		Input.is_action_pressed("ui_down") or
 		Input.is_action_pressed("ui_up")
 	):
 		direction = Vector2(0.0, 0.0)
-		# Sending the location of the user
-#		$CanvasLayer/ParticipantUI._test(str(" is in: ", location.text))
 		$CanvasLayer/ParticipantUI._test(location.text)
 	
 	velocity = Vector2(0.0, 0.0)

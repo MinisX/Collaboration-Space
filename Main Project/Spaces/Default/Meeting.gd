@@ -37,8 +37,6 @@ var participant_data: Dictionary = {
 var participants: Dictionary = {}
 var selected_space_server = "NA"
 
-var is_chat_focused = false
-
 # Signals to Lobby UI
 # The signals are names that trigger function.
 # E.g for participants_list_changed the function refresh_lobby in Lobby is triggered
