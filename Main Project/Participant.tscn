@@ -2610,8 +2610,6 @@ custom_fonts/font = ExtResource( 11 )
 text = "Emojis"
 
 [node name="EmojiesUI" parent="CanvasLayer" instance=ExtResource( 10 )]
-margin_left = 1.0
-margin_right = 1.0
 
 [node name="ParticipantsButton" type="Button" parent="CanvasLayer"]
 anchor_left = 1.0
@@ -2621,6 +2619,10 @@ anchor_bottom = 1.0
 margin_left = -131.0
 margin_top = -41.0
 text = "Participants"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
 
 [node name="Emojis" type="Node2D" parent="."]
 
@@ -2708,8 +2710,4 @@ offset = Vector2( 0, -75 )
 visible = false
 texture = ExtResource( 33 )
 
-[node name="Timer" type="Timer" parent="Emojis"]
-wait_time = 3.0
-autostart = true
-
-[connection signal="timeout" from="Emojis/Timer" to="." method="_on_emoji_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_emoji_timeout"]

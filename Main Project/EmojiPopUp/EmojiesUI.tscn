@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://EmojiPopUp/EmojiesUI.gd" type="Script" id=1]
 [ext_resource path="res://EmojiPopUp/48x48 pngs/icons8-thinking-face-48.png" type="Texture" id=2]
@@ -19,7 +19,6 @@
 [ext_resource path="res://EmojiPopUp/48x48 pngs/icons8-winking-face-with-tongue-48.png" type="Texture" id=17]
 [ext_resource path="res://EmojiPopUp/48x48 pngs/icons8-grinning-face-48.png" type="Texture" id=18]
 [ext_resource path="res://Assets/UI/Fonts/SztyletBold-aOKK.otf" type="DynamicFontData" id=19]
-[ext_resource path="res://Assets/UI/Fonts/custom_font.tres" type="DynamicFont" id=20]
 [ext_resource path="res://EmojiPopUp/48x48 pngs/NotoNew.ttf" type="DynamicFontData" id=21]
 
 [sub_resource type="DynamicFont" id=1]
@@ -30,14 +29,12 @@ fallback/0 = ExtResource( 19 )
 [sub_resource type="ButtonGroup" id=2]
 
 [node name="Control" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
 script = ExtResource( 1 )
 
 [node name="Panel" type="Panel" parent="."]
 margin_top = 50.0
 margin_right = 184.0
-margin_bottom = 326.0
+margin_bottom = 284.0
 
 [node name="One" type="TextureButton" parent="Panel"]
 margin_left = 3.0
@@ -192,15 +189,3 @@ hint_tooltip = "Do not disturb "
 custom_fonts/font = SubResource( 1 )
 group = SubResource( 2 )
 text = "Do not disturb 😴"
-
-[node name="OkButton" type="Button" parent="Panel"]
-margin_left = 3.0
-margin_top = 230.0
-margin_right = 181.0
-margin_bottom = 271.0
-custom_fonts/font = ExtResource( 20 )
-text = "OK"
-
-[node name="TextureRect" type="TextureRect" parent="Panel"]
-margin_right = 40.0
-margin_bottom = 40.0
