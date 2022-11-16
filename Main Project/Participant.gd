@@ -67,19 +67,17 @@ func display_emoji() -> void:
 			for e in emojis:
 				e.hide()
 		else:
-			print("THe valeu of the current---", current_emoji)
 			$Emojis.get_node(current_emoji).show()
-			
-		
+
 		$Timer.start()
 
 # In order to get the current emoji
 func _get_emoji(which) -> void:
 	if which== "":
 		which = "DefaultEmoji"
-	print("on emoji pressed signal: ", which)
+	#print("on emoji pressed signal: ", which)
 	if which != "Seventeen" and which != "":
-		$Emojis.get_node(which).show() #Shows emoji for Avatar
+		$Emojis.get_node(which).show() # Shows emoji for Avatar
 		$Timer.start()
 	elif which == "Seventeen" and dnd_activated ==true:
 		$Emojis.get_node(which).hide()
