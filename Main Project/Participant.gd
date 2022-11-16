@@ -25,7 +25,7 @@ puppet var puppet_pos: Vector2 = Vector2()
 puppet var puppet_motion: Vector2 = Vector2()
 puppet var puppet_current_animation: String = "idle_s"
 puppet var puppet_current_location: String
-puppet var puppet_emoji: String
+puppet var puppet_emoji: String = "DefaultEmoji"
 
 func _ready() -> void:
 	print("Participant: _ready()")
@@ -67,12 +67,16 @@ func display_emoji() -> void:
 			for e in emojis:
 				e.hide()
 		else:
+			print("THe valeu of the current---", current_emoji)
 			$Emojis.get_node(current_emoji).show()
+			
 		
 		$Timer.start()
 
 # In order to get the current emoji
 func _get_emoji(which) -> void:
+	if which== "":
+		which = "DefaultEmoji"
 	print("on emoji pressed signal: ", which)
 	if which != "Seventeen" and which != "":
 		$Emojis.get_node(which).show() #Shows emoji for Avatar
