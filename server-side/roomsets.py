@@ -10,7 +10,7 @@ room1, room2, library, aula, b_building, b_building_learning, Cafeteria, cafeter
                         dict(), dict(), dict(), dict(), dict(), dict(), dict(), dict(), dict(), dict(), \
                         dict(), dict(), dict(), dict(), dict(), dict(), dict(), dict(), dict()
 
-rooms = {"room_1": room1, "room_2": room2, "Library": library, "Aula": aula, "B Building": b_building,
+rooms = {"Meeting Room 1": room1, "Meeting Room 2": room2, "Library": library, "Aula": aula, "B Building": b_building,
         "B Building Learning": b_building_learning, "Cafeteria": Cafeteria, "Cafeteria Outside": cafeteria_outside,
         "physics_1": physics_1, "Physics 2": physics_2, "C": c_building, "C Room": c_room,
         "C Chill": c_chill, "C 12": c_12, "C 11": c_10, "C Printer": c_printer, "D": d_building, 

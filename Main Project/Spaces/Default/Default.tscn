@@ -3576,13 +3576,13 @@ position = Vector2( 32, 96 )
 position = Vector2( -221, 0 )
 scale = Vector2( 21.16, 18.36 )
 z_index = 99
-room_name = "room_1"
+room_name = "Meeting Room 1"
 
 [node name="Room2" parent="Library/Rooms" instance=ExtResource( 24 )]
 position = Vector2( -221, 496 )
 scale = Vector2( 20.88, 13.28 )
 z_index = 99
-room_name = "room_2"
+room_name = "Meeting Room 2"
 
 [node name="Room3" parent="Library/Rooms" instance=ExtResource( 24 )]
 position = Vector2( 716, 310 )
